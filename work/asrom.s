@@ -64,9 +64,9 @@ AS_GOSTROUT            = $03                           ; GETS "JMP STROUT"
 MS_USRPOK                 = $0A                           ; GETS "JMP <USER ADDR>"
                                                     ; (INITIALLY $E199)
 AS_CHARAC              = $0D                           ; ALTERNATE STRING TERMINATOR
-AS_ENDCHR              = $0E                           ; STRING TERMINATOR
+MS_ENDCHR              = $0E                           ; STRING TERMINATOR
 AS_TKN_CNTR            = $0F                           ; USED IN PARSE
-AS_EOL_PNTR            = $0F                           ; USED IN NXLIN
+MS_COUNT            = $0F                           ; USED IN NXLIN
 AS_NUMDIM              = $0F                           ; USED IN ARRAY ROUTINES
 AS_DIMFLG              = $10                           ; 
 AS_VALTYP              = $11                           ; $:VALTYP=$FF; %:VALTYP+1=$80
@@ -88,26 +88,26 @@ MON_MASK            = $2E
 MON_HMASK           = $30                           ; 
 MON_COLOR           = $30
 MON_INVFLG          = $32                           ; 
-MON_PROMPT          = $33                           ; 
+MS_CQPRMP          = $33                           ; 
 MON_A1L             = $3C                           ; USED BY TAPE I/O ROUTINES
 MON_A1H             = $3D                           ; "
 MON_A2L             = $3E                           ; "
 MON_A2H             = $3F                           ; "
-AS_LINNUM              = $50                           ; CONVERTED LINE #
+MS_LINNUM              = $50                           ; CONVERTED LINE #
 AS_TEMPPT              = $52                           ; LAST USED TEMP STRING DESC
 AS_LASTPT              = $53                           ; LAST USED TEMP STRING PNTR
 AS_TEMPST              = $55                           ; HOLDS UP TO 3 DESCRIPTORS
 MS_INDEX               = $5E                           ; 
-AS_DEST                = $60                           ; 
+MS_INDEX2                = $60                           ; 
 AS_RESULT              = $62                           ; RESULT OF LAST * OR /
 AS_TXTTAB              = $67                           ; START OF PROGRAM TEXT
-AS_VARTAB              = $69                           ; START OF VARIABLE STORAGE
+MS_VARTAB              = $69                           ; START OF VARIABLE STORAGE
 AS_ARYTAB              = $6B                           ; START OF ARRAY STORAGE
 MS_STREND              = $6D                           ; END OF ARRAY STORAGE
-AS_FRETOP              = $6F                           ; START OF STRING STORAGE
+MS_FRETOP              = $6F                           ; START OF STRING STORAGE
 AS_FRESPC              = $71                           ; TEMP PNTR, STRING ROUTINES
 AS_MEMSIZ              = $73                           ; END OF STRING SPACE (HIMEM)
-AS_CURLIN              = $75                           ; CURRENT LINE NUMBER
+MS_CURLIN              = $75                           ; CURRENT LINE NUMBER
                                                     ; ( = $FFXX IF IN DIRECT MODE)
 AS_OLDLIN              = $77                           ; ADDR. OF LAST LINE EXECUTED
 AS_OLDTEXT             = $79                           ; 
@@ -127,7 +127,7 @@ AS_DSCLEN              = $8F                           ; USED IN GARBAG
 AS_JMPADRS             = $90                           ; GETS "JMP ...."
 AS_LENGTH              = $91                           ; USED IN GARBAG
 AS_ARG_EXTENSION       = $92                           ; FP EXTRA PRECISION
-AS_TEMP1               = $93                           ; SAVE AREAS FOR FAC
+MS_HIGHDS               = $93                           ; SAVE AREAS FOR FAC
 AS_ARYPNT              = $94                           ; USED IN GARBAG
 MS_HIGHDS              = $94                           ; PNTR FOR BLTU
 MS_HIGHTR              = $96                           ; PNTR FOR BLTU
@@ -150,11 +150,11 @@ AS_SGNCPR              = $AB                           ; FLAGS OPP SIGN IN FP RO
 AS_FAC_EXTENSION       = $AC                           ; FAC EXTENSION BYTE
 AS_SERPNT              = $AD                           ; PNTR TO SERIES DATA IN FP
 AS_STRNG1              = $AB                           ; 
-AS_STRNG2              = $AD                           ; 
+MS_BUFPTR              = $AD                           ; 
 AS_PRGEND              = $AF                           ; 
 AS_CHRGET              = $B1                           ; 
 AS_CHRGOT              = $B7                           ; 
-AS_TXTPTR              = $B8                           ; 
+MS_TXTPTR              = $B8                           ; 
 AS_RNDSEED             = $C9                           ; 
 AS_HGR_DX              = $D0                           ; 
 AS_HGR_DY              = $D2                           ; 
@@ -185,7 +185,7 @@ AS_HGR_ROTATION        = $F9                           ;
                                                     ; $FF IS ALSO USED BY THE STRING OUT ROUTINES
                                                     ; --------------------------------
 AS_STACK               = $0100
-AS_INPUT_BUFFER        = $0200
+MS_BUF        = $0200
 AS_AMPERSAND_VECTOR    = $03F5                         ; - 3F7   GETS "JMP ...."
                                                     ; --------------------------------
                                                     ; I/O & SOFT SWITCHES
@@ -214,7 +214,7 @@ AS_SW_HIRES            = $C057
 ;MON_WAIT            = $FCA8
 ;MON_RD2BIT          = $FCFA
 ;MON_RDKEY           = $FD0C
-;MON_GETLN           = $FD6A
+;MS_CQINLN           = $FD6A
 ;MON_COUT            = $FDED
 ;MON_INPORT          = $FE8B
 ;MON_OUTPORT         = $FE95
@@ -226,14 +226,14 @@ AS_SW_HIRES            = $C057
                                                     ; APPLESOFT TOKENS
                                                     ; --------------------------------
 MS_FORTK           = $81
-AS_TOKENDWTA           = $83
+MS_DATATK           = $83
 AS_TOKEN_POP           = $A1
 AS_TOKEN_GOTO          = $AB
 AS_TOKEN_GOSUB         = $B0
-AS_TOKEN_REM           = $B2
-AS_TOKEN_PRINT         = $BA
+MS_REMTK           = $B2
+MS_PRINTK         = $BA
 AS_TOKEN_TAB           = $C0
-AS_TOKEN_TO            = $C1
+MS_TOTK            = $C1
 AS_TOKEN_FN            = $C2
 AS_TOKEN_SPC           = $C3
 AS_TOKEN_THEN          = $C4
@@ -241,7 +241,7 @@ AS_TOKENDB             = $C5
 AS_TOKEN_NOT           = $C6
 AS_TOKEN_STEP          = $C7
 AS_TOKEN_PLUS          = $C8
-AS_TOKEN_MINUS         = $C9
+MS_MINUTK         = $C9
 AS_TOKEN_GREATER       = $CF
 AS_TOKENEQUUAL         = $D0
 AS_TOKEN_SGN           = $D2
@@ -313,14 +313,14 @@ AS_TOKEN_ADDRESS_TABLE .WORD AS_ENDX-1                    ; $80...128...END
                     .WORD MS_LIST-1                    ; $BC...188...LIST
                     .WORD MS_CLEAR-1                   ; $BD...189...CLEAR
                     .WORD MS_GET-1                     ; $BE...190...GET
-                    .WORD AS_NEW-1                     ; $BF...191...NEW
+                    .WORD MS_SCRATH-1                     ; $BF...191...NEW
                                                     ; --------------------------------
 MS_FUNDSP               .WORD MS_SGN                       ; $D2...210...SGN
                     .WORD MS_INT                       ; $D3...211...INT
                     .WORD MS_ABS                       ; $D4...212...ABS
                     .WORD MS_USRPOK                       ; $D5...213...USR
                     .WORD MS_FRE                       ; $D6...214...FRE
-                    .WORD AS_ERROR                     ; $D7...215...SCRN(
+                    .WORD MS_ERROR                     ; $D7...215...SCRN(
                     .WORD AS_PDL                       ; $D8...216...PDL
                     .WORD MS_POS                       ; $D9...217...POS
                     .WORD MS_SQR                       ; $DA...218...SQR
@@ -982,7 +982,7 @@ AS_ERR_OVERFLOW        = *-MS_ERRTAB
 .BYT ("O"&%01111111) 
 .BYT ("W"|%10000000) 
 
-AS_ERR_MEMFULL         = *-MS_ERRTAB
+MS_ERROM         = *-MS_ERRTAB
                     .BYT ("O"&%01111111) 
 .BYT ("U"&%01111111) 
 .BYT ("T"&%01111111) 
@@ -1287,48 +1287,48 @@ MS_DECBLT                  DEC MS_HIGHTR+1                    ; DOWN TO NEXT BLO
                                                     ; CHECK IF ENOUGH ROOM LEFT ON STACK
                                                     ; FOR "FOR", "GOSUB", OR EXPRESSION EVALUATION
                                                     ; --------------------------------
-AS_CHKMEM              ASL
+MS_GETSTK              ASL
                     ADC #54
-                    BCS AS_MEMERR                      ; ...MEM FULL ERR
+                    BCS MS_OMERR                      ; ...MEM FULL ERR
                     STA MS_INDEX
                     TSX
                     CPX MS_INDEX
-                    BCC AS_MEMERR                      ; ...MEM FULL ERR
+                    BCC MS_OMERR                      ; ...MEM FULL ERR
                     RTS
                                                     ; --------------------------------
                                                     ; CHECK IF ENOUGH ROOM BETWEEN ARRAYS AND STRINGS
                                                     ; (Y,A) = ADDR ARRAYS NEED TO GROW TO
                                                     ; --------------------------------
-MS_REASON              CPY AS_FRETOP+1                    ; HIGH BYTE
-                    BCC AS_L_REASON_4                          ; PLENTY OF ROOM
-                    BNE AS_L_REASON_1                          ; NOT ENOUGH, TRY GARBAGE COLLECTION
-                    CMP AS_FRETOP                      ; LOW BYTE
-                    BCC AS_L_REASON_4                          ; ENOUGH ROOM
+MS_REASON              CPY MS_FRETOP+1                    ; HIGH BYTE
+                    BCC MS_REARTS                          ; PLENTY OF ROOM
+                    BNE MS_TRYMOR                          ; NOT ENOUGH, TRY GARBAGE COLLECTION
+                    CMP MS_FRETOP                      ; LOW BYTE
+                    BCC MS_REARTS                          ; ENOUGH ROOM
                                                     ; --------------------------------
-AS_L_REASON_1                  PHA                             ; SAVE (Y,A), TEMP1, AND TEMP2
-                    LDX #AS_FAC-AS_TEMP1-1
+MS_TRYMOR                  PHA                             ; SAVE (Y,A), TEMP1, AND TEMP2
+                    LDX #AS_FAC-MS_HIGHDS-1
                     TYA
-AS_L_REASON_2                  PHA
-                    LDA AS_TEMP1,X
+MS_REASAV                  PHA
+                    LDA MS_HIGHDS,X
                     DEX
-                    BPL AS_L_REASON_2
-                    JSR AS_GARBAG                      ; MAKE AS MUCH ROOM AS POSSIBLE
-                    LDX #AS_TEMP1+256-AS_FAC+1                ; RESTORE TEMP1 AND TEMP2
-AS_L_REASON_3                  PLA                             ; AND (Y,A)
+                    BPL MS_REASAV
+                    JSR MS_GARBA2                      ; MAKE AS MUCH ROOM AS POSSIBLE
+                    LDX #MS_HIGHDS+256-AS_FAC+1                ; RESTORE TEMP1 AND TEMP2
+MS_REASTO                  PLA                             ; AND (Y,A)
                     STA AS_FAC,X
                     INX
-                    BMI AS_L_REASON_3
+                    BMI MS_REASTO
                     PLA
                     TAY
                     PLA                             ; DID WE FIND ENOUGH ROOM?
-                    CPY AS_FRETOP+1                    ; HIGH BYTE
-                    BCC AS_L_REASON_4                          ; YES, AT LEAST A PAGE
-                    BNE AS_MEMERR                      ; NO, MEM FULL ERR
-                    CMP AS_FRETOP                      ; LOW BYTE
-                    BCS AS_MEMERR                      ; NO, MEM FULL ERR
-AS_L_REASON_4                  RTS                             ; YES, RETURN
+                    CPY MS_FRETOP+1                    ; HIGH BYTE
+                    BCC MS_REARTS                          ; YES, AT LEAST A PAGE
+                    BNE MS_OMERR                      ; NO, MEM FULL ERR
+                    CMP MS_FRETOP                      ; LOW BYTE
+                    BCS MS_OMERR                      ; NO, MEM FULL ERR
+MS_REARTS                  RTS                             ; YES, RETURN
                                                     ; --------------------------------
-AS_MEMERR              LDX #AS_ERR_MEMFULL
+MS_OMERR              LDX #MS_ERROM
                                                     ; --------------------------------
                                                     ; HANDLE AN ERROR
                                                     ; 
@@ -1336,18 +1336,18 @@ AS_MEMERR              LDX #AS_ERR_MEMFULL
                                                     ; (ERRFLG) > 128 IF "ON ERR" TURNED ON
                                                     ; (CURLIN+1) = $FF IF IN DIRECT MODE
                                                     ; --------------------------------
-AS_ERROR               BIT AS_ERRFLG                      ; "ON ERR" TURNED ON?
-                    BPL AS_L_ERROR_1                          ; NO
+MS_ERROR               BIT AS_ERRFLG                      ; "ON ERR" TURNED ON?
+                    BPL MS_ERRCRD                          ; NO
                     JMP AS_HANDLERR                    ; YES
-AS_L_ERROR_1                  JSR AS_CRDO                        ; PRINT <RETURN>
-                    JSR AS_OUTQUES                     ; PRINT "?"
-AS_L_ERROR_2                  LDA MS_ERRTAB,X
+MS_ERRCRD                  JSR MS_CRDO                        ; PRINT <RETURN>
+                    JSR MS_OUTQST                     ; PRINT "?"
+MS_GETERR                  LDA MS_ERRTAB,X
                     PHA                             ; PRINT MESSAGE
-                    JSR AS_OUTDO
+                    JSR MS_OUTDO
                     INX
                     PLA
-                    BPL AS_L_ERROR_2
-                    JSR AS_STKINI                      ; FIX STACK, ET AL
+                    BPL MS_GETERR
+                    JSR MS_STKINI                      ; FIX STACK, ET AL
                     LDA #<MS_ERR                  ; PRINT " ERROR" AND BELL
                     LDY #>MS_ERR
                                                     ; --------------------------------
@@ -1355,123 +1355,123 @@ AS_L_ERROR_2                  LDA MS_ERRTAB,X
                                                     ; PRINT CURRENT LINE # UNLESS IN DIRECT MODE
                                                     ; FALL INTO WARM RESTART
                                                     ; --------------------------------
-AS_PRINT_ERROR_LINNUM
+MS_ERRFIN
                     JSR AS_STROUT                      ; PRINT STRING AT (Y,A)
-                    LDY AS_CURLIN+1                    ; RUNNING, OR DIRECT?
+                    LDY MS_CURLIN+1                    ; RUNNING, OR DIRECT?
                     INY
-                    BEQ AS_RESTART                     ; WAS $FF, SO DIRECT MODE
-                    JSR AS_INPRT                       ; RUNNING, SO PRINT LINE NUMBER
+                    BEQ MS_MAIN                     ; WAS $FF, SO DIRECT MODE
+                    JSR MS_INPRT                       ; RUNNING, SO PRINT LINE NUMBER
                                                     ; --------------------------------
                                                     ; WARM RESTART ENTRY
                                                     ; 
                                                     ; COME HERE FROM MONITOR BY CTL-C, 0G, 3D0G, OR E003G
                                                     ; --------------------------------
-AS_RESTART
-                    JSR AS_CRDO                        ; PRINT <RETURN>
+MS_MAIN
+                    JSR MS_CRDO                        ; PRINT <RETURN>
                     LDX #("]"|%10000000)                ; PROMPT CHARACTER
-                    JSR AS_INLIN2                      ; READ A LINE
-                    STX AS_TXTPTR                      ; SET UP CHRGET TO SCAN THE LINE
-                    STY AS_TXTPTR+1                    ; 
+                    JSR MS_INLIN2                      ; READ A LINE
+                    STX MS_TXTPTR                      ; SET UP CHRGET TO SCAN THE LINE
+                    STY MS_TXTPTR+1                    ; 
                     LSR AS_ERRFLG                      ; CLEAR FLAG
                     JSR AS_CHRGET                      ; 
                     TAX                             ; 
-                    BEQ AS_RESTART                     ; EMPTY LINE
+                    BEQ MS_MAIN                     ; EMPTY LINE
                     LDX #$FF                        ; $FF IN HI-BYTE OF CURLIN MEANS
-                    STX AS_CURLIN+1                    ; WE ARE IN DIRECT MODE
-                    BCC AS_NUMBERED_LINE               ; CHRGET SAW DIGIT, NUMBERED LINE
-                    JSR AS_PARSE_INPUT_LINE            ; NO NUMBER, SO PARSE IT
+                    STX MS_CURLIN+1                    ; WE ARE IN DIRECT MODE
+                    BCC MS_MAIN1               ; CHRGET SAW DIGIT, NUMBERED LINE
+                    JSR MS_CRUNCH            ; NO NUMBER, SO PARSE IT
                     JMP AS_TRACE_                      ; AND TRY EXECUTING IT
                                                     ; --------------------------------
                                                     ; HANDLE NUMBERED LINE
                                                     ; --------------------------------
-AS_NUMBERED_LINE
+MS_MAIN1
                     LDX AS_PRGEND                      ; SQUASH VARIABLE TABLE
-                    STX AS_VARTAB
+                    STX MS_VARTAB
                     LDX AS_PRGEND+1
-                    STX AS_VARTAB+1
-                    JSR AS_LINGET                      ; GET LINE #
-                    JSR AS_PARSE_INPUT_LINE            ; AND PARSE THE INPUT LINE
-                    STY AS_EOL_PNTR                    ; SAVE INDEX TO INPUT BUFFER
-                    JSR AS_FNDLIN                      ; IS THIS LINE # ALREADY IN PROGRAM?
-                    BCC AS_PUT_NEW_LINE                ; NO
+                    STX MS_VARTAB+1
+                    JSR MS_LINGET                      ; GET LINE #
+                    JSR MS_CRUNCH            ; AND PARSE THE INPUT LINE
+                    STY MS_COUNT                    ; SAVE INDEX TO INPUT BUFFER
+                    JSR MS_FNDLIN                      ; IS THIS LINE # ALREADY IN PROGRAM?
+                    BCC MS_NODEL                ; NO
                     LDY #1                          ; YES, SO DELETE IT
                     LDA (MS_LOWTR),Y                   ; LOWTR POINTS AT LINE
                     STA MS_INDEX+1                     ; GET HIGH BYTE OF FORWARD PNTR
-                    LDA AS_VARTAB
+                    LDA MS_VARTAB
                     STA MS_INDEX
                     LDA MS_LOWTR+1
-                    STA AS_DEST+1
+                    STA MS_INDEX2+1
                     LDA MS_LOWTR
                     DEY
                     SBC (MS_LOWTR),Y
                     CLC
-                    ADC AS_VARTAB
-                    STA AS_VARTAB
-                    STA AS_DEST
-                    LDA AS_VARTAB+1
+                    ADC MS_VARTAB
+                    STA MS_VARTAB
+                    STA MS_INDEX2
+                    LDA MS_VARTAB+1
                     ADC #$FF
-                    STA AS_VARTAB+1
+                    STA MS_VARTAB+1
                     SBC MS_LOWTR+1
                     TAX
                     SEC
                     LDA MS_LOWTR
-                    SBC AS_VARTAB
+                    SBC MS_VARTAB
                     TAY
-                    BCS AS_L_NUMBERED_LINE_1
+                    BCS MS_QDECT1
                     INX
-                    DEC AS_DEST+1
-AS_L_NUMBERED_LINE_1                  CLC
+                    DEC MS_INDEX2+1
+MS_QDECT1                  CLC
                     ADC MS_INDEX
-                    BCC AS_L_NUMBERED_LINE_2
+                    BCC MS_MLOOP
                     DEC MS_INDEX+1
                     CLC
                                                     ; --------------------------------
-AS_L_NUMBERED_LINE_2                  LDA (MS_INDEX),Y                   ; MOVE HIGHER LINES OF PROGRAM
-                    STA (AS_DEST),Y                    ; DOWN OVER THE DELETED LINE.
+MS_MLOOP                  LDA (MS_INDEX),Y                   ; MOVE HIGHER LINES OF PROGRAM
+                    STA (MS_INDEX2),Y                    ; DOWN OVER THE DELETED LINE.
                     INY
-                    BNE AS_L_NUMBERED_LINE_2
+                    BNE MS_MLOOP
                     INC MS_INDEX+1
-                    INC AS_DEST+1
+                    INC MS_INDEX2+1
                     DEX
-                    BNE AS_L_NUMBERED_LINE_2
+                    BNE MS_MLOOP
                                                     ; --------------------------------
-AS_PUT_NEW_LINE
-                    LDA AS_INPUT_BUFFER                ; ANY CHARACTERS AFTER LINE #?
+MS_NODEL
+                    LDA MS_BUF                ; ANY CHARACTERS AFTER LINE #?
                     BEQ AS_FIX_LINKS                   ; NO, SO NOTHING TO INSERT.
                     LDA AS_MEMSIZ                      ; YES, SO MAKE ROOM AND INSERT LINE
                     LDY AS_MEMSIZ+1                    ; WIPE STRING AREA CLEAN
-                    STA AS_FRETOP                      ; 
-                    STY AS_FRETOP+1                    ; 
-                    LDA AS_VARTAB                      ; SET UP BLTU SUBROUTINE
+                    STA MS_FRETOP                      ; 
+                    STY MS_FRETOP+1                    ; 
+                    LDA MS_VARTAB                      ; SET UP BLTU SUBROUTINE
                     STA MS_HIGHTR                      ; INSERT NEW LINE.
-                    ADC AS_EOL_PNTR
+                    ADC MS_COUNT
                     STA MS_HIGHDS
-                    LDY AS_VARTAB+1
+                    LDY MS_VARTAB+1
                     STY MS_HIGHTR+1
-                    BCC AS_L_PUT_NEW_LINE_1
+                    BCC MS_NODELC
                     INY
-AS_L_PUT_NEW_LINE_1                  STY MS_HIGHDS+1
+MS_NODELC                  STY MS_HIGHDS+1
                     JSR MS_BLTU                        ; MAKE ROOM FOR THE LINE
-                    LDA AS_LINNUM                      ; PUT LINE NUMBER IN LINE IMAGE
-                    LDY AS_LINNUM+1
-                    STA AS_INPUT_BUFFER-2
-                    STY AS_INPUT_BUFFER-1
+                    LDA MS_LINNUM                      ; PUT LINE NUMBER IN LINE IMAGE
+                    LDY MS_LINNUM+1
+                    STA MS_BUF-2
+                    STY MS_BUF-1
                     LDA MS_STREND
                     LDY MS_STREND+1
-                    STA AS_VARTAB
-                    STY AS_VARTAB+1
-                    LDY AS_EOL_PNTR
+                    STA MS_VARTAB
+                    STY MS_VARTAB+1
+                    LDY MS_COUNT
                                                     ; ---COPY LINE INTO PROGRAM-------
-AS_L_PUT_NEW_LINE_2                  LDA AS_INPUT_BUFFER-5,Y
+MS_STOLOP                  LDA MS_BUF-5,Y
                     DEY
                     STA (MS_LOWTR),Y
-                    BNE AS_L_PUT_NEW_LINE_2
+                    BNE MS_STOLOP
                                                     ; --------------------------------
                                                     ; CLEAR ALL VARIABLES
                                                     ; RE-ESTABLISH ALL FORWARD LINKS
                                                     ; --------------------------------
 AS_FIX_LINKS
-                    JSR AS_SETPTRS                     ; CLEAR ALL VARIABLES
+                    JSR MS_RUNC                     ; CLEAR ALL VARIABLES
                     LDA AS_TXTTAB                      ; POINT INDEX AT START OF PROGRAM
                     LDY AS_TXTTAB+1
                     STA MS_INDEX
@@ -1480,11 +1480,11 @@ AS_FIX_LINKS
 AS_L_FIX_LINKS_1                  LDY #1                          ; HI-BYTE OF NEXT FORWARD PNTR
                     LDA (MS_INDEX),Y                   ; END OF PROGRAM YET?
                     BNE AS_L_FIX_LINKS_2                          ; NO, KEEP GOING
-                    LDA AS_VARTAB                      ; YES
+                    LDA MS_VARTAB                      ; YES
                     STA AS_PRGEND
-                    LDA AS_VARTAB+1
+                    LDA MS_VARTAB+1
                     STA AS_PRGEND+1
-                    JMP AS_RESTART
+                    JMP MS_MAIN
 AS_L_FIX_LINKS_2                  LDY #4                          ; FIND END OF THIS LINE
 AS_L_FIX_LINKS_3                  INY                             ; (NOTE MAXIMUM LENGTH < 256)
                     LDA (MS_INDEX),Y                   ; 
@@ -1506,24 +1506,24 @@ AS_L_FIX_LINKS_3                  INY                             ; (NOTE MAXIMU
                                                     ; --------------------------------
                                                     ; READ A LINE, AND STRIP OFF SIGN BITS
                                                     ; --------------------------------
-AS_INLIN               LDX #$80                        ; NULL PROMPT
-AS_INLIN2              STX MON_PROMPT
-                    JSR MON_GETLN
+MS_INLIN               LDX #$80                        ; NULL PROMPT
+MS_INLIN2              STX MS_CQPRMP
+                    JSR MS_CQINLN
                     CPX #239                        ; MAXIMUM LINE LENGTH
-                    BCC AS_L_INLIN2_1
+                    BCC MS_GDBUFS
                     LDX #239                        ; TRUNCATE AT 239 CHARS
-AS_L_INLIN2_1                  LDA #0                          ; MARK END OF LINE WITH $00 BYTE
-                    STA AS_INPUT_BUFFER,X
+MS_GDBUFS                  LDA #0                          ; MARK END OF LINE WITH $00 BYTE
+                    STA MS_BUF,X
                     TXA
-                    BEQ AS_L_INLIN2_3                          ; NULL INPUT LINE
-AS_L_INLIN2_2                  LDA AS_INPUT_BUFFER-1,X            ; DROP SIGN BITS
+                    BEQ MS_NOCHR                          ; NULL INPUT LINE
+MS_LOPBHT                  LDA MS_BUF-1,X            ; DROP SIGN BITS
                     AND #$7F
-                    STA AS_INPUT_BUFFER-1,X
+                    STA MS_BUF-1,X
                     DEX
-                    BNE AS_L_INLIN2_2
-AS_L_INLIN2_3                  LDA #0                          ; (Y,X) POINTS AT BUFFER-1
-                    LDX #<(AS_INPUT_BUFFER-1)
-                    LDY #>(AS_INPUT_BUFFER-1)
+                    BNE MS_LOPBHT
+MS_NOCHR                  LDA #0                          ; (Y,X) POINTS AT BUFFER-1
+                    LDX #<(MS_BUF-1)
+                    LDY #>(MS_BUF-1)
                     RTS
                                                     ; --------------------------------
 AS_INCHR               JSR MON_RDKEY                   ; *** OUGHT TO BE "BIT $C010" ***
@@ -1532,8 +1532,8 @@ AS_INCHR               JSR MON_RDKEY                   ; *** OUGHT TO BE "BIT $C
                                                     ; --------------------------------
                                                     ; TOKENIZE THE INPUT LINE
                                                     ; --------------------------------
-AS_PARSE_INPUT_LINE
-                    LDX AS_TXTPTR                      ; INDEX INTO UNPARSED LINE
+MS_CRUNCH
+                    LDX MS_TXTPTR                      ; INDEX INTO UNPARSED LINE
                     DEX                             ; PREPARE FOR INX AT "PARSE"
                     LDY #4                          ; INDEX TO PARSED OUTPUT LINE
                     STY MS_DATAFLG                     ; CLEAR SIGN-BIT OF DATAFLG
@@ -1541,32 +1541,32 @@ AS_PARSE_INPUT_LINE
                     BPL AS_PARSE                       ; NO, GO AHEAD AND PARSE THE LINE
                     PLA                             ; YES, IGNORE INPUT AND "RUN"
                     PLA                             ; THE PROGRAM
-                    JSR AS_SETPTRS                     ; CLEAR ALL VARIABLES
+                    JSR MS_RUNC                     ; CLEAR ALL VARIABLES
                     JMP AS_NEWSTT                      ; START RUNNING
                                                     ; --------------------------------
 AS_PARSE               INX                             ; NEXT INPUT CHARACTER
-AS_L_PARSE_1                  LDA AS_INPUT_BUFFER,X
+AS_L_PARSE_1                  LDA MS_BUF,X
                     BIT MS_DATAFLG                     ; IN A "DATA" STATEMENT?
                     BVS AS_L_PARSE_2                          ; YES (DATAFLG = $49)
                     CMP #(" "&%01111111)                        ; IGNORE BLANKS
                     BEQ AS_PARSE                       ; 
-AS_L_PARSE_2                  STA AS_ENDCHR                      ; 
+AS_L_PARSE_2                  STA MS_ENDCHR                      ; 
                     CMP #$22                        ; START OF QUOTATION?
-                    BEQ AS_L_PARSE_13                         ; 
-                    BVS AS_L_PARSE_9                          ; BRANCH IF IN "DATA" STATEMENT
+                    BEQ MS_STRNG                         ; 
+                    BVS MS_STUFFH                          ; BRANCH IF IN "DATA" STATEMENT
                     CMP #("?"&%01111111)                        ; SHORTHAND FOR "PRINT"?
-                    BNE AS_L_PARSE_3                          ; NO
-                    LDA #AS_TOKEN_PRINT                ; YES, REPLACE WITH "PRINT" TOKEN
-                    BNE AS_L_PARSE_9                          ; ...ALWAYS
-AS_L_PARSE_3                  CMP #("0"&%01111111)                        ; IS IT A DIGIT, COLON, OR SEMI-COLON?
-                    BCC AS_L_PARSE_4                          ; NO, PUNCTUATION !"#$%&'()*+,-./
+                    BNE MS_KLOOP1                          ; NO
+                    LDA #MS_PRINTK                ; YES, REPLACE WITH "PRINT" TOKEN
+                    BNE MS_STUFFH                          ; ...ALWAYS
+MS_KLOOP1                  CMP #("0"&%01111111)                        ; IS IT A DIGIT, COLON, OR SEMI-COLON?
+                    BCC MS_MUSTCR                          ; NO, PUNCTUATION !"#$%&'()*+,-./
                     CMP #(";"&%01111111)+1
-                    BCC AS_L_PARSE_9                          ; YES, NOT A TOKEN
+                    BCC MS_STUFFH                          ; YES, NOT A TOKEN
                                                     ; --------------------------------
                                                     ; SEARCH TOKEN NAME TABLE FOR MATCH STARTING
                                                     ; WITH CURRENT CHAR FROM INPUT LINE
                                                     ; --------------------------------
-AS_L_PARSE_4                  STY AS_STRNG2                      ; SAVE INDEX TO OUTPUT LINE
+MS_MUSTCR                  STY MS_BUFPTR                      ; SAVE INDEX TO OUTPUT LINE
                     LDA #<(MS_RESLST-$100)
                     STA AS_FAC                         ; MAKE PNTR FOR SEARCH
                     LDA #>(MS_RESLST-$100)
@@ -1574,64 +1574,64 @@ AS_L_PARSE_4                  STY AS_STRNG2                      ; SAVE INDEX TO
                     LDY #0                          ; USE Y-REG WITH (FAC) TO ADDRESS TABLE
                     STY AS_TKN_CNTR                    ; HOLDS CURRENT TOKEN-$80
                     DEY                             ; PREPARE FOR "INY" A FEW LINES DOWN
-                    STX AS_TXTPTR                      ; SAVE POSITION IN INPUT LINE
+                    STX MS_TXTPTR                      ; SAVE POSITION IN INPUT LINE
                     DEX                             ; PREPARE FOR "INX" A FEW LINES DOWN
-AS_L_PARSE_5                  INY                             ; ADVANCE POINTER TO TOKEN TABLE
+MS_RESER                  INY                             ; ADVANCE POINTER TO TOKEN TABLE
                     BNE AS_L_PARSE_6                          ; Y=Y+1 IS ENOUGH
                     INC AS_FAC+1                       ; ALSO NEED TO BUMP THE PAGE
 AS_L_PARSE_6                  INX                             ; ADVANCE POINTER TO INPUT LINE
-AS_L_PARSE_7                  LDA AS_INPUT_BUFFER,X              ; NEXT CHAR FROM INPUT LINE
+AS_L_PARSE_7                  LDA MS_BUF,X              ; NEXT CHAR FROM INPUT LINE
                     CMP #(" "&%01111111)                        ; THIS CHAR A BLANK?
                     BEQ AS_L_PARSE_6                          ; YES, IGNORE ALL BLANKS
                     SEC                             ; NO, COMPARE TO CHAR IN TABLE
                     SBC (AS_FAC),Y                     ; SAME AS NEXT CHAR OF TOKEN NAME?
-                    BEQ AS_L_PARSE_5                          ; YES, CONTINUE MATCHING
+                    BEQ MS_RESER                          ; YES, CONTINUE MATCHING
                     CMP #$80                        ; MAYBE; WAS IT SAME EXCEPT FOR BIT 7?
-                    BNE AS_L_PARSE_14                         ; NO, SKIP TO NEXT TOKEN
+                    BNE MS_NTHIS                         ; NO, SKIP TO NEXT TOKEN
                     ORA AS_TKN_CNTR                    ; YES, END OF TOKEN; GET TOKEN #
                     CMP #AS_TOKENDB                    ; DID WE MATCH "AT"?
-                    BNE AS_L_PARSE_8                          ; NO, SO NO AMBIGUITY
-                    LDA AS_INPUT_BUFFER+1,X            ; "AT" COULD BE "ATN" OR "A TO"
+                    BNE MS_GETBPT                          ; NO, SO NO AMBIGUITY
+                    LDA MS_BUF+1,X            ; "AT" COULD BE "ATN" OR "A TO"
                     CMP #("N"&%01111111)                        ; "ATN" HAS PRECEDENCE OVER "AT"
-                    BEQ AS_L_PARSE_14                         ; IT IS "ATN", FIND IT THE HARD WAY
+                    BEQ MS_NTHIS                         ; IT IS "ATN", FIND IT THE HARD WAY
                     CMP #("O"&%01111111)                        ; "TO" HAS PRECEDENCE OVER "AT"
-                    BEQ AS_L_PARSE_14                         ; IT IS "A TO", FIN IT THE HARD WAY
+                    BEQ MS_NTHIS                         ; IT IS "A TO", FIN IT THE HARD WAY
                     LDA #AS_TOKENDB                    ; NOT "ATN" OR "A TO", SO USE "AT"
                                                     ; --------------------------------
                                                     ; STORE CHARACTER OR TOKEN IN OUTPUT LINE
                                                     ; --------------------------------
-AS_L_PARSE_8                  LDY AS_STRNG2                      ; GET INDEX TO OUTPUT LINE IN Y-REG
-AS_L_PARSE_9                  INX                             ; ADVANCE INPUT INDEX
+MS_GETBPT                  LDY MS_BUFPTR                      ; GET INDEX TO OUTPUT LINE IN Y-REG
+MS_STUFFH                  INX                             ; ADVANCE INPUT INDEX
                     INY                             ; ADVANCE OUTPUT INDEX
-                    STA AS_INPUT_BUFFER-5,Y            ; STORE CHAR OR TOKEN
-                    LDA AS_INPUT_BUFFER-5,Y            ; TEST FOR EOL OR EOS
-                    BEQ AS_L_PARSE_17                         ; END OF LINE
+                    STA MS_BUF-5,Y            ; STORE CHAR OR TOKEN
+                    LDA MS_BUF-5,Y            ; TEST FOR EOL OR EOS
+                    BEQ MS_CRDONE                         ; END OF LINE
                     SEC                             ; 
                     SBC #(":"&%01111111)                        ; END OF STATEMENT?
-                    BEQ AS_L_PARSE_10                         ; YES, CLEAR DATAFLG
-                    CMP #AS_TOKENDWTA+128-$BA              ; "DATA" TOKEN?
-                    BNE AS_L_PARSE_11                         ; NO, LEAVE DATAFLG ALONE
-AS_L_PARSE_10                 STA MS_DATAFLG                     ; DATAFLG = 0 OR $83-$3A = $49
-AS_L_PARSE_11                 SEC                             ; IS IT A "REM" TOKEN?
-                    SBC #AS_TOKEN_REM+128-$BA
+                    BEQ MS_COLIS                         ; YES, CLEAR DATAFLG
+                    CMP #MS_DATATK+128-$BA              ; "DATA" TOKEN?
+                    BNE MS_NODATT                         ; NO, LEAVE DATAFLG ALONE
+MS_COLIS                 STA MS_DATAFLG                     ; DATAFLG = 0 OR $83-$3A = $49
+MS_NODATT                 SEC                             ; IS IT A "REM" TOKEN?
+                    SBC #MS_REMTK+128-$BA
                     BNE AS_L_PARSE_1                          ; NO, CONTINUE PARSING LINE
-                    STA AS_ENDCHR                      ; YES, CLEAR LITERAL FLAG
+                    STA MS_ENDCHR                      ; YES, CLEAR LITERAL FLAG
                                                     ; --------------------------------
                                                     ; HANDLE LITERAL (BETWEEN QUOTES) OR REMARK,
                                                     ; BY COPYING CHARS UP TO ENDCHR.
                                                     ; --------------------------------
-AS_L_PARSE_12                 LDA AS_INPUT_BUFFER,X
-                    BEQ AS_L_PARSE_9                          ; END OF LINE
-                    CMP AS_ENDCHR
-                    BEQ AS_L_PARSE_9                          ; FOUND ENDCHR
-AS_L_PARSE_13                 INY                             ; NEXT OUTPUT CHAR
-                    STA AS_INPUT_BUFFER-5,Y
+AS_L_PARSE_12                 LDA MS_BUF,X
+                    BEQ MS_STUFFH                          ; END OF LINE
+                    CMP MS_ENDCHR
+                    BEQ MS_STUFFH                          ; FOUND ENDCHR
+MS_STRNG                 INY                             ; NEXT OUTPUT CHAR
+                    STA MS_BUF-5,Y
                     INX                             ; NEXT INPUT CHAR
                     BNE AS_L_PARSE_12                         ; ...ALWAYS
                                                     ; --------------------------------
                                                     ; ADVANCE POINTER TO NEXT TOKEN NAME
                                                     ; --------------------------------
-AS_L_PARSE_14                 LDX AS_TXTPTR                      ; GET POINTER TO INPUT LINE IN X-REG
+MS_NTHIS                 LDX MS_TXTPTR                      ; GET POINTER TO INPUT LINE IN X-REG
                     INC AS_TKN_CNTR                    ; BUMP (TOKEN # - $80)
 AS_L_PARSE_15                 LDA (AS_FAC),Y                     ; SCAN THROUGH TABLE FOR BIT7 = 1
                     INY                             ; NEXT TOKEN ONE BEYOND THAT
@@ -1641,13 +1641,13 @@ AS_L_PARSE_16                 ASL                             ; SEE IF SIGN BIT 
                     BCC AS_L_PARSE_15                         ; NO, MORE IN THIS NAME
                     LDA (AS_FAC),Y                     ; YES, AT NEXT NAME.  END OF TABLE?
                     BNE AS_L_PARSE_7                          ; NO, NOT END OF TABLE
-                    LDA AS_INPUT_BUFFER,X              ; YES, SO NOT A KEYWORD
-                    BPL AS_L_PARSE_8                          ; ...ALWAYS, COPY CHAR AS IS
+                    LDA MS_BUF,X              ; YES, SO NOT A KEYWORD
+                    BPL MS_GETBPT                          ; ...ALWAYS, COPY CHAR AS IS
                                                     ; ---END OF LINE------------------
-AS_L_PARSE_17                 STA AS_INPUT_BUFFER-3,Y            ; STORE ANOTHER 00 ON END
-                    DEC AS_TXTPTR+1                    ; SET TXTPTR = INPUT.BUFFER-1
-                    LDA #<(AS_INPUT_BUFFER-1)
-                    STA AS_TXTPTR
+MS_CRDONE                 STA MS_BUF-3,Y            ; STORE ANOTHER 00 ON END
+                    DEC MS_TXTPTR+1                    ; SET TXTPTR = INPUT.BUFFER-1
+                    LDA #<(MS_BUF-1)
+                    STA MS_TXTPTR
                     RTS
                                                     ; --------------------------------
                                                     ; SEARCH FOR LINE
@@ -1658,39 +1658,39 @@ AS_L_PARSE_17                 STA AS_INPUT_BUFFER-3,Y            ; STORE ANOTHER
                                                     ; IF FOUND:      CARRY = 1
                                                     ; LOWTR POINTS AT LINE
                                                     ; --------------------------------
-AS_FNDLIN              LDA AS_TXTTAB                      ; SEARCH FROM BEGINNING OF PROGRAM
+MS_FNDLIN              LDA AS_TXTTAB                      ; SEARCH FROM BEGINNING OF PROGRAM
                     LDX AS_TXTTAB+1                    ; 
-AS_FL1                 LDY #1                          ; SEARCH FROM (X,A)
+MS_FNDLNC                 LDY #1                          ; SEARCH FROM (X,A)
                     STA MS_LOWTR                       ; 
                     STX MS_LOWTR+1                     ; 
                     LDA (MS_LOWTR),Y                   ; 
-                    BEQ AS_L_FL1_3                          ; END OF PROGRAM, AND NOT FOUND
+                    BEQ MS_FLINRT                          ; END OF PROGRAM, AND NOT FOUND
                     INY                             ; 
                     INY                             ; 
-                    LDA AS_LINNUM+1                    ; 
+                    LDA MS_LINNUM+1                    ; 
                     CMP (MS_LOWTR),Y                   ; 
-                    BCC AS_RTS_1                       ; IF NOT FOUND
-                    BEQ AS_L_FL1_1                          ; 
+                    BCC MS_FLNRTS                       ; IF NOT FOUND
+                    BEQ MS_FNDLO1                          ; 
                     DEY                             ; 
-                    BNE AS_L_FL1_2                          ; 
-AS_L_FL1_1                  LDA AS_LINNUM                      ; 
+                    BNE MS_AFFRTS                          ; 
+MS_FNDLO1                  LDA MS_LINNUM                      ; 
                     DEY                             ; 
                     CMP (MS_LOWTR),Y                   ; 
-                    BCC AS_RTS_1                       ; PAST LINE, NOT FOUND
-                    BEQ AS_RTS_1                       ; IF FOUND
-AS_L_FL1_2                  DEY                             ; 
+                    BCC MS_FLNRTS                       ; PAST LINE, NOT FOUND
+                    BEQ MS_FLNRTS                       ; IF FOUND
+MS_AFFRTS                  DEY                             ; 
                     LDA (MS_LOWTR),Y                   ; 
                     TAX                             ; 
                     DEY                             ; 
                     LDA (MS_LOWTR),Y                   ; 
-                    BCS AS_FL1                         ; ALWAYS
-AS_L_FL1_3                  CLC                             ; RETURN CARRY = 0
-AS_RTS_1               RTS
+                    BCS MS_FNDLNC                         ; ALWAYS
+MS_FLINRT                  CLC                             ; RETURN CARRY = 0
+MS_FLNRTS               RTS
                                                     ; --------------------------------
                                                     ; "NEW" STATEMENT
                                                     ; --------------------------------
-AS_NEW                 BNE AS_RTS_1                       ; IGNORE IF MORE TO THE STATEMENT
-AS_SCRTCH              LDA #0
+MS_SCRATH                 BNE MS_FLNRTS                       ; IGNORE IF MORE TO THE STATEMENT
+MS_SCRTCH              LDA #0
                     STA AS_LOCK
                     TAY
                     STA (AS_TXTTAB),Y
@@ -1698,33 +1698,33 @@ AS_SCRTCH              LDA #0
                     STA (AS_TXTTAB),Y
                     LDA AS_TXTTAB
                     ADC #2                          ; (CARRY WASN'T CLEARED, SO "NEW" USUALLY
-                    STA AS_VARTAB                      ; ADDS 3, WHEREAS "FP" ADDS 2.)
+                    STA MS_VARTAB                      ; ADDS 3, WHEREAS "FP" ADDS 2.)
                     STA AS_PRGEND
                     LDA AS_TXTTAB+1
                     ADC #0
-                    STA AS_VARTAB+1
+                    STA MS_VARTAB+1
                     STA AS_PRGEND+1
                                                     ; --------------------------------
-AS_SETPTRS
-                    JSR AS_STXTPT                      ; SET TXTPTR TO TXTTAB - 1
+MS_RUNC
+                    JSR MS_STXTPT                      ; SET TXTPTR TO TXTTAB - 1
                     LDA #0                          ; (THIS COULD HAVE BEEN ".HS 2C")
                                                     ; --------------------------------
                                                     ; "CLEAR" STATEMENT
                                                     ; --------------------------------
-MS_CLEAR               BNE AS_RTS_2                       ; IGNORE IF NOT AT END OF STATEMENT
-AS_CLEARC              LDA AS_MEMSIZ                      ; CLEAR STRING AREA
+MS_CLEAR               BNE MS_STKRTS                       ; IGNORE IF NOT AT END OF STATEMENT
+MS_CLEARC              LDA AS_MEMSIZ                      ; CLEAR STRING AREA
                     LDY AS_MEMSIZ+1                    ; 
-                    STA AS_FRETOP                      ; 
-                    STY AS_FRETOP+1                    ; 
-                    LDA AS_VARTAB                      ; CLEAR ARRAY AREA
-                    LDY AS_VARTAB+1                    ; 
+                    STA MS_FRETOP                      ; 
+                    STY MS_FRETOP+1                    ; 
+                    LDA MS_VARTAB                      ; CLEAR ARRAY AREA
+                    LDY MS_VARTAB+1                    ; 
                     STA AS_ARYTAB                      ; 
                     STY AS_ARYTAB+1                    ; 
                     STA MS_STREND                      ; LOW END OF FREE SPACE
                     STY MS_STREND+1                    ; 
                     JSR MS_RESTOR                     ; SET "DATA" POINTER TO BEGINNING
                                                     ; --------------------------------
-AS_STKINI              LDX #AS_TEMPST
+MS_STKINI              LDX #AS_TEMPST
                     STX AS_TEMPPT
                     PLA                             ; SAVE RETURN ADDRESS
                     TAY                             ; 
@@ -1737,72 +1737,72 @@ AS_STKINI              LDX #AS_TEMPST
                     LDA #0
                     STA AS_OLDTEXT+1
                     STA AS_SUBFLG
-AS_RTS_2               RTS
+MS_STKRTS               RTS
                                                     ; --------------------------------
                                                     ; SET TXTPTR TO BEGINNING OF PROGRAM
                                                     ; --------------------------------
-AS_STXTPT              CLC                             ; TXTPTR = TXTTAB - 1
+MS_STXTPT              CLC                             ; TXTPTR = TXTTAB - 1
                     LDA AS_TXTTAB
                     ADC #$FF
-                    STA AS_TXTPTR
+                    STA MS_TXTPTR
                     LDA AS_TXTTAB+1
                     ADC #$FF
-                    STA AS_TXTPTR+1
+                    STA MS_TXTPTR+1
                     RTS
                                                     ; --------------------------------
                                                     ; "LIST" STATEMENT
                                                     ; --------------------------------
-MS_LIST                BCC AS_L_LIST_1                          ; NO  LINE # SPECIFIED
-                    BEQ AS_L_LIST_1                          ; ---DITTO---
-                    CMP #AS_TOKEN_MINUS                ; IF DASH OR COMMA, START AT LINE 0
-                    BEQ AS_L_LIST_1                          ; IS IS A DASH
+MS_LIST                BCC MS_GOLST                          ; NO  LINE # SPECIFIED
+                    BEQ MS_GOLST                          ; ---DITTO---
+                    CMP #MS_MINUTK                ; IF DASH OR COMMA, START AT LINE 0
+                    BEQ MS_GOLST                          ; IS IS A DASH
                     CMP #(","&%01111111)                        ; COMMA?
-                    BNE AS_RTS_2                       ; NO, ERROR
-AS_L_LIST_1                  JSR AS_LINGET                      ; CONVERT LINE NUMBER IF ANY
-                    JSR AS_FNDLIN                      ; POINT LOWTR TO 1ST LINE
+                    BNE MS_STKRTS                       ; NO, ERROR
+MS_GOLST                  JSR MS_LINGET                      ; CONVERT LINE NUMBER IF ANY
+                    JSR MS_FNDLIN                      ; POINT LOWTR TO 1ST LINE
                     JSR AS_CHRGOT                      ; RANGE SPECIFIED?
-                    BEQ AS_L_LIST_3                          ; NO
-                    CMP #AS_TOKEN_MINUS
+                    BEQ MS_LSTEND                          ; NO
+                    CMP #MS_MINUTK
                     BEQ AS_L_LIST_2
                     CMP #(","&%01111111)
-                    BNE AS_RTS_1
+                    BNE MS_FLNRTS
 AS_L_LIST_2                  JSR AS_CHRGET                      ; GET NEXT CHAR
-                    JSR AS_LINGET                      ; CONVERT SECOND LINE #
-                    BNE AS_RTS_2                       ; BRANCH IF SYNTAX ERR
-AS_L_LIST_3                  PLA                             ; POP RETURN ADRESS
+                    JSR MS_LINGET                      ; CONVERT SECOND LINE #
+                    BNE MS_STKRTS                       ; BRANCH IF SYNTAX ERR
+MS_LSTEND                  PLA                             ; POP RETURN ADRESS
                     PLA                             ; (GET BACK BY "JMP NEWSTT")
-                    LDA AS_LINNUM                      ; IF NO SECOND NUMBER, USE $FFFF
-                    ORA AS_LINNUM+1                    ; 
-                    BNE AS_LIST_0                      ; THERE WAS A SECOND NUMBER
+                    LDA MS_LINNUM                      ; IF NO SECOND NUMBER, USE $FFFF
+                    ORA MS_LINNUM+1                    ; 
+                    BNE MS_LIST4                      ; THERE WAS A SECOND NUMBER
                     LDA #$FF                        ; MAX END RANGE
-                    STA AS_LINNUM                      ; 
-                    STA AS_LINNUM+1                    ; 
-AS_LIST_0              LDY #1                          ; 
+                    STA MS_LINNUM                      ; 
+                    STA MS_LINNUM+1                    ; 
+MS_LIST4              LDY #1                          ; 
                     LDA (MS_LOWTR),Y                   ; HIGH BYTE OF LINK
                     BEQ AS_LIST_3                      ; END OF PROGRAM
-                    JSR AS_ISCNTC                      ; CHECK IF CONTROL-C HAS BEEN TYPED
-                    JSR AS_CRDO                        ; NO, PRINT <RETURN>
+                    JSR MS_ISCNTC                      ; CHECK IF CONTROL-C HAS BEEN TYPED
+                    JSR MS_CRDO                        ; NO, PRINT <RETURN>
                     INY                             ; 
                     LDA (MS_LOWTR),Y                   ; GET LINE #, COMPARE WITH END RANGE
                     TAX                             ; 
                     INY                             ; 
                     LDA (MS_LOWTR),Y                   ; 
-                    CMP AS_LINNUM+1                    ; 
-                    BNE AS_L_LIST_0_5                          ; 
-                    CPX AS_LINNUM                      ; 
-                    BEQ AS_L_LIST_0_6                          ; ON LAST LINE OF RANGE
-AS_L_LIST_0_5                  BCS AS_LIST_3                      ; FINISHED THE RANGE
+                    CMP MS_LINNUM+1                    ; 
+                    BNE MS_TSTDUN                          ; 
+                    CPX MS_LINNUM                      ; 
+                    BEQ MS_TYPLIN                          ; ON LAST LINE OF RANGE
+MS_TSTDUN                  BCS AS_LIST_3                      ; FINISHED THE RANGE
                                                     ; ---LIST ONE LINE----------------
-AS_L_LIST_0_6                  STY MS_FORPNT                      ; 
-                    JSR AS_LINPRT                      ; PRINT LINE # FROM X,A
+MS_TYPLIN                  STY MS_FORPNT                      ; 
+                    JSR MS_LINPRT                      ; PRINT LINE # FROM X,A
                     LDA #(" "&%01111111)                        ; PRINT SPACE AFTER LINE #
-AS_LIST_1              LDY MS_FORPNT                      ; 
+MS_PRIT4              LDY MS_FORPNT                      ; 
                     AND #$7F                        ; 
-AS_LIST_2              JSR AS_OUTDO                       ; 
+MS_PLOOP              JSR MS_OUTDO                       ; 
                     LDA MON_CH                      ; IF PAST COLUMN 33, START A NEW LINE
                     CMP #33                         ; 
                     BCC AS_L_LIST_2_1                          ; < 33
-                    JSR AS_CRDO                        ; PRINT <RETURN>
+                    JSR MS_CRDO                        ; PRINT <RETURN>
                     LDA #5                          ; AND TAB OVER 5
                     STA MON_CH                      ; 
 AS_L_LIST_2_1                  INY                             ; 
@@ -1815,9 +1815,9 @@ AS_L_LIST_2_1                  INY                             ;
                     LDA (MS_LOWTR),Y                   ; 
                     STX MS_LOWTR                       ; POINT TO NEXT LINE
                     STA MS_LOWTR+1                     ; 
-                    BNE AS_LIST_0                      ; BRANCH IF NOT END OF PROGRAM
+                    BNE MS_LIST4                      ; BRANCH IF NOT END OF PROGRAM
 AS_LIST_3              LDA #$0D                        ; PRINT <RETURN>
-                    JSR AS_OUTDO                       ; 
+                    JSR MS_OUTDO                       ; 
                     JMP AS_NEWSTT                      ; TO NEXT STATEMENT
                                                     ; --------------------------------
 AS_GETCHR              INY                             ; PICK UP CHAR FROM TABLE
@@ -1826,7 +1826,7 @@ AS_GETCHR              INY                             ; PICK UP CHAR FROM TABLE
 AS_L_GETCHR_1                  LDA (AS_FAC),Y                     ; 
                     RTS                             ; 
                                                     ; --------------------------------
-AS_LIST_4              BPL AS_LIST_2                      ; BRANCH IF NOT A TOKEN
+AS_LIST_4              BPL MS_PLOOP                      ; BRANCH IF NOT A TOKEN
                     SEC                             ; 
                     SBC #$7F                        ; CONVERT TOKEN TO INDEX
                     TAX                             ; 
@@ -1836,20 +1836,20 @@ AS_LIST_4              BPL AS_LIST_2                      ; BRANCH IF NOT A TOKE
                     LDY #>(MS_RESLST-$100)
                     STY AS_FAC+1
                     LDY #$FF
-AS_L_LIST_4_1                  DEX                             ; SKIP KEYWORDS UNTIL REACH THIS ONE
-                    BEQ AS_L_LIST_4_3                          ; 
+MS_RESRCH                  DEX                             ; SKIP KEYWORDS UNTIL REACH THIS ONE
+                    BEQ MS_PRIT3                          ; 
 AS_L_LIST_4_2                  JSR AS_GETCHR                      ; BUMP Y, GET CHAR FROM TABLE
                     BPL AS_L_LIST_4_2                          ; NOT AT END OF KEYWORD YET
-                    BMI AS_L_LIST_4_1                          ; END OF KEYWORD, ALWAYS BRANCHES
-AS_L_LIST_4_3                  LDA #(" "&%01111111)                        ; FOUND THE RIGHT KEYWORD
-                    JSR AS_OUTDO                       ; PRINT LEADING SPACE
+                    BMI MS_RESRCH                          ; END OF KEYWORD, ALWAYS BRANCHES
+MS_PRIT3                  LDA #(" "&%01111111)                        ; FOUND THE RIGHT KEYWORD
+                    JSR MS_OUTDO                       ; PRINT LEADING SPACE
 AS_L_LIST_4_4                  JSR AS_GETCHR                      ; PRINT THE KEYWORD
                     BMI AS_L_LIST_4_5                          ; LAST CHAR OF KEYWORD
-                    JSR AS_OUTDO                       ; 
+                    JSR MS_OUTDO                       ; 
                     BNE AS_L_LIST_4_4                          ; ...ALWAYS
-AS_L_LIST_4_5                  JSR AS_OUTDO                       ; PRINT LAST CHAR OF KEYWORD
+AS_L_LIST_4_5                  JSR MS_OUTDO                       ; PRINT LAST CHAR OF KEYWORD
                     LDA #(" "&%01111111)                        ; PRINT TRAILING SPACE
-                    BNE AS_LIST_1                      ; ...ALWAYS, BACK TO ACTUAL LINE
+                    BNE MS_PRIT4                      ; ...ALWAYS, BACK TO ACTUAL LINE
                                                     ; --------------------------------
                                                     ; "FOR" STATEMENT
                                                     ; 
@@ -1866,28 +1866,28 @@ MS_FOR                 LDA #$80                        ;
                     STA AS_SUBFLG                      ; SUBSCRIPTS NOT ALLOWED
                     JSR MS_LET                         ; DO <VAR> = <EXP>, STORE ADDR IN FORPNT
                     JSR MS_FNDFOR                    ; IS THIS FOR VARIABLE ACTIVE?
-                    BNE AS_L_FOR_1                          ; NO
+                    BNE MS_NOTOL                          ; NO
                     TXA                             ; YES, CANCEL IT AND ENCLOSED LOOPS
                     ADC #15                         ; CARRY=1, THIS ADDS 16
                     TAX                             ; X WAS ALREADY S+2
                     TXS                             ; 
-AS_L_FOR_1                  PLA                             ; POP RETURN ADDRESS TOO
+MS_NOTOL                  PLA                             ; POP RETURN ADDRESS TOO
                     PLA                             ; 
                     LDA #9                          ; BE CERTAIN ENOUGH ROOM IN STACK
-                    JSR AS_CHKMEM                      ; 
+                    JSR MS_GETSTK                      ; 
                     JSR MS_DATAN                       ; SCAN AHEAD TO NEXT STATEMENT
                     CLC                             ; PUSH STATEMENT ADDRESS ON STACK
                     TYA                             ; 
-                    ADC AS_TXTPTR                      ; 
+                    ADC MS_TXTPTR                      ; 
                     PHA                             ; 
-                    LDA AS_TXTPTR+1                    ; 
+                    LDA MS_TXTPTR+1                    ; 
                     ADC #0                          ; 
                     PHA                             ; 
-                    LDA AS_CURLIN+1                    ; PUSH LINE NUMBER ON STACK
+                    LDA MS_CURLIN+1                    ; PUSH LINE NUMBER ON STACK
                     PHA                             ; 
-                    LDA AS_CURLIN                      ; 
+                    LDA MS_CURLIN                      ; 
                     PHA                             ; 
-                    LDA #AS_TOKEN_TO                   ; 
+                    LDA #MS_TOTK                   ; 
                     JSR AS_SYNCHR                      ; REQUIRE "TO"
                     JSR AS_CHKNUM                      ; <VAR> = <EXP> MUST BE NUMERIC
                     JSR AS_FRMNUM                      ; GET FINAL VALUE, MUST BE NUMERIC
@@ -1895,16 +1895,16 @@ AS_L_FOR_1                  PLA                             ; POP RETURN ADDRESS
                     ORA #$7F                        ; 
                     AND AS_FAC+1                       ; 
                     STA AS_FAC+1                       ; 
-                    LDA #<AS_STEP                      ; SET UP FOR RETURN
-                    LDY #>AS_STEP                      ; TO STEP
+                    LDA #<MS_LDFONE                      ; SET UP FOR RETURN
+                    LDY #>MS_LDFONE                      ; TO STEP
                     STA MS_INDEX
                     STY MS_INDEX+1
                     JMP AS_FRM_STACK_3                 ; RETURNS BY "JMP (INDEX)"
                                                     ; --------------------------------
                                                     ; "STEP" PHRASE OF "FOR" STATEMENT
                                                     ; --------------------------------
-AS_STEP                LDA #<AS_CON_ONE                   ; STEP DEFAULT=1
-                    LDY #>AS_CON_ONE
+MS_LDFONE                LDA #<MS_FONE                   ; STEP DEFAULT=1
+                    LDY #>MS_FONE
                     JSR AS_LOAD_FAC_FROM_YA
                     JSR AS_CHRGOT
                     CMP #AS_TOKEN_STEP
@@ -1924,44 +1924,44 @@ AS_L_STEP_1                  JSR AS_SIGN
                                                     ; --------------------------------
 AS_NEWSTT              TSX                             ; REMEMBER THE STACK POSITION
                     STX AS_REMSTK                      ; 
-                    JSR AS_ISCNTC                      ; SEE IF CONTROL-C HAS BEEN TYPED
-                    LDA AS_TXTPTR                      ; NO, KEEP EXECUTING
-                    LDY AS_TXTPTR+1                    ; 
-                    LDX AS_CURLIN+1                    ; =$FF IF IN DIRECT MODE
+                    JSR MS_ISCNTC                      ; SEE IF CONTROL-C HAS BEEN TYPED
+                    LDA MS_TXTPTR                      ; NO, KEEP EXECUTING
+                    LDY MS_TXTPTR+1                    ; 
+                    LDX MS_CURLIN+1                    ; =$FF IF IN DIRECT MODE
                     INX                             ; $FF TURNS INTO $00
                     BEQ AS_L_NEWSTT_1                          ; IN DIRECT MODE
                     STA AS_OLDTEXT                     ; IN RUNNING MODE
                     STY AS_OLDTEXT+1                   ; 
 AS_L_NEWSTT_1                  LDY #0                          ; 
-                    LDA (AS_TXTPTR),Y                  ; END OF LINE YET?
+                    LDA (MS_TXTPTR),Y                  ; END OF LINE YET?
                     BNE AS_COLON_                      ; NO
                     LDY #2                          ; YES, SEE IF END OF PROGRAM
-                    LDA (AS_TXTPTR),Y                  ; 
+                    LDA (MS_TXTPTR),Y                  ; 
                     CLC                             ; 
                     BEQ AS_GOEND                       ; YES, END OF PROGRAM
                     INY                             ; 
-                    LDA (AS_TXTPTR),Y                  ; GET LINE # OF NEXT LINE
-                    STA AS_CURLIN                      ; 
+                    LDA (MS_TXTPTR),Y                  ; GET LINE # OF NEXT LINE
+                    STA MS_CURLIN                      ; 
                     INY                             ; 
-                    LDA (AS_TXTPTR),Y                  ; 
-                    STA AS_CURLIN+1                    ; 
+                    LDA (MS_TXTPTR),Y                  ; 
+                    STA MS_CURLIN+1                    ; 
                     TYA                             ; ADJUST TXTPTR TO START
-                    ADC AS_TXTPTR                      ; OF NEW LINE
-                    STA AS_TXTPTR
+                    ADC MS_TXTPTR                      ; OF NEW LINE
+                    STA MS_TXTPTR
                     BCC AS_L_NEWSTT_2
-                    INC AS_TXTPTR+1
+                    INC MS_TXTPTR+1
 AS_L_NEWSTT_2
                                                     ; --------------------------------
 AS_TRACE_              BIT AS_TRCFLG                      ; IS TRACE ON?
                     BPL AS_L_TRACE__1                          ; NO
-                    LDX AS_CURLIN+1                    ; YES, ARE WE RUNNING?
+                    LDX MS_CURLIN+1                    ; YES, ARE WE RUNNING?
                     INX                             ; 
                     BEQ AS_L_TRACE__1                          ; NOT RUNNING, SO DON'T TRACE
                     LDA #("#"&%01111111)                        ; PRINT "#"
-                    JSR AS_OUTDO                       ; 
-                    LDX AS_CURLIN                      ; 
-                    LDA AS_CURLIN+1                    ; 
-                    JSR AS_LINPRT                      ; PRINT LINE NUMBER
+                    JSR MS_OUTDO                       ; 
+                    LDX MS_CURLIN                      ; 
+                    LDA MS_CURLIN+1                    ; 
+                    JSR MS_LINPRT                      ; PRINT LINE NUMBER
                     JSR AS_OUTSP                       ; PRINT TRAILING SPACE
 AS_L_TRACE__1                  JSR AS_CHRGET                      ; GET FIRST CHR OF STATEMENT
                     JSR AS_EXECUTE_STATEMENT           ; AND START PROCESSING
@@ -2011,7 +2011,7 @@ AS_RTS_3               RTS
                                                     ; --------------------------------
                                                     ; SEE IF CONTROL-C TYPED
                                                     ; --------------------------------
-AS_ISCNTC              LDA AS_KEYBOARD
+MS_ISCNTC              LDA AS_KEYBOARD
                     CMP #$83
                     BEQ AS_L_ISCNTC_1
                     RTS
@@ -2031,15 +2031,15 @@ MS_STOP                BCS AS_END2                        ; CARRY=1 TO FORCE PRI
                                                     ; --------------------------------
 AS_ENDX                CLC                             ; CARRY=0 TO AVOID PRINTING MESSAGE
 AS_END2                BNE AS_RTS_4                       ; IF NOT END OF STATEMENT, DO NOTHING
-                    LDA AS_TXTPTR
-                    LDY AS_TXTPTR+1
-                    LDX AS_CURLIN+1
+                    LDA MS_TXTPTR
+                    LDY MS_TXTPTR+1
+                    LDX MS_CURLIN+1
                     INX                             ; RUNNING?
                     BEQ AS_L_END2_1                          ; NO, DIRECT MODE
                     STA AS_OLDTEXT
                     STY AS_OLDTEXT+1
-                    LDA AS_CURLIN
-                    LDY AS_CURLIN+1
+                    LDA MS_CURLIN
+                    LDY MS_CURLIN+1
                     STA AS_OLDLIN
                     STY AS_OLDLIN+1
 AS_L_END2_1                  PLA
@@ -2047,8 +2047,8 @@ AS_L_END2_1                  PLA
 AS_END4                LDA #<MS_BRKTXT                  ; " BREAK" AND BELL
                     LDY #>MS_BRKTXT
                     BCC AS_L_END4_1
-                    JMP AS_PRINT_ERROR_LINNUM
-AS_L_END4_1                  JMP AS_RESTART
+                    JMP MS_ERRFIN
+AS_L_END4_1                  JMP MS_MAIN
                                                     ; --------------------------------
                                                     ; "CONT" COMMAND
                                                     ; --------------------------------
@@ -2056,14 +2056,14 @@ MS_CONT                BNE AS_RTS_4                       ; IF NOT END OF STATEM
                     LDX #AS_ERR_CANTCONT
                     LDY AS_OLDTEXT+1                   ; MEANINGFUL RE-ENTRY?
                     BNE AS_L_CONT_1                          ; YES
-                    JMP AS_ERROR                       ; NO
+                    JMP MS_ERROR                       ; NO
 AS_L_CONT_1                  LDA AS_OLDTEXT                     ; RESTORE TXTPTR
-                    STA AS_TXTPTR                      ; 
-                    STY AS_TXTPTR+1                    ; 
+                    STA MS_TXTPTR                      ; 
+                    STY MS_TXTPTR+1                    ; 
                     LDA AS_OLDLIN                      ; RESTORE LINE NUMBER
                     LDY AS_OLDLIN+1
-                    STA AS_CURLIN
-                    STY AS_CURLIN+1
+                    STA MS_CURLIN
+                    STY MS_CURLIN+1
 AS_RTS_4               RTS
                                                     ; --------------------------------
                                                     ; "SAVE" COMMAND
@@ -2072,10 +2072,10 @@ AS_RTS_4               RTS
 AS_SAVE                SEC
                     LDA AS_PRGEND                      ; COMPUTE PROGRAM LENGTH
                     SBC AS_TXTTAB
-                    STA AS_LINNUM
+                    STA MS_LINNUM
                     LDA AS_PRGEND+1
                     SBC AS_TXTTAB+1
-                    STA AS_LINNUM+1
+                    STA MS_LINNUM+1
                     JSR AS_VARTIO                      ; SET UP TO WRITE 3 BYTE HEADER
                     JSR MON_WRITE                   ; WRITE 'EM
                     JSR AS_PROGIO                      ; SET UP TO WRITE THE PROGRAM
@@ -2088,21 +2088,21 @@ AS_LOAD                JSR AS_VARTIO                      ; SET UP TO READ 3 BYT
                     JSR MON_READ                    ; READ LENGTH, LOCK BYTE
                     CLC                             ; 
                     LDA AS_TXTTAB                      ; COMPUTE END ADDRESS
-                    ADC AS_LINNUM                      ; 
-                    STA AS_VARTAB                      ; 
+                    ADC MS_LINNUM                      ; 
+                    STA MS_VARTAB                      ; 
                     LDA AS_TXTTAB+1                    ; 
-                    ADC AS_LINNUM+1                    ; 
-                    STA AS_VARTAB+1                    ; 
+                    ADC MS_LINNUM+1                    ; 
+                    STA MS_VARTAB+1                    ; 
                     LDA AS_TEMPPT                      ; LOCK BYTE
                     STA AS_LOCK                        ; 
                     JSR AS_PROGIO                      ; SET UP TO READ PROGRAM
                     JSR MON_READ                    ; READ IT
                     BIT AS_LOCK                        ; IF LOCKED, START RUNNING NOW
                     BPL AS_L_LOAD_1                          ; NOT LOCKED
-                    JMP AS_SETPTRS                     ; LOCKED, START RUNNING
+                    JMP MS_RUNC                     ; LOCKED, START RUNNING
 AS_L_LOAD_1                  JMP AS_FIX_LINKS                   ; JUST FIX FORWARD POINTERS
                                                     ; --------------------------------
-AS_VARTIO              LDA #AS_LINNUM                     ; SET UP TO READ/WRITE 3 BYTE HEADER
+AS_VARTIO              LDA #MS_LINNUM                     ; SET UP TO READ/WRITE 3 BYTE HEADER
                     LDY #0
                     STA MON_A1L
                     STY MON_A1H
@@ -2116,8 +2116,8 @@ AS_PROGIO              LDA AS_TXTTAB                      ; SET UP TO READ/WRITE
                     LDY AS_TXTTAB+1
                     STA MON_A1L
                     STY MON_A1H
-                    LDA AS_VARTAB
-                    LDY AS_VARTAB+1
+                    LDA MS_VARTAB
+                    LDY MS_VARTAB+1
                     STA MON_A2L
                     STY MON_A2H
                     RTS
@@ -2126,12 +2126,12 @@ AS_PROGIO              LDA AS_TXTTAB                      ; SET UP TO READ/WRITE
                                                     ; "RUN" COMMAND
                                                     ; --------------------------------
 MS_RUN                 PHP                             ; SAVE STATUS WHILE SUBTRACTING
-                    DEC AS_CURLIN+1                    ; IF WAS $FF (MEANING DIRECT MODE)
+                    DEC MS_CURLIN+1                    ; IF WAS $FF (MEANING DIRECT MODE)
                                                     ; MAKE IT "RUNNING MODE"
                     PLP                             ; GET STATUS AGAIN (FROM CHRGET)
                     BNE AS_L_RUN_1                          ; PROBABLY A LINE NUMBER
-                    JMP AS_SETPTRS                     ; START AT BEGINNING OF PROGRAM
-AS_L_RUN_1                  JSR AS_CLEARC                      ; CLEAR VARIABLES
+                    JMP MS_RUNC                     ; START AT BEGINNING OF PROGRAM
+AS_L_RUN_1                  JSR MS_CLEARC                      ; CLEAR VARIABLES
                     JMP AS_GO_TO_LINE                  ; JOIN GOSUB STATEMENT
                                                     ; --------------------------------
                                                     ; "GOSUB" STATEMENT
@@ -2143,14 +2143,14 @@ AS_L_RUN_1                  JSR AS_CLEARC                      ; CLEAR VARIABLES
                                                     ; 1 -- GOSUB TOKEN ($B0)
                                                     ; --------------------------------
 MS_GOSUB               LDA #3                          ; BE SURE ENOUGH ROOM ON STACK
-                    JSR AS_CHKMEM
-                    LDA AS_TXTPTR+1
+                    JSR MS_GETSTK
+                    LDA MS_TXTPTR+1
                     PHA
-                    LDA AS_TXTPTR
+                    LDA MS_TXTPTR
                     PHA
-                    LDA AS_CURLIN+1
+                    LDA MS_CURLIN+1
                     PHA
-                    LDA AS_CURLIN
+                    LDA MS_CURLIN
                     PHA
                     LDA #AS_TOKEN_GOSUB
                     PHA
@@ -2162,28 +2162,28 @@ AS_GO_TO_LINE
                                                     ; "GOTO" STATEMENT
                                                     ; ALSO USED BY "RUN" AND "GOSUB"
                                                     ; --------------------------------
-MS_GOTO                JSR AS_LINGET                      ; GET GOTO LINE
+MS_GOTO                JSR MS_LINGET                      ; GET GOTO LINE
                     JSR AS_REMN                        ; POINT Y TO EOL
-                    LDA AS_CURLIN+1                    ; IS CURRENT PAGE < GOTO PAGE?
-                    CMP AS_LINNUM+1                    ; 
+                    LDA MS_CURLIN+1                    ; IS CURRENT PAGE < GOTO PAGE?
+                    CMP MS_LINNUM+1                    ; 
                     BCS AS_L_GOTO_1                          ; SEARCH FROM PROG START IF NOT
                     TYA                             ; OTHERWISE SEARCH FROM NEXT LINE
                     SEC                             ; 
-                    ADC AS_TXTPTR                      ; 
-                    LDX AS_TXTPTR+1                    ; 
+                    ADC MS_TXTPTR                      ; 
+                    LDX MS_TXTPTR+1                    ; 
                     BCC AS_L_GOTO_2                          ; 
                     INX                             ; 
                     BCS AS_L_GOTO_2                          ; 
 AS_L_GOTO_1                  LDA AS_TXTTAB                      ; GET PROGRAM BEGINNING
                     LDX AS_TXTTAB+1                    ; 
-AS_L_GOTO_2                  JSR AS_FL1                         ; SEARCH FOR GOTO LINE
+AS_L_GOTO_2                  JSR MS_FNDLNC                         ; SEARCH FOR GOTO LINE
                     BCC AS_UNDERR                      ; ERROR IF NOT THERE
                     LDA MS_LOWTR                       ; TXTPTR = START OF THE DESTINATION LINE
                     SBC #1                          ; 
-                    STA AS_TXTPTR                      ; 
+                    STA MS_TXTPTR                      ; 
                     LDA MS_LOWTR+1                     ; 
                     SBC #0                          ; 
-                    STA AS_TXTPTR+1                    ; 
+                    STA MS_TXTPTR+1                    ; 
 AS_RTS_5               RTS                             ; RETURN TO NEWSTT OR GOSUB
                                                     ; --------------------------------
                                                     ; "POP" AND "RETURN" STATEMENTS
@@ -2199,7 +2199,7 @@ AS_POP                 BNE AS_RTS_5
                     LDX #AS_ERR_NOGOSUB
                     .BYT $2C                       ; FAKE
 AS_UNDERR              LDX #AS_ERR_UNDEFSTAT
-                    JMP AS_ERROR
+                    JMP MS_ERROR
                                                     ; --------------------------------
 AS_SYNERR_2            JMP AS_SYNERR
                                                     ; --------------------------------
@@ -2207,13 +2207,13 @@ AS_RETURN              PLA                             ; DISCARD GOSUB TOKEN
                     PLA
                     CPY #<(AS_TOKEN_POP*2)
                     BEQ AS_PULL3                       ; BRANCH IF A POP
-                    STA AS_CURLIN                      ; PULL LINE #
+                    STA MS_CURLIN                      ; PULL LINE #
                     PLA
-                    STA AS_CURLIN+1
+                    STA MS_CURLIN+1
                     PLA
-                    STA AS_TXTPTR                      ; PULL TXTPTR
+                    STA MS_TXTPTR                      ; PULL TXTPTR
                     PLA
-                    STA AS_TXTPTR+1
+                    STA MS_TXTPTR+1
                                                     ; --------------------------------
                                                     ; "DATA" STATEMENT
                                                     ; EXECUTED BY SKIPPING TO NEXT COLON OR EOL
@@ -2224,10 +2224,10 @@ MS_DATA                JSR MS_DATAN                       ; MOVE TO NEXT STATEME
                                                     ; --------------------------------
 AS_ADDON               TYA
                     CLC
-                    ADC AS_TXTPTR
-                    STA AS_TXTPTR
+                    ADC MS_TXTPTR
+                    STA MS_TXTPTR
                     BCC AS_L_ADDON_1
-                    INC AS_TXTPTR+1
+                    INC MS_TXTPTR+1
 AS_L_ADDON_1
 AS_RTS_6               RTS
                                                     ; --------------------------------
@@ -2239,14 +2239,14 @@ MS_DATAN               LDX #(":"&%01111111)                        ; GET OFFSET 
 AS_REMN                LDX #0                          ; TO EOL ONLY
                     STX AS_CHARAC
                     LDY #0
-                    STY AS_ENDCHR
-AS_L_REMN_1                  LDA AS_ENDCHR                      ; TRICK TO COUNT QUOTE PARITY
+                    STY MS_ENDCHR
+AS_L_REMN_1                  LDA MS_ENDCHR                      ; TRICK TO COUNT QUOTE PARITY
                     LDX AS_CHARAC
                     STA AS_CHARAC
-                    STX AS_ENDCHR
-AS_L_REMN_2                  LDA (AS_TXTPTR),Y
+                    STX MS_ENDCHR
+AS_L_REMN_2                  LDA (MS_TXTPTR),Y
                     BEQ AS_RTS_6                       ; END OF LINE
-                    CMP AS_ENDCHR
+                    CMP MS_ENDCHR
                     BEQ AS_RTS_6                       ; COLON IF LOOKING FOR COLONS
                     INY
                     CMP #$22
@@ -2296,7 +2296,7 @@ AS_ON_2                DEC AS_FAC+4                       ; COUNTED TO RIGHT ONE
                     PLA                             ; YES, RETRIEVE CMD
                     JMP AS_EXECUTE_STATEMENT_1         ; AND GO.
 AS_L_ON_2_3                  JSR AS_CHRGET                      ; PRIME CONVERT SUBROUTINE
-                    JSR AS_LINGET                      ; CONVERT LINE #
+                    JSR MS_LINGET                      ; CONVERT LINE #
                     CMP #(","&%01111111)                        ; TERMINATE WITH COMMA?
                     BEQ AS_ON_2                        ; YES
                     PLA                             ; NO, END OF LIST, SO IGNORE
@@ -2304,13 +2304,13 @@ AS_RTS_7               RTS
                                                     ; --------------------------------
                                                     ; CONVERT LINE NUMBER
                                                     ; --------------------------------
-AS_LINGET              LDX #0                          ; ASC # TO HEX ADDRESS
-                    STX AS_LINNUM                      ; IN LINNUM.
-                    STX AS_LINNUM+1                    ; 
+MS_LINGET              LDX #0                          ; ASC # TO HEX ADDRESS
+                    STX MS_LINNUM                      ; IN LINNUM.
+                    STX MS_LINNUM+1                    ; 
 AS_L_LINGET_1                  BCS AS_RTS_7                       ; NOT A DIGIT
                     SBC #("0"&%01111111)-1                      ; CONVERT DIGIT TO BINARY
                     STA AS_CHARAC                      ; SAVE THE DIGIT
-                    LDA AS_LINNUM+1                    ; CHECK RANGE
+                    LDA MS_LINNUM+1                    ; CHECK RANGE
                     STA MS_INDEX                       ; 
                     CMP #>6400                      ; LINE # TOO LARGE?
                     BCS AS_ON_1                        ; YES, > 63999, GO INDIRECTLY TO
@@ -2327,23 +2327,23 @@ AS_L_LINGET_1                  BCS AS_RTS_7                       ; NOT A DIGIT
                                                     ; ANY VALUE FROM 437760 THROUGH 440319 WILL CAUSE
                                                     ; THE PROBLEM.  ($AB00 - $ABFF)
                                                     ; <<<<<DANGEROUS CODE>>>>>
-                    LDA AS_LINNUM                      ; MULTIPLY BY TEN
+                    LDA MS_LINNUM                      ; MULTIPLY BY TEN
                     ASL
                     ROL MS_INDEX
                     ASL
                     ROL MS_INDEX
-                    ADC AS_LINNUM
-                    STA AS_LINNUM
+                    ADC MS_LINNUM
+                    STA MS_LINNUM
                     LDA MS_INDEX
-                    ADC AS_LINNUM+1
-                    STA AS_LINNUM+1
-                    ASL AS_LINNUM
-                    ROL AS_LINNUM+1
-                    LDA AS_LINNUM
+                    ADC MS_LINNUM+1
+                    STA MS_LINNUM+1
+                    ASL MS_LINNUM
+                    ROL MS_LINNUM+1
+                    LDA MS_LINNUM
                     ADC AS_CHARAC                      ; ADD DIGIT
-                    STA AS_LINNUM
+                    STA MS_LINNUM
                     BCC AS_L_LINGET_2
-                    INC AS_LINNUM+1
+                    INC MS_LINNUM+1
 AS_L_LINGET_2                  JSR AS_CHRGET                      ; GET NEXT CHAR
                     JMP AS_L_LINGET_1                          ; MORE CONVERTING
                                                     ; --------------------------------
@@ -2390,19 +2390,19 @@ AS_LET_STRING
                                                     ; --------------------------------
 AS_PUTSTR              LDY #2                          ; STRING DATA ALREADY IN STRING AREA?
                     LDA (AS_FAC+3),Y                   ; (STRING AREA IS BTWN FRETOP
-                    CMP AS_FRETOP+1                    ; HIMEM)
+                    CMP MS_FRETOP+1                    ; HIMEM)
                     BCC AS_L_PUTSTR_2                          ; YES, DATA ALREADY UP THERE
                     BNE AS_L_PUTSTR_1                          ; NO
                     DEY                             ; MAYBE, TEST LOW BYTE OF POINTER
                     LDA (AS_FAC+3),Y                   ; 
-                    CMP AS_FRETOP                      ; 
+                    CMP MS_FRETOP                      ; 
                     BCC AS_L_PUTSTR_2                          ; YES, ALREADY THERE
 AS_L_PUTSTR_1                  LDY AS_FAC+4                       ; NO. DESCRIPTOR ALREADY AMONG VARIABLES?
-                    CPY AS_VARTAB+1                    ; 
+                    CPY MS_VARTAB+1                    ; 
                     BCC AS_L_PUTSTR_2                          ; NO
                     BNE AS_L_PUTSTR_3                          ; YES
                     LDA AS_FAC+3                       ; MAYBE, COMPARE LO-BYTE
-                    CMP AS_VARTAB                      ; 
+                    CMP MS_VARTAB                      ; 
                     BCS AS_L_PUTSTR_3                          ; YES, DESCRIPTOR IS AMONG VARIABLES
 AS_L_PUTSTR_2                  LDA AS_FAC+3                       ; EITHER STRING ALREADY ON TOP, OR
                     LDY AS_FAC+4                       ; DESCRIPTOR IS NOT A VARIABLE
@@ -2441,7 +2441,7 @@ AS_PR_STRING
                                                     ; --------------------------------
                                                     ; "PRINT" STATEMENT
                                                     ; --------------------------------
-MS_PRINT               BEQ AS_CRDO                        ; NO MORE LIST, PRINT <RETURN>
+MS_PRINT               BEQ MS_CRDO                        ; NO MORE LIST, PRINT <RETURN>
                                                     ; --------------------------------
 AS_PRINT2              BEQ AS_RTS_8                       ; NO MORE LIST, DON'T PRINT <RETURN>
                     CMP #AS_TOKEN_TAB
@@ -2461,8 +2461,8 @@ AS_PRINT2              BEQ AS_RTS_8                       ; NO MORE LIST, DON'T 
                     JSR AS_STRLIT                      ; MAKE BUFFER INTO STRING
                     JMP AS_PR_STRING                   ; PRINT THE STRING
                                                     ; --------------------------------
-AS_CRDO                LDA #$0D                        ; PRINT <RETURN>
-                    JSR AS_OUTDO
+MS_CRDO                LDA #$0D                        ; PRINT <RETURN>
+                    JSR MS_OUTDO
 AS_NEGATE              EOR #$FF                        ; <<< WHY??? >>>
 AS_RTS_8               RTS
                                                     ; --------------------------------
@@ -2472,7 +2472,7 @@ AS_PR_COMMA
                     LDA MON_CH
                     CMP #24                         ; <<< BUG:  IT SHOULD BE 32 >>>
                     BCC AS_L_PR_COMMA_1                          ; NEXT COLUMN, SAME LINE
-                    JSR AS_CRDO                        ; FIRST COLUMN, NEXT LINT
+                    JSR MS_CRDO                        ; FIRST COLUMN, NEXT LINT
                     BNE AS_PR_NEXT_CHAR                ; ...ALWAYS
 AS_L_PR_COMMA_1                  ADC #16
                     AND #$F0                        ; ROUND TO 16 OR 32
@@ -2515,7 +2515,7 @@ AS_STRPRT              JSR AS_FREFAC                      ; GET ADDRESS INTO IND
 AS_L_STRPRT_1                  DEX                             ; 
                     BEQ AS_RTS_8                       ; FINISHED
                     LDA (MS_INDEX),Y                   ; NEXT CHAR FROM STRING
-                    JSR AS_OUTDO                       ; PRINT THE CHAR
+                    JSR MS_OUTDO                       ; PRINT THE CHAR
                     INY                             ; 
                                                     ; <<< NEXT THREE LINES ARE USELESS >>>
                     CMP #$0D                        ; WAS IT <RETURN>?
@@ -2526,7 +2526,7 @@ AS_L_STRPRT_1                  DEX                             ;
                                                     ; --------------------------------
 AS_OUTSP               LDA #(" "&%01111111)                        ; PRINT A SPACE
                     .BYT $2C                       ; SKIP OVER NEXT LINE
-AS_OUTQUES             LDA #("?"&%01111111)                        ; PRINT QUESTION MARK
+MS_OUTQST             LDA #("?"&%01111111)                        ; PRINT QUESTION MARK
                                                     ; --------------------------------
                                                     ; PRINT CHAR FROM (A)
                                                     ; 
@@ -2534,7 +2534,7 @@ AS_OUTQUES             LDA #("?"&%01111111)                        ; PRINT QUEST
                                                     ; OUTPUT TO LOWER CASE.  THIS CAN BE CANCELLED
                                                     ; BY NORMAL, INVERSE, OR FLASH OR POKE 243,0.
                                                     ; --------------------------------
-AS_OUTDO               ORA #$80                        ; PRINT (A)
+MS_OUTDO               ORA #$80                        ; PRINT (A)
                     CMP #$A0                        ; CONTROL CHR?
                     BCC AS_L_OUTDO_1                          ; SKIP IF SO
                     ORA AS_FLASH_BIT                   ; =$40 FOR FLASH, ELSE $00
@@ -2561,8 +2561,8 @@ AS_READERR
                     LDA AS_DATLIN                      ; TELL WHERE THE "DATA" IS, RATHER
                     LDY AS_DATLIN+1                    ; THAN THE "READ"
                                                     ; --------------------------------
-AS_ERLIN               STA AS_CURLIN
-                    STY AS_CURLIN+1
+AS_ERLIN               STA MS_CURLIN
+                    STY MS_CURLIN+1
                     JMP AS_SYNERR
                                                     ; --------------------------------
 AS_INPERR              PLA
@@ -2577,17 +2577,17 @@ AS_L_RESPERR_1                  LDA #<AS_ERR_REENTRY               ; "?REENTER"
                     JSR AS_STROUT
                     LDA AS_OLDTEXT                     ; RE-EXECUTE THE WHOLE INPUT STATEMENT
                     LDY AS_OLDTEXT+1
-                    STA AS_TXTPTR
-                    STY AS_TXTPTR+1
+                    STA MS_TXTPTR
+                    STY MS_TXTPTR+1
                     RTS
                                                     ; --------------------------------
                                                     ; "GET" STATEMENT
                                                     ; --------------------------------
 MS_GET                 JSR AS_ERRDIR                      ; ILLEGAL IF IN DIRECT MODE
-                    LDX #<(AS_INPUT_BUFFER+1)          ; SIMULATE INPUT
-                    LDY #>(AS_INPUT_BUFFER+1)
+                    LDX #<(MS_BUF+1)          ; SIMULATE INPUT
+                    LDY #>(MS_BUF+1)
                     LDA #0
-                    STA AS_INPUT_BUFFER+1
+                    STA MS_BUF+1
                     LDA #$40                        ; SET UP INPUTFLG
                     JSR AS_PROCESS_INPUT_LIST          ; <<< CAN SAVE 1 BYTE HERE>>>
                     RTS                             ; <<<BY "JMP PROCESS.INPUT.LIST">>>
@@ -2601,18 +2601,18 @@ MS_INPUT               CMP #$22                        ; CHECK FOR OPTIONAL PROM
                     JSR AS_SYNCHR                      ; 
                     JSR AS_STRPRT                      ; PRINT THE STRING
                     JMP AS_L_INPUT_2                          ; 
-AS_L_INPUT_1                  JSR AS_OUTQUES                     ; NO STRING, PRINT "?"
+AS_L_INPUT_1                  JSR MS_OUTQST                     ; NO STRING, PRINT "?"
 AS_L_INPUT_2                  JSR AS_ERRDIR                      ; ILLEGAL IF IN DIRECT MODE
                     LDA #(","&%01111111)                        ; PRIME THE BUFFER
-                    STA AS_INPUT_BUFFER-1
-                    JSR AS_INLIN
-                    LDA AS_INPUT_BUFFER
+                    STA MS_BUF-1
+                    JSR MS_INLIN
+                    LDA MS_BUF
                     CMP #$03                        ; CONTROL C?
                     BNE AS_INPUT_FLAG_ZERO             ; NO
                     JMP AS_CONTROL_C_TYPED
                                                     ; --------------------------------
-AS_NXIN                JSR AS_OUTQUES                     ; PRINT "?"
-                    JMP AS_INLIN
+AS_NXIN                JSR MS_OUTQST                     ; PRINT "?"
+                    JMP MS_INLIN
                                                     ; --------------------------------
                                                     ; "READ" STATEMENT
                                                     ; --------------------------------
@@ -2637,30 +2637,30 @@ AS_PROCESS_INPUT_LIST  STA AS_INPUTFLG
 AS_PROCESS_INPUT_ITEM  JSR AS_PTRGET                      ; GET ADDRESS OF VARIABLE
                     STA MS_FORPNT                      ; 
                     STY MS_FORPNT+1                    ; 
-                    LDA AS_TXTPTR                      ; SAVE CURRENT TXTPTR,
-                    LDY AS_TXTPTR+1                    ; WHICH POINTS INTO PROGRAM
+                    LDA MS_TXTPTR                      ; SAVE CURRENT TXTPTR,
+                    LDY MS_TXTPTR+1                    ; WHICH POINTS INTO PROGRAM
                     STA AS_TXPSV                       ; 
                     STY AS_TXPSV+1                     ; 
                     LDX AS_INPTR                       ; SET TXTPTR TO POINT AT INPUT BUFFER
                     LDY AS_INPTR+1                     ; OR "DATA" LINE
-                    STX AS_TXTPTR                      ; 
-                    STY AS_TXTPTR+1                    ; 
+                    STX MS_TXTPTR                      ; 
+                    STY MS_TXTPTR+1                    ; 
                     JSR AS_CHRGOT                      ; GET CHAR AT PNTR
                     BNE AS_INSTART                     ; NOT END OF LINE OR COLON
                     BIT AS_INPUTFLG                    ; DOING A "GET"?
                     BVC AS_L_PROCESS_INPUT_ITEM_1                          ; NO
                     JSR MON_RDKEY                   ; YES, GET CHAR
                     AND #$7F
-                    STA AS_INPUT_BUFFER
-                    LDX #<(AS_INPUT_BUFFER-1)
-                    LDY #>(AS_INPUT_BUFFER-1)
+                    STA MS_BUF
+                    LDX #<(MS_BUF-1)
+                    LDY #>(MS_BUF-1)
                     BNE AS_L_PROCESS_INPUT_ITEM_2                          ; ...ALWAYS
                                                     ; --------------------------------
 AS_L_PROCESS_INPUT_ITEM_1                  BMI AS_FINDATA                     ; DOING A "READ"
-                    JSR AS_OUTQUES                     ; DOING AN "INPUT", PRINT "?"
+                    JSR MS_OUTQST                     ; DOING AN "INPUT", PRINT "?"
                     JSR AS_NXIN                        ; PRINT ANOTHER "?", AND INPUT A LINE
-AS_L_PROCESS_INPUT_ITEM_2                  STX AS_TXTPTR
-                    STY AS_TXTPTR+1
+AS_L_PROCESS_INPUT_ITEM_2                  STX MS_TXTPTR
+                    STY MS_TXTPTR+1
                                                     ; --------------------------------
 AS_INSTART
                     JSR AS_CHRGET                      ; GET NEXT INPUT CHAR
@@ -2669,7 +2669,7 @@ AS_INSTART
                     BIT AS_INPUTFLG                    ; STRING -- NOW WHAT INPUT TYPE?
                     BVC AS_L_INSTART_1                          ; NOT A "GET"
                     INX                             ; "GET"
-                    STX AS_TXTPTR
+                    STX MS_TXTPTR
                     LDA #0
                     STA AS_CHARAC                      ; NO OTHER TERMINATORS THAN $00
                     BEQ AS_L_INSTART_2                          ; ...ALWAYS
@@ -2681,9 +2681,9 @@ AS_L_INSTART_1                  STA AS_CHARAC
                     STA AS_CHARAC
                     LDA #(","&%01111111)
 AS_L_INSTART_2                  CLC
-AS_L_INSTART_3                  STA AS_ENDCHR
-                    LDA AS_TXTPTR
-                    LDY AS_TXTPTR+1
+AS_L_INSTART_3                  STA MS_ENDCHR
+                    LDA MS_TXTPTR
+                    LDY MS_TXTPTR+1
                     ADC #0                          ; SKIP OVER QUOTATION MARK, IF
                     BCC AS_L_INSTART_4                          ; THERE WAS ONE
                     INY
@@ -2694,7 +2694,7 @@ AS_L_INSTART_4                  JSR AS_STRLT2                      ; BUILD STRIN
                     JMP AS_INPUT_MORE
                                                     ; --------------------------------
 AS_L_INSTART_5                  PHA
-                    LDA AS_INPUT_BUFFER                ; ANYTHING IN BUFFER?
+                    LDA MS_BUF                ; ANYTHING IN BUFFER?
                     BEQ AS_INPFIN                      ; NO, SEE IF READ OR INPUT
                                                     ; --------------------------------
 AS_INPUTDWTA
@@ -2709,14 +2709,14 @@ AS_INPUT_MORE
                     CMP #(","&%01111111)                        ; COMMA IN INPUT?
                     BEQ AS_L_INPUT_MORE_1                          ; YES
                     JMP AS_INPUTERR                    ; NOTHING ELSE WILL DO
-AS_L_INPUT_MORE_1                  LDA AS_TXTPTR                      ; SAVE POSITION IN INPUT BUFFER
-                    LDY AS_TXTPTR+1                    ; 
+AS_L_INPUT_MORE_1                  LDA MS_TXTPTR                      ; SAVE POSITION IN INPUT BUFFER
+                    LDY MS_TXTPTR+1                    ; 
                     STA AS_INPTR                       ; 
                     STY AS_INPTR+1                     ; 
                     LDA AS_TXPSV                       ; RESTORE PROGRAM POINTER
                     LDY AS_TXPSV+1                     ; 
-                    STA AS_TXTPTR                      ; 
-                    STY AS_TXTPTR+1                    ; 
+                    STA MS_TXTPTR                      ; 
+                    STY MS_TXTPTR+1                    ; 
                     JSR AS_CHRGOT                      ; NEXT CHAR FROM PROGRAM
                     BEQ AS_INPDONE                     ; END OF STATEMENT
                     JSR AS_CHKCOM                      ; BETTER BE A COMMA THEN
@@ -2733,19 +2733,19 @@ AS_FINDATA
                     BNE AS_L_FINDATA_1                          ; COLON
                     LDX #AS_ERR_NODATA                 ; EOL: MIGHT BE OUT OF DATA
                     INY                             ; CHECK HI-BYTE OF FORWARD PNTR
-                    LDA (AS_TXTPTR),Y                  ; END OF PROGRAM?
+                    LDA (MS_TXTPTR),Y                  ; END OF PROGRAM?
                     BEQ AS_GERR                        ; YES, WE ARE OUT OF DATA
                     INY                             ; PICK UP THE LINE #
-                    LDA (AS_TXTPTR),Y
+                    LDA (MS_TXTPTR),Y
                     STA AS_DATLIN
                     INY
-                    LDA (AS_TXTPTR),Y
+                    LDA (MS_TXTPTR),Y
                     INY                             ; POINT AT FIRST TEXT CHAR IN LINE
                     STA AS_DATLIN+1
-AS_L_FINDATA_1                  LDA (AS_TXTPTR),Y                  ; GET 1ST TOKEN OF STATEMENT
+AS_L_FINDATA_1                  LDA (MS_TXTPTR),Y                  ; GET 1ST TOKEN OF STATEMENT
                     TAX                             ; SAVE TOKEN IN X-REG
                     JSR AS_ADDON                       ; ADD (Y) TO TXTPTR
-                    CPX #AS_TOKENDWTA                  ; DID WE FIND A "DATA" STATEMENT?
+                    CPX #MS_DATATK                  ; DID WE FIND A "DATA" STATEMENT?
                     BNE AS_FINDATA                     ; NOT YET
                     JMP AS_INSTART                     ; YES, READ IT
                                                     ; ---NO MORE INPUT REQUESTED------
@@ -2817,7 +2817,7 @@ MS_NEXT_3              TXS                             ; SET STACK PTR TO POINT 
                     INX
                     INX
                     INX
-                    STX AS_DEST                        ; LOW BYTE ADRS OF FOR VAR VALUE
+                    STX MS_INDEX2                        ; LOW BYTE ADRS OF FOR VAR VALUE
                     LDY #>AS_STACK                     ; (Y,A) IS ADDRESS OF STEP VALUE
                     JSR AS_LOAD_FAC_FROM_YA            ; STEP TO FAC
                     TSX
@@ -2834,13 +2834,13 @@ MS_NEXT_3              TXS                             ; SET STACK PTR TO POINT 
                     SBC AS_STACK+9,X                   ; SIGN OF STEP
                     BEQ AS_L_NEXT_3_2                          ; BRANCH IF FOR COMPLETE
                     LDA AS_STACK+15,X                  ; OTHERWISE SET UP
-                    STA AS_CURLIN                      ; FOR LINE #
+                    STA MS_CURLIN                      ; FOR LINE #
                     LDA AS_STACK+16,X
-                    STA AS_CURLIN+1
+                    STA MS_CURLIN+1
                     LDA AS_STACK+18,X                  ; AND SET TXTPTR TO JUST
-                    STA AS_TXTPTR                      ; AFTER FOR STATEMENT
+                    STA MS_TXTPTR                      ; AFTER FOR STATEMENT
                     LDA AS_STACK+17,X
-                    STA AS_TXTPTR+1
+                    STA MS_TXTPTR+1
 AS_L_NEXT_3_1                  JMP AS_NEWSTT
 AS_L_NEXT_3_2                  TXA                             ; POP OFF FOR-FRAME, LOOP IS DONE
                     ADC #17                         ; CARRY IS SET, SO ADDS 18
@@ -2875,16 +2875,16 @@ AS_CHKVAL              BIT AS_VALTYP                      ; $00 IF NUMERIC, $FF 
 AS_L_CHKVAL_1                  RTS                             ; TYPE IS CORRECT
 AS_L_CHKVAL_2                  BCS AS_L_CHKVAL_1                          ; IS STRING AND WE WANTED STRING
 AS_L_CHKVAL_3                  LDX #AS_ERR_BADTYPE                ; TYPE MISMATCH
-AS_JERROR              JMP AS_ERROR
+AS_JERROR              JMP MS_ERROR
                                                     ; --------------------------------
                                                     ; EVALUATE THE EXPRESSION AT TXTPTR, LEAVING THE
                                                     ; RESULT IN FAC.  WORKS FOR BOTH STRING AND NUMERIC
                                                     ; EXPRESSIONS.
                                                     ; --------------------------------
-AS_FRMEVL              LDX AS_TXTPTR                      ; DECREMENT TXTPTR
+AS_FRMEVL              LDX MS_TXTPTR                      ; DECREMENT TXTPTR
                     BNE AS_L_FRMEVL_1
-                    DEC AS_TXTPTR+1
-AS_L_FRMEVL_1                  DEC AS_TXTPTR
+                    DEC MS_TXTPTR+1
+AS_L_FRMEVL_1                  DEC MS_TXTPTR
                     LDX #0                          ; START WITH PRECEDENCE = 0
                     .BYT $24                       ; TRICK TO SKIP FOLLOWING "PHA"
                                                     ; --------------------------------
@@ -2893,7 +2893,7 @@ AS_FRMEVL_1
                     TXA                             ; 
                     PHA                             ; SAVE LAST PRECEDENCE
                     LDA #1                          ; 
-                    JSR AS_CHKMEM                      ; CHECK IF ENOUGH ROOM ON STACK
+                    JSR MS_GETSTK                      ; CHECK IF ENOUGH ROOM ON STACK
                     JSR AS_FRM_ELEMENT                 ; GET AN ELEMENT
                     LDA #0
                     STA AS_CPRTYP                      ; CLEAR COMPARISON OPERATOR FLAGS
@@ -2950,10 +2950,10 @@ AS_FRM_RELATIONAL
                     LSR AS_VALTYP                      ; (VALTYP) = 0 (NUMERIC), = $FF (STRING)
                     TXA                             ; SET CPRTYP TO 0000<=>C
                     ROL                             ; WHERE C=0 IF #, C=1 IF STRING
-                    LDX AS_TXTPTR                      ; BACK UP TXTPTR
+                    LDX MS_TXTPTR                      ; BACK UP TXTPTR
                     BNE AS_L_FRM_RELATIONAL_1
-                    DEC AS_TXTPTR+1
-AS_L_FRM_RELATIONAL_1                  DEC AS_TXTPTR
+                    DEC MS_TXTPTR+1
+AS_L_FRM_RELATIONAL_1                  DEC MS_TXTPTR
                     LDY #MS_PTDORL-AS_MATHTBL              ; POINT AT RELOPS ENTRY
                     STA AS_CPRTYP
                     BNE AS_FRM_PRECEDENCE_TEST         ; ...ALWAYS
@@ -3073,7 +3073,7 @@ AS_L_FRM_ELEMENT_3                  JSR AS_ISLETC                      ; VARIABL
                     BCS AS_FRM_VARIABLE                ; YES
                     CMP #("."&%01111111)                        ; DECIMAL POINT
                     BEQ AS_L_FRM_ELEMENT_2                          ; YES, NUMERIC CONSTANT
-                    CMP #AS_TOKEN_MINUS                ; UNARY MINUS?
+                    CMP #MS_MINUTK                ; UNARY MINUS?
                     BEQ AS_MIN                         ; YES
                     CMP #AS_TOKEN_PLUS                 ; UNARY PLUS
                     BEQ AS_L_FRM_ELEMENT_1                          ; YES
@@ -3084,8 +3084,8 @@ AS_L_FRM_ELEMENT_3                  JSR AS_ISLETC                      ; VARIABL
                                                     ; 
                                                     ; SET Y,A = (TXTPTR)+CARRY
                                                     ; --------------------------------
-AS_STRTXT              LDA AS_TXTPTR                      ; ADD (CARRY) TO GET ADDRESS OF 1ST CHAR
-                    LDY AS_TXTPTR+1                    ; OF STRING IN Y,A
+AS_STRTXT              LDA MS_TXTPTR                      ; ADD (CARRY) TO GET ADDRESS OF 1ST CHAR
+                    LDY MS_TXTPTR+1                    ; OF STRING IN Y,A
                     ADC #0                          ; 
                     BCC AS_L_STRTXT_1                          ; 
                     INY                             ; 
@@ -3136,12 +3136,12 @@ AS_CHKCOM              LDA #(","&%01111111)                        ; COMMA AT TX
                                                     ; UNLESS CHAR AT TXTPTR = (A), SYNTAX ERROR
                                                     ; --------------------------------
 AS_SYNCHR              LDY #0
-                    CMP (AS_TXTPTR),Y
+                    CMP (MS_TXTPTR),Y
                     BNE AS_SYNERR
                     JMP AS_CHRGET                      ; MATCH, GET NEXT CHAR & RETURN
                                                     ; --------------------------------
 AS_SYNERR              LDX #AS_ERR_SYNTAX
-                    JMP AS_ERROR
+                    JMP MS_ERROR
                                                     ; --------------------------------
 AS_MIN                 LDY #MS_NEGTAB-AS_MATHTBL              ; POINT AT UNARY MINUS
 AS_EQUL                PLA
@@ -3354,7 +3354,7 @@ AS_NAMOK               LDX #0                          ;
                                                     ; DOS AND MONITOR CALL BASIC AT $E000 AND $E003
                                                     ; --------------------------------
 AS_BASIC               JMP AS_COLD_START
-AS_BASIC2              JMP AS_RESTART
+AS_BASIC2              JMP MS_MAIN
                     BRK                             ; <<< WASTED BYTE >>>
                                                     ; --------------------------------
 AS_PTRGET4
@@ -3395,8 +3395,8 @@ AS_L_PTRGET4_8                  BIT AS_SUBFLG                      ; CHECK TOP T
                     BVS AS_L_PTRGET4_7                          ; $40, CALLED FROM GETARYPT
 AS_L_PTRGET4_9                  LDA #0                          ; CLEAR SUBFLG
                     STA AS_SUBFLG                      ; 
-                    LDA AS_VARTAB                      ; START LOWTR AT SIMPLE VARIABLE TABLE
-                    LDX AS_VARTAB+1                    ; 
+                    LDA MS_VARTAB                      ; START LOWTR AT SIMPLE VARIABLE TABLE
+                    LDX MS_VARTAB+1                    ; 
                     LDY #0                          ; 
 AS_L_PTRGET4_10                 STX MS_LOWTR+1                     ; 
 AS_L_PTRGET4_11                 STA MS_LOWTR                       ; 
@@ -3649,7 +3649,7 @@ AS_SUBERR              LDX #AS_ERR_BADSUBS
                                                     ; ERROR:  ILLEGAL QUANTITY
                                                     ; --------------------------------
 AS_IQERR               LDX #AS_ERR_ILLQTY
-AS_JER                 JMP AS_ERROR
+AS_JER                 JMP MS_ERROR
                                                     ; --------------------------------
                                                     ; FOUND THE ARRAY
                                                     ; --------------------------------
@@ -3676,7 +3676,7 @@ AS_MAKE_NEW_ARRAY
                     LDA AS_SUBFLG                      ; CALLED FROM GETARYPT?
                     BEQ AS_L_MAKE_NEW_ARRAY_1                          ; NO
                     LDX #AS_ERR_NODATA                 ; YES, GIVE "OUT OF DATA" ERROR
-                    JMP AS_ERROR
+                    JMP MS_ERROR
 AS_L_MAKE_NEW_ARRAY_1                  JSR AS_GETARY                      ; PUT ADDR OF 1ST ELEMENT IN ARYPNT
                     JSR MS_REASON                      ; MAKE SURE ENOUGH MEMORY LEFT
                                                     ; --------------------------------
@@ -3686,7 +3686,7 @@ AS_L_MAKE_NEW_ARRAY_1                  JSR AS_GETARY                      ; PUT 
                                                     ; --------------------------------
                     LDA #0                          ; POINT Y-REG AT VARIABLE NAME SLOT
                     TAY                             ; 
-                    STA AS_STRNG2+1                    ; START SIZE COMPUTATION
+                    STA MS_BUFPTR+1                    ; START SIZE COMPUTATION
                     LDX #5                          ; ASSUME 5-BYTES PER ELEMENT
                     LDA AS_VARNAM                      ; STUFF VARIABLE NAME IN ARRAY
                     STA (MS_LOWTR),Y                   ; 
@@ -3698,7 +3698,7 @@ AS_L_MAKE_NEW_ARRAY_2                  INY                             ; POINT Y
                     BPL AS_L_MAKE_NEW_ARRAY_3                          ; REAL ARRAY, STICK WITH SIZE = 5 BYTES
                     DEX                             ; INTEGER OR STRING ARRAY, ADJUST SIZE
                     DEX                             ; TO INTEGER=3, STRING=2 BYTES
-AS_L_MAKE_NEW_ARRAY_3                  STX AS_STRNG2                      ; STORE LOW-BYTE OF ARRAY ELEMENT SIZE
+AS_L_MAKE_NEW_ARRAY_3                  STX MS_BUFPTR                      ; STORE LOW-BYTE OF ARRAY ELEMENT SIZE
                     LDA AS_NUMDIM                      ; STORE NUMBER OF DIMENSIONS
                     INY                             ; IN 5TH BYTE OF ARRAY
                     INY                             ; 
@@ -3722,8 +3722,8 @@ AS_L_MAKE_NEW_ARRAY_5                  INY                             ; ADD THI
                     JSR AS_MULTIPLY_SUBSCRIPT          ; MULTIPLY THIS
                                                     ; DIMENSION BY RUNNING SIZE
                                                     ; ((LOWTR)) * (STRNG2) --> A,X
-                    STX AS_STRNG2                      ; STORE RUNNING SIZE IN STRNG2
-                    STA AS_STRNG2+1                    ; 
+                    STX MS_BUFPTR                      ; STORE RUNNING SIZE IN STRNG2
+                    STA MS_BUFPTR+1                    ; 
                     LDY MS_INDEX                       ; RETRIEVE Y SAVED BY MULTIPLY.SUBSCRIPT
                     DEC AS_NUMDIM                      ; COUNT DOWN # DIMS
                     BNE AS_L_MAKE_NEW_ARRAY_4                          ; LOOP TILL DONE
@@ -3743,14 +3743,14 @@ AS_L_MAKE_NEW_ARRAY_6                  JSR MS_REASON                      ; MAKE
                     STA MS_STREND                      ; THERE IS ROOM SO SAVE NEW END OF TABLE
                     STY MS_STREND+1                    ; AND ZERO THE ARRAY
                     LDA #0                          ; 
-                    INC AS_STRNG2+1                    ; PREPARE FOR FAST ZEROING LOOP
-                    LDY AS_STRNG2                      ; # BYTES MOD 256
+                    INC MS_BUFPTR+1                    ; PREPARE FOR FAST ZEROING LOOP
+                    LDY MS_BUFPTR                      ; # BYTES MOD 256
                     BEQ AS_L_MAKE_NEW_ARRAY_8                          ; FULL PAGE
 AS_L_MAKE_NEW_ARRAY_7                  DEY                             ; CLEAR PAGE FULL
                     STA (AS_ARYPNT),Y
                     BNE AS_L_MAKE_NEW_ARRAY_7
 AS_L_MAKE_NEW_ARRAY_8                  DEC AS_ARYPNT+1                    ; POINT TO NEXT PAGE
-                    DEC AS_STRNG2+1                    ; COUNT THE PAGES
+                    DEC MS_BUFPTR+1                    ; COUNT THE PAGES
                     BNE AS_L_MAKE_NEW_ARRAY_7                          ; STILL MORE TO CLEAR
                     INC AS_ARYPNT+1                    ; RECOVER LAST DEC, POINT AT 1ST ELEMENT
                     SEC                             ; 
@@ -3775,8 +3775,8 @@ AS_FIND_ARRAY_ELEMENT
                     LDA (MS_LOWTR),Y                   ; GET # OF DIMENSIONS
                     STA AS_NUMDIM                      ; 
                     LDA #0                          ; ZERO SUBSCRIPT ACCUMULATOR
-                    STA AS_STRNG2                      ; 
-AS_FAE_1               STA AS_STRNG2+1                    ; 
+                    STA MS_BUFPTR                      ; 
+AS_FAE_1               STA MS_BUFPTR+1                    ; 
                     INY                             ; 
                     PLA                             ; PULL NEXT SUBSCRIPT FROM STACK
                     TAX                             ; SAVE IN FAC+3,4
@@ -3792,11 +3792,11 @@ AS_FAE_1               STA AS_STRNG2+1                    ;
                     BCC AS_FAE_3                       ; NOT TOO LARGE
                                                     ; --------------------------------
 AS_GSE                 JMP AS_SUBERR                      ; BAD SUBSCRIPTS ERROR
-AS_GME                 JMP AS_MEMERR                      ; MEM FULL ERROR
+AS_GME                 JMP MS_OMERR                      ; MEM FULL ERROR
                                                     ; --------------------------------
 AS_FAE_2               INY                             ; BUMP POINTER INTO DESCRIPTOR
-AS_FAE_3               LDA AS_STRNG2+1                    ; BYPASS MULTIPLICATION IF VALUE SO
-                    ORA AS_STRNG2                      ; FAR = 0
+AS_FAE_3               LDA MS_BUFPTR+1                    ; BYPASS MULTIPLICATION IF VALUE SO
+                    ORA MS_BUFPTR                      ; FAR = 0
                     CLC                             ; 
                     BEQ AS_L_FAE_3_1                          ; IT IS ZERO SO FAR
                     JSR AS_MULTIPLY_SUBSCRIPT          ; NOT ZERO, SO MULTIPLY
@@ -3806,10 +3806,10 @@ AS_FAE_3               LDA AS_STRNG2+1                    ; BYPASS MULTIPLICATIO
                     TYA                             ; 
                     LDY MS_INDEX                       ; RETRIEVE Y SAVED BY MULTIPLY.SUBSCRIPT
 AS_L_FAE_3_1                  ADC AS_FAC+4                       ; FINISH ADDING CURRENT SUBSCRIPT
-                    STX AS_STRNG2                      ; STORE ACCUMULATED OFFSET
+                    STX MS_BUFPTR                      ; STORE ACCUMULATED OFFSET
                     DEC AS_NUMDIM                      ; LAST SUBSCRIPT YET?
                     BNE AS_FAE_1                       ; NO, LOOP TILL DONE
-                    STA AS_STRNG2+1                    ; YES, NOW MULTIPLY BE ELEMENT SIZE
+                    STA MS_BUFPTR+1                    ; YES, NOW MULTIPLY BE ELEMENT SIZE
                     LDX #5                          ; START WITH SIZE = 5
                     LDA AS_VARNAM                      ; DETERMINE VARIABLE TYPE
                     BPL AS_L_FAE_3_2                          ; NOT INTEGER
@@ -3855,8 +3855,8 @@ AS_L_MULTIPLY_SUBS_1_1                  TXA                             ; DOUBLE
                     ROL                             ; IF TOO LARGE, SET CARRY
                     TAY                             ; 
                     BCS AS_GME                         ; TOO LARGE, "MEM FULL ERROR"
-                    ASL AS_STRNG2                      ; NEXT BIT OF MUTLPLICAND
-                    ROL AS_STRNG2+1                    ; INTO CARRY
+                    ASL MS_BUFPTR                      ; NEXT BIT OF MUTLPLICAND
+                    ROL MS_BUFPTR+1                    ; INTO CARRY
                     BCC AS_L_MULTIPLY_SUBS_1_2                          ; BIT=0, DON'T NEED TO ADD
                     CLC                             ; BIT=1, ADD INTO PARTIAL PRODUCT
                     TXA                             ; 
@@ -3877,12 +3877,12 @@ AS_L_MULTIPLY_SUBS_1_2                  DEC AS_INDX                        ; 16-
 MS_FRE                 LDA AS_VALTYP                      ; LOOK AT VALUE OF ARGUMENT
                     BEQ AS_L_FRE_1                          ; =0 MEANS REAL, =$FF MEANS STRING
                     JSR AS_FREFAC                      ; STRING, SO SET IT FREE IS TEMP
-AS_L_FRE_1                  JSR AS_GARBAG                      ; COLLECT ALL THE GARBAGE IN SIGHT
+AS_L_FRE_1                  JSR MS_GARBA2                      ; COLLECT ALL THE GARBAGE IN SIGHT
                     SEC                             ; COMPUTE SPACE BETWEEN ARRAYS AND
-                    LDA AS_FRETOP                      ; STRING TEMP AREA
+                    LDA MS_FRETOP                      ; STRING TEMP AREA
                     SBC MS_STREND                      ; 
                     TAY                             ; 
-                    LDA AS_FRETOP+1                    ; 
+                    LDA MS_FRETOP+1                    ; 
                     SBC MS_STREND+1                    ; FREE SPACE IN Y,A
                                                     ; FALL INTO GIVAYF TO FLOAT THE VALUE
                                                     ; NOTE THAT VALUES OVER 32767 WILL RETURN AS NEGATIVE
@@ -3911,14 +3911,14 @@ AS_SNGFLT              LDA #0                          ; MSB = 0
                                                     ; CHECK FOR DIRECT OR RUNNING MODE
                                                     ; GIVING ERROR IF DIRECT MODE
                                                     ; --------------------------------
-AS_ERRDIR              LDX AS_CURLIN+1                    ; =$FF IF DIRECT MODE
+AS_ERRDIR              LDX MS_CURLIN+1                    ; =$FF IF DIRECT MODE
                     INX                             ; MAKES $FF INTO ZERO
                     BNE AS_RTS_9                       ; RETURN IF RUNNING MODE
                     LDX #AS_ERR_ILLDIR                 ; DIRECT MODE, GIVE ERROR
                     .BYT $2C                       ; TRICK TO SKIP NEXT 2 BYTES
                                                     ; --------------------------------
 AS_UNDFNC              LDX #AS_ERR_UNDEFFUNC              ; UNDEFINDED FUNCTION ERROR
-                    JMP AS_ERROR
+                    JMP MS_ERROR
                                                     ; --------------------------------
                                                     ; "DEF" STATEMENT
                                                     ; --------------------------------
@@ -3937,9 +3937,9 @@ MS_DEF                 JSR AS_FNC_                        ; PARSE "FN", FUNCTION
                     PHA
                     LDA AS_VARPNT
                     PHA
-                    LDA AS_TXTPTR+1                    ; SAVE TXTPTR
+                    LDA MS_TXTPTR+1                    ; SAVE TXTPTR
                     PHA
-                    LDA AS_TXTPTR
+                    LDA MS_TXTPTR
                     PHA
                     JSR MS_DATA                        ; SCAN TO NEXT STATEMENT
                     JMP AS_FNCDATA                     ; STORE ABOVE 5 BYTES IN "VALUE"
@@ -3984,15 +3984,15 @@ AS_L_FUNCT_1                  LDA (AS_VARPNT),Y                  ; SAVE OLD VALU
                     BPL AS_L_FUNCT_1
                     LDY AS_VARPNT+1                    ; (Y,X)= ADDRESS, STORE FAC IN VARIABLE
                     JSR AS_STORE_FACDB_YX_ROUNDED
-                    LDA AS_TXTPTR+1                    ; REMEMBER TXTPTR AFTER FN CALL
+                    LDA MS_TXTPTR+1                    ; REMEMBER TXTPTR AFTER FN CALL
                     PHA
-                    LDA AS_TXTPTR
+                    LDA MS_TXTPTR
                     PHA
                     LDA (AS_FNCNAM),Y                  ; Y=0 FROM MOVMF
-                    STA AS_TXTPTR                      ; POINT TO FUNCTION DEF'N
+                    STA MS_TXTPTR                      ; POINT TO FUNCTION DEF'N
                     INY
                     LDA (AS_FNCNAM),Y
-                    STA AS_TXTPTR+1
+                    STA MS_TXTPTR+1
                     LDA AS_VARPNT+1                    ; SAVE ADDRESS OF ARGUMENT VARIABLE
                     PHA                             ; 
                     LDA AS_VARPNT                      ; 
@@ -4006,9 +4006,9 @@ AS_L_FUNCT_1                  LDA (AS_VARPNT),Y                  ; SAVE OLD VALU
                     BEQ AS_L_FUNCT_2                          ; WE ARE
                     JMP AS_SYNERR                      ; WE ARE NOT, SLYNTAX ERROR
 AS_L_FUNCT_2                  PLA                             ; RETRIEVE TXTPTR AFTER "FN" CALL
-                    STA AS_TXTPTR
+                    STA MS_TXTPTR
                     PLA
-                    STA AS_TXTPTR+1
+                    STA MS_TXTPTR+1
                                                     ; STACK NOW HAS 5-BYTE VALUE
                                                     ; OF THE ARGUMENT VARIABLE,
                                                     ; AND FNCNAM POINTS AT THE VARIABLE
@@ -4069,7 +4069,7 @@ AS_STRSPA              JSR AS_GETSPA                      ; A HOLDS LENGTH
                                                     ; --------------------------------
 AS_STRLIT              LDX #$22                        ; SET UP LITERAL SCAN TO STOP ON
                     STX AS_CHARAC                      ; QUOTATION MARK OR $00
-                    STX AS_ENDCHR                      ; 
+                    STX MS_ENDCHR                      ; 
                                                     ; --------------------------------
                                                     ; BUILD A DESCRIPTOR FOR STRING STARTING AT Y,A
                                                     ; AND TERMINATED BY $00, (CHARAC), OR (ENDCHR)
@@ -4087,7 +4087,7 @@ AS_L_STRLT2_1                  INY                             ; FIND END OF STR
                     BEQ AS_L_STRLT2_3                          ; END OF STRING
                     CMP AS_CHARAC                      ; ALTERNATE TERMINATOR # 1?
                     BEQ AS_L_STRLT2_2                          ; YES
-                    CMP AS_ENDCHR                      ; ALTERNATE TERMINATOR # 2?
+                    CMP MS_ENDCHR                      ; ALTERNATE TERMINATOR # 2?
                     BNE AS_L_STRLT2_1                          ; NO, KEEP SCANNING
 AS_L_STRLT2_2                  CMP #$22                        ; IS STRING ENDED WITH QUOTE MARK?
                     BEQ AS_L_STRLT2_4                          ; YES, C=1 TO INCLUDE " IN STRING
@@ -4095,11 +4095,11 @@ AS_L_STRLT2_3                  CLC                             ;
 AS_L_STRLT2_4                  STY AS_FAC                         ; SAVE LENGTH
                     TYA                             ; 
                     ADC AS_STRNG1                      ; COMPUTE ADDRESS OF END OF STRING
-                    STA AS_STRNG2                      ; (OF 00 BYTE, OR JUST AFTER ")
+                    STA MS_BUFPTR                      ; (OF 00 BYTE, OR JUST AFTER ")
                     LDX AS_STRNG1+1                    ; 
                     BCC AS_L_STRLT2_5                          ; 
                     INX                             ; 
-AS_L_STRLT2_5                  STX AS_STRNG2+1                    ; 
+AS_L_STRLT2_5                  STX MS_BUFPTR+1                    ; 
                     LDA AS_STRNG1+1                    ; WHERE DOES THE STRING START?
                     BEQ AS_L_STRLT2_6                          ; PAGE 0, MUST BE FROM STR$ FUNCTION
                     CMP #2                          ; PAGE 2?
@@ -4119,7 +4119,7 @@ AS_PUTNEW              LDX AS_TEMPPT                      ; POINTER TO NEXT TEMP
                     CPX #AS_TEMPST+9                   ; MAX OF 3 TEMP STRINGS
                     BNE AS_PUTEMP                      ; ROOM FOR ANOTHER ONE
                     LDX #AS_ERR_FRMCPX                 ; TOO MANY, FORMULA TOO COMPLEX
-AS_JERR                JMP AS_ERROR
+AS_JERR                JMP MS_ERROR
                                                     ; --------------------------------
 AS_PUTEMP              LDA AS_FAC                         ; COPY TEMP DESCRIPTOR INTO TEMP STACK
                     STA 0,X
@@ -4149,8 +4149,8 @@ AS_GETSPA              LSR AS_GARFLG                      ; CLEAR SIGNBIT OF FLA
 AS_L_GETSPA_1                  PHA                             ; A HOLDS LENGTH
                     EOR #$FF                        ; GET -LENGTH
                     SEC                             ; 
-                    ADC AS_FRETOP                      ; COMPUTE STARTING ADDRESS OF SPACE
-                    LDY AS_FRETOP+1                    ; FOR THE STRING
+                    ADC MS_FRETOP                      ; COMPUTE STARTING ADDRESS OF SPACE
+                    LDY MS_FRETOP+1                    ; FOR THE STRING
                     BCS AS_L_GETSPA_2                          ; 
                     DEY                             ; 
 AS_L_GETSPA_2                  CPY MS_STREND+1                    ; SEE IF FITS IN REMAINING MEMORY
@@ -4158,17 +4158,17 @@ AS_L_GETSPA_2                  CPY MS_STREND+1                    ; SEE IF FITS 
                     BNE AS_L_GETSPA_3                          ; YES, IT FITS
                     CMP MS_STREND                      ; HAVE TO CHECK LOWER BYTES
                     BCC AS_L_GETSPA_4                          ; NOT ENUF ROOM YET
-AS_L_GETSPA_3                  STA AS_FRETOP                      ; THERE IS ROOM SO SAVE NEW FRETOP
-                    STY AS_FRETOP+1                    ; 
+AS_L_GETSPA_3                  STA MS_FRETOP                      ; THERE IS ROOM SO SAVE NEW FRETOP
+                    STY MS_FRETOP+1                    ; 
                     STA AS_FRESPC                      ; 
                     STY AS_FRESPC+1                    ; 
                     TAX                             ; ADDR IN Y,X
                     PLA                             ; LENGTH IN A
                     RTS
-AS_L_GETSPA_4                  LDX #AS_ERR_MEMFULL
+AS_L_GETSPA_4                  LDX #MS_ERROM
                     LDA AS_GARFLG                      ; GARBAGE DONE YET?
                     BMI AS_JERR                        ; YES, MEMORY IS REALLY FULL
-                    JSR AS_GARBAG                      ; NO, TRY COLLECTING NOW
+                    JSR MS_GARBA2                      ; NO, TRY COLLECTING NOW
                     LDA #$80                        ; FLAG THAT COLLECTED GARBAGE ALREADY
                     STA AS_GARFLG                      ; 
                     PLA                             ; GET STRING LENGTH AGAIN
@@ -4178,11 +4178,11 @@ AS_L_GETSPA_4                  LDX #AS_ERR_MEMFULL
                                                     ; IN MEMORY (AGAINST HIMEM), FREEING UP SPACE
                                                     ; BELOW STRING AREA DOWN TO STREND.
                                                     ; --------------------------------
-AS_GARBAG              LDX AS_MEMSIZ                      ; COLLECT FROM TOP DOWN
+MS_GARBA2              LDX AS_MEMSIZ                      ; COLLECT FROM TOP DOWN
                     LDA AS_MEMSIZ+1                    ; 
 AS_FIND_HIGHEST_STRING                                 ; 
-                    STX AS_FRETOP                      ; ONE PASS THROUGH ALL VARS
-                    STA AS_FRETOP+1                    ; FOR EACH ACTIVE STRING!
+                    STX MS_FRETOP                      ; ONE PASS THROUGH ALL VARS
+                    STA MS_FRETOP+1                    ; FOR EACH ACTIVE STRING!
                     LDY #0                          ; 
                     STY AS_FNCNAM+1                    ; FLAG IN CASE NO STRINGS TO COLLECT
                     LDA MS_STREND                      ; 
@@ -4205,8 +4205,8 @@ AS_L_FIND_HIGHEST_STRING_1                  CMP AS_TEMPPT                      ;
                                                     ; --------------------------------
 AS_L_FIND_HIGHEST_STRING_2                  LDA #7                          ; LENGTH OF EACH VARIABLE IS 7 BYTES
                     STA AS_DSCLEN                      ; 
-                    LDA AS_VARTAB                      ; START AT BEGINNING OF VARTAB
-                    LDX AS_VARTAB+1
+                    LDA MS_VARTAB                      ; START AT BEGINNING OF VARTAB
+                    LDX MS_VARTAB+1
                     STA MS_INDEX
                     STX MS_INDEX+1
 AS_L_FIND_HIGHEST_STRING_3                  CPX AS_ARYTAB+1                    ; FINISHED WITH SIMPLE VARIABLES?
@@ -4287,10 +4287,10 @@ AS_CHECK_VARIABLE                                      ;
                     TAX                             ; 
                     INY                             ; 
                     LDA (MS_INDEX),Y                   ; 
-                    CMP AS_FRETOP+1                    ; CHECK IF ALREADY COLLECTED
+                    CMP MS_FRETOP+1                    ; CHECK IF ALREADY COLLECTED
                     BCC AS_L_CHECK_VARIABLE_1                          ; NO, BELOW FRETOP
                     BNE AS_CHECK_BUMP                  ; YES, ABOVE FRETOP
-                    CPX AS_FRETOP                      ; MAYBE, CHECK LO-BYTE
+                    CPX MS_FRETOP                      ; MAYBE, CHECK LO-BYTE
                     BCS AS_CHECK_BUMP                  ; YES, ABOVE FRETOP
 AS_L_CHECK_VARIABLE_1                  CMP MS_LOWTR+1                     ; ABOVE HIGHEST STRING FOUND?
                     BCC AS_CHECK_BUMP                  ; NO, IGNORE FOR NOW
@@ -4339,8 +4339,8 @@ AS_MOVE_HIGHEST_STRING_TO_TOP
                     LDA MS_LOWTR+1                     ; 
                     ADC #0                          ; 
                     STA MS_HIGHTR+1                    ; 
-                    LDA AS_FRETOP                      ; HIGH END DESTINATION
-                    LDX AS_FRETOP+1                    ; 
+                    LDA MS_FRETOP                      ; HIGH END DESTINATION
+                    LDX MS_FRETOP+1                    ; 
                     STA MS_HIGHDS                      ; 
                     STX MS_HIGHDS+1                    ; 
                     JSR MS_BLTUC                       ; MOVE STRING UP
@@ -4374,7 +4374,7 @@ AS_CAT                 LDA AS_FAC+4                       ; SAVE ADDRESS OF FIRS
                     ADC (AS_FAC+3),Y
                     BCC AS_L_CAT_1                          ; OK IF < $100
                     LDX #AS_ERR_STRLONG
-                    JMP AS_ERROR
+                    JMP MS_ERROR
 AS_L_CAT_1                  JSR AS_STRINI                      ; GET SPACE FOR CONCATENATED STRINGS
                     JSR AS_MOVINS                      ; MOVE 1ST STRING
                     LDA AS_DSCPTR                      ; 
@@ -4452,16 +4452,16 @@ AS_FRETMP              STA MS_INDEX                       ; SAVE THE ADDRESS OF 
                     PLA                             ; LENGTH IN A
                     PLP                             ; RETRIEVE STATUS, Z=1 IF TEMP
                     BNE AS_L_FRETMP_2                          ; NOT A TEMPORARY STRING
-                    CPY AS_FRETOP+1                    ; IS IT THE LOWEST STRING?
+                    CPY MS_FRETOP+1                    ; IS IT THE LOWEST STRING?
                     BNE AS_L_FRETMP_2                          ; NO
-                    CPX AS_FRETOP                      ; 
+                    CPX MS_FRETOP                      ; 
                     BNE AS_L_FRETMP_2                          ; NO
                     PHA                             ; YES, PUSH LENGTH AGAIN
                     CLC                             ; RECOVER THE SPACE USED BY
-                    ADC AS_FRETOP                      ; THE STRING
-                    STA AS_FRETOP                      ; 
+                    ADC MS_FRETOP                      ; THE STRING
+                    STA MS_FRETOP                      ; 
                     BCC AS_L_FRETMP_1                          ; 
-                    INC AS_FRETOP+1                    ; 
+                    INC MS_FRETOP+1                    ; 
 AS_L_FRETMP_1                  PLA                             ; RETRIEVE LENGTH AGAIN
 AS_L_FRETMP_2                  STX MS_INDEX                       ; ADDRESS OF STRING IN Y,X
                     STY MS_INDEX+1                     ; LENGTH OF STRING IN A-REG
@@ -4632,25 +4632,25 @@ AS_CONINT              JSR AS_MKINT                       ; CONVERT IF IN RANGE 
 MS_VAL                 JSR AS_GETSTR                      ; GET POINTER TO STRING IN INDEX
                     BNE AS_L_VAL_1                          ; LENGTH NON-ZERO
                     JMP AS_ZERO_FAC                    ; RETURN 0 IF LENGTH=0
-AS_L_VAL_1                  LDX AS_TXTPTR                      ; SAVE CURRENT TXTPTR
-                    LDY AS_TXTPTR+1                    ; 
-                    STX AS_STRNG2                      ; 
-                    STY AS_STRNG2+1                    ; 
+AS_L_VAL_1                  LDX MS_TXTPTR                      ; SAVE CURRENT TXTPTR
+                    LDY MS_TXTPTR+1                    ; 
+                    STX MS_BUFPTR                      ; 
+                    STY MS_BUFPTR+1                    ; 
                     LDX MS_INDEX                       ; 
-                    STX AS_TXTPTR                      ; POINT TXTPTR TO START OF STRING
+                    STX MS_TXTPTR                      ; POINT TXTPTR TO START OF STRING
                     CLC                             ; 
                     ADC MS_INDEX                       ; ADD LENGTH
-                    STA AS_DEST                        ; POINT DEST TO END OF STRING + 1
+                    STA MS_INDEX2                        ; POINT DEST TO END OF STRING + 1
                     LDX MS_INDEX+1                     ; 
-                    STX AS_TXTPTR+1                    ; 
+                    STX MS_TXTPTR+1                    ; 
                     BCC AS_L_VAL_2                          ; 
                     INX                             ; 
-AS_L_VAL_2                  STX AS_DEST+1                      ; 
+AS_L_VAL_2                  STX MS_INDEX2+1                      ; 
                     LDY #0                          ; SAVE BYTE THAT FOLLOWS STRING
-                    LDA (AS_DEST),Y                    ; ON STACK
+                    LDA (MS_INDEX2),Y                    ; ON STACK
                     PHA                             ; 
                     LDA #0                          ; AND STORE $00 IN ITS PLACE
-                    STA (AS_DEST),Y                    ; 
+                    STA (MS_INDEX2),Y                    ; 
                                                     ; <<< THAT CAUSES A BUG IF HIMEM = $BFFF, >>>
                                                     ; <<< BECAUSE STORING $00 AT $C000 IS NO  >>>
                                                     ; <<< USE; $C000 WILL ALWAYS BE LAST CHAR >>>
@@ -4660,15 +4660,15 @@ AS_L_VAL_2                  STX AS_DEST+1                      ;
                     JSR AS_FIN                         ; EVALUATE STRING
                     PLA                             ; GET BYTE THAT SHOULD FOLLOW STRING
                     LDY #0                          ; AND PUT IT BACK
-                    STA (AS_DEST),Y                    ; 
+                    STA (MS_INDEX2),Y                    ; 
                                                     ; RESTORE TXTPTR
                                                     ; --------------------------------
                                                     ; COPY STRNG2 INTO TXTPTR
                                                     ; --------------------------------
-AS_POINT               LDX AS_STRNG2                      ; 
-                    LDY AS_STRNG2+1                    ; 
-                    STX AS_TXTPTR                      ; 
-                    STY AS_TXTPTR+1                    ; 
+AS_POINT               LDX MS_BUFPTR                      ; 
+                    LDY MS_BUFPTR+1                    ; 
+                    STX MS_TXTPTR                      ; 
+                    STY MS_TXTPTR+1                    ; 
                     RTS                             ; 
                                                     ; --------------------------------
                                                     ; EVALUATE "EXP1,EXP2"
@@ -4694,24 +4694,24 @@ AS_GETADR              LDA AS_FAC                         ; FAC < 2^16?
                     JSR AS_QINT                        ; CONVERT TO INTEGER
                     LDA AS_FAC+3                       ; COPY IT INTO LINNUM
                     LDY AS_FAC+4                       ; 
-                    STY AS_LINNUM                      ; TO LINNUM
-                    STA AS_LINNUM+1                    ; 
+                    STY MS_LINNUM                      ; TO LINNUM
+                    STA MS_LINNUM+1                    ; 
                     RTS                             ; 
                                                     ; --------------------------------
                                                     ; "PEEK" FUNCTION
                                                     ; --------------------------------
-MS_PEEK                LDA AS_LINNUM                      ; SAVE (LINNUM) ON STACK DURING PEEK
+MS_PEEK                LDA MS_LINNUM                      ; SAVE (LINNUM) ON STACK DURING PEEK
                     PHA                             ; 
-                    LDA AS_LINNUM+1                    ; 
+                    LDA MS_LINNUM+1                    ; 
                     PHA                             ; 
                     JSR AS_GETADR                      ; GET ADDRESS PEEKING AT
                     LDY #0
-                    LDA (AS_LINNUM),Y                  ; TAKE A QUICK LOOK
+                    LDA (MS_LINNUM),Y                  ; TAKE A QUICK LOOK
                     TAY                             ; VALUE IN Y-REG
                     PLA                             ; RESTORE LINNUM FROM STACK
-                    STA AS_LINNUM+1                    ; 
+                    STA MS_LINNUM+1                    ; 
                     PLA                             ; 
-                    STA AS_LINNUM                      ; 
+                    STA MS_LINNUM                      ; 
                     JMP AS_SNGFLT                      ; FLOAT Y-REG INTO FAC
                                                     ; --------------------------------
                                                     ; "POKE" STATEMENT
@@ -4719,7 +4719,7 @@ MS_PEEK                LDA AS_LINNUM                      ; SAVE (LINNUM) ON STA
 MS_POKE                JSR AS_GTNUM                       ; GET THE ADDRESS AND VALUE
                     TXA                             ; VALUE IN A,
                     LDY #0                          ; 
-                    STA (AS_LINNUM),Y                  ; STORE IT AWAY,
+                    STA (MS_LINNUM),Y                  ; STORE IT AWAY,
                     RTS                             ; AND THAT'S ALL FOR TODAY
                                                     ; --------------------------------
                                                     ; "WAIT" STATEMENT
@@ -4732,7 +4732,7 @@ MS_FNWAIT                JSR AS_GTNUM                       ; GET ADDRESS IN LIN
                     JSR AS_COMBYTE                     ; GET XOR-MASK
 AS_L_WAIT_1                  STX MS_FORPNT+1                    ; SAVE XOR-MASK HERE
                     LDY #0
-AS_L_WAIT_2                  LDA (AS_LINNUM),Y                  ; GET BYTE AT ADDRESS
+AS_L_WAIT_2                  LDA (MS_LINNUM),Y                  ; GET BYTE AT ADDRESS
                     EOR MS_FORPNT+1                    ; INVERT SPECIFIED BITS
                     AND MS_FORPNT                      ; SELECT SPECIFIED BITS
                     BEQ AS_L_WAIT_2                          ; LOOP TILL NOT 0
@@ -4953,7 +4953,7 @@ AS_RTS_12              RTS
                                                     ; --------------------------------
 AS_OVERFLOW
                     LDX #AS_ERR_OVERFLOW
-                    JMP AS_ERROR
+                    JMP MS_ERROR
                                                     ; --------------------------------
                                                     ; SHIFT 1,X THRU 5,X RIGHT
                                                     ; (A) = NEGATIVE OF SHIFT COUNT
@@ -5007,7 +5007,7 @@ AS_SHIFT_RIGHT_5                                       ;
                                                     ; --------------------------------
                                                     ; --------------------------------
 
-AS_CON_ONE             .BYT $81,$00,$00,$00,$00
+MS_FONE             .BYT $81,$00,$00,$00,$00
                                                     ; --------------------------------
 AS_POLY_LOG            .BYT 3                         ; # OF COEFFICIENTS - 1
                     .BYT $7F,$5E,$56,$CB,$79       ; * X^7 +
@@ -5038,8 +5038,8 @@ AS_LOG_2               LDA AS_FAC                         ; FIRST GET LOG BASE 2
                     LDA #<AS_CON_SQR_TWO               ; POWERS OF
                     LDY #>AS_CON_SQR_TWO               ; (SQR(2)X-1)/(SQR(2)X+1)
                     JSR AS_FDIV
-                    LDA #<AS_CON_ONE
-                    LDY #>AS_CON_ONE
+                    LDA #<MS_FONE
+                    LDY #>MS_FONE
                     JSR AS_FSUB
                     LDA #<AS_POLY_LOG
                     LDY #>AS_POLY_LOG
@@ -5296,7 +5296,7 @@ AS_L_FDIVT_7                  ASL                             ; LEFT JUSTIFY THE
                     JMP AS_COPY_RESULT_INTO_FAC
                                                     ; --------------------------------
 AS_L_FDIVT_8                  LDX #AS_ERR_ZERODIV
-                    JMP AS_ERROR
+                    JMP MS_ERROR
                                                     ; --------------------------------
                                                     ; COPY RESULT INTO FAC MANTISSA, AND NORMALIZE
                                                     ; --------------------------------
@@ -5345,8 +5345,8 @@ AS_STORE_FAC_IN_TEMP2_ROUNDED
                                                     ; ROUND FAC, STORE IN TEMP1
                                                     ; --------------------------------
 AS_STORE_FAC_IN_TEMP1_ROUNDED
-                    LDX #<AS_TEMP1                     ; PACK FAC INTO TEMP1
-                    LDY #>AS_TEMP1                     ; HI-BYTE OF TEMP1 SAME AS TEMP2
+                    LDX #<MS_HIGHDS                     ; PACK FAC INTO TEMP1
+                    LDY #>MS_HIGHDS                     ; HI-BYTE OF TEMP1 SAME AS TEMP2
                     BEQ AS_STORE_FACDB_YX_ROUNDED      ; ...ALWAYS
                                                     ; --------------------------------
                                                     ; ROUND FAC, AND STORE WHERE FORPNT POINTS
@@ -5478,38 +5478,38 @@ MS_ABS                 LSR AS_FAC_SIGN                    ; CHANGE SIGN TO +
                                                     ; COMPARE FAC WITH PACKED # AT (Y,A)
                                                     ; RETURN A=1,0,-1 AS (Y,A) IS <,=,> FAC
                                                     ; --------------------------------
-AS_FCOMP               STA AS_DEST                        ; USE DEST FOR PNTR
+AS_FCOMP               STA MS_INDEX2                        ; USE DEST FOR PNTR
                                                     ; --------------------------------
                                                     ; SPECIAL ENTRY FROM "NEXT" PROCESSOR
                                                     ; "DEST" ALREADY SET UP
                                                     ; --------------------------------
-AS_FCOMP2              STY AS_DEST+1                      ; 
+AS_FCOMP2              STY MS_INDEX2+1                      ; 
                     LDY #0                          ; GET EXPONENT OF COMPARAND
-                    LDA (AS_DEST),Y                    ; 
+                    LDA (MS_INDEX2),Y                    ; 
                     INY                             ; POINT AT NEXT BYTE
                     TAX                             ; EXPONENT TO X-REG
                     BEQ AS_SIGN                        ; IF COMPARAND=0, "SIGN" COMPARES FAC
-                    LDA (AS_DEST),Y                    ; GET HI-BYTE OF MANTISSA
+                    LDA (MS_INDEX2),Y                    ; GET HI-BYTE OF MANTISSA
                     EOR AS_FAC_SIGN                    ; COMPARE WITH FAC SIGN
                     BMI AS_SIGN1                       ; DIFFERENT SIGNS, "SIGN" GIVES ANSWER
                     CPX AS_FAC                         ; SAME SIGN, SO COMPARE EXPONENTS
                     BNE AS_L_FCOMP2_1                          ; DIFFERENT, SO SUFFICIENT TEST
-                    LDA (AS_DEST),Y                    ; SAME EXPONENT, COMPARE MANTISSA
+                    LDA (MS_INDEX2),Y                    ; SAME EXPONENT, COMPARE MANTISSA
                     ORA #$80                        ; SET INVISIBLE NORMALIZED BIT
                     CMP AS_FAC+1                       ; 
                     BNE AS_L_FCOMP2_1                          ; NOT SAME, SO SUFFICIENT
                     INY                             ; SAME, COMPARE MORE MANTISSA
-                    LDA (AS_DEST),Y                    ; 
+                    LDA (MS_INDEX2),Y                    ; 
                     CMP AS_FAC+2                       ; 
                     BNE AS_L_FCOMP2_1                          ; NOT SAME, SO SUFFICIENT
                     INY                             ; SAME, COMPARE MORE MANTISSA
-                    LDA (AS_DEST),Y                    ; 
+                    LDA (MS_INDEX2),Y                    ; 
                     CMP AS_FAC+3                       ; 
                     BNE AS_L_FCOMP2_1                          ; NOT SAME, SO SUFFICIENT
                     INY                             ; SAME, COMPARE REST OF MANTISSA
                     LDA #$7F                        ; ARTIFICIAL EXTENSION BYTE FOR COMPARAND
                     CMP AS_FAC_EXTENSION
-                    LDA (AS_DEST),Y
+                    LDA (MS_INDEX2),Y
                     SBC AS_FAC+4
                     BEQ AS_RTS_16                      ; NUMBERS ARE EQUAL, RETURN (A)=0
 AS_L_FCOMP2_1                  LDA AS_FAC_SIGN                    ; NUMBERS ARE DIFFERENT
@@ -5615,7 +5615,7 @@ AS_FIN_3               CMP #("."&%01111111)                        ; CHECK FOR D
                     BNE AS_FIN_7                       ; NO, END OF NUMBER
                     JSR AS_CHRGET                      ; YES, START CONVERTING EXPONENT
                     BCC AS_FIN_5                       ; EXPONENT DIGIT
-                    CMP #AS_TOKEN_MINUS                ; NEGATIVE EXPONENT?
+                    CMP #MS_MINUTK                ; NEGATIVE EXPONENT?
                     BEQ AS_L_FIN_3_1                          ; YES
                     CMP #("-"&%01111111)                        ; MIGHT NOT BE TOKENIZED YET
                     BEQ AS_L_FIN_3_1                          ; YES, IT IS NEGATIVE
@@ -5710,7 +5710,7 @@ AS_L_GETEXP_1                  ASL                             ; EXPONENT TIMES 
                     ASL                             ; 
                     CLC                             ; <<< ASL ALREADY DID THIS! >>>
                     LDY #0                          ; ADD THE NEW DIGIT
-                    ADC (AS_TXTPTR),Y                  ; BUT THIS IS IN ASCII,
+                    ADC (MS_TXTPTR),Y                  ; BUT THIS IS IN ASCII,
                     SEC                             ; SO ADJUST BACK TO BINARY
                     SBC #("0"&%01111111)
 AS_L_GETEXP_2                  STA AS_EXPON                       ; NEW VALUE
@@ -5724,15 +5724,15 @@ AS_CON_BILLION         .BYT $9E,$6E,$6B,$28,$00       ; 1,000,000,000
                                                     ; --------------------------------
                                                     ; PRINT "IN <LINE #>"
                                                     ; --------------------------------
-AS_INPRT               LDA #<MS_INTXT                     ; PRINT " IN "
+MS_INPRT               LDA #<MS_INTXT                     ; PRINT " IN "
                     LDY #>MS_INTXT
                     JSR AS_GO_STROUT
-                    LDA AS_CURLIN+1
-                    LDX AS_CURLIN
+                    LDA MS_CURLIN+1
+                    LDX MS_CURLIN
                                                     ; --------------------------------
                                                     ; PRINT A,X AS DECIMAL INTEGER
                                                     ; --------------------------------
-AS_LINPRT              STA AS_FAC+1                       ; PRINT A,X IN DECIMAL
+MS_LINPRT              STA AS_FAC+1                       ; PRINT A,X IN DECIMAL
                     STX AS_FAC+2                       ; 
                     LDX #$90                        ; EXPONENT = 2^16
                     SEC                             ; CONVERT UNSIGNED
@@ -5764,7 +5764,7 @@ AS_FOUT_1              LDA #("-"&%01111111)                        ; IN CASE VAL
                     INY                             ; VALUE IS -
                     STA AS_STACK-1,Y                   ; EMIT "-"
 AS_L_FOUT_1_1                  STA AS_FAC_SIGN                    ; MAKE FAC.SIGN POSITIVE ($2D)
-                    STY AS_STRNG2                      ; SAVE STRING PNTR
+                    STY MS_BUFPTR                      ; SAVE STRING PNTR
                     INY                             ; 
                     LDA #("0"&%01111111)                        ; IN CASE (FAC)=0
                     LDX AS_FAC                         ; NUMBER=0?
@@ -5827,7 +5827,7 @@ AS_L_FOUT_2_2                  SBC #2                          ;
                     TXA                             ; SEE IF "." COMES FIRST
                     BEQ AS_L_FOUT_2_3                          ; YES
                     BPL AS_L_FOUT_2_5                          ; NO, LATER
-AS_L_FOUT_2_3                  LDY AS_STRNG2                      ; GET INDEX INTO STRING BEING BUILT
+AS_L_FOUT_2_3                  LDY MS_BUFPTR                      ; GET INDEX INTO STRING BEING BUILT
                     LDA #("."&%01111111)                        ; STORE A DECIMAL POINT
                     INY                             ; 
                     STA AS_STACK-1,Y                   ; 
@@ -5836,7 +5836,7 @@ AS_L_FOUT_2_3                  LDY AS_STRNG2                      ; GET INDEX IN
                     LDA #("0"&%01111111)                        ; YES, STORE "0"
                     INY                             ; 
                     STA AS_STACK-1,Y                   ; 
-AS_L_FOUT_2_4                  STY AS_STRNG2                      ; SAVE OUTPUT INDEX AGAIN
+AS_L_FOUT_2_4                  STY MS_BUFPTR                      ; SAVE OUTPUT INDEX AGAIN
                                                     ; --------------------------------
                                                     ; NOW DIVIDE BY POWERS OF TEN TO GET SUCCESSIVE DIGITS
                                                     ; --------------------------------
@@ -5870,7 +5870,7 @@ AS_L_FOUT_2_9                  ADC #("0"&%01111111)-1                      ; MAK
                     INY                             ; 
                     INY                             ; 
                     STY AS_VARPNT                      ; SAVE PNTR TO POWERS
-                    LDY AS_STRNG2                      ; GET OUTPUT PNTR
+                    LDY MS_BUFPTR                      ; GET OUTPUT PNTR
                     INY                             ; STORE THE DIGIT
                     TAX                             ; SAVE DIGIT, HI-BIT IS DIRECTION
                     AND #$7F                        ; MAKE SURE MON_COLOR...$39 FOR STRING
@@ -5880,7 +5880,7 @@ AS_L_FOUT_2_9                  ADC #("0"&%01111111)-1                      ; MAK
                     LDA #("."&%01111111)                        ; TIME, SO STORE THE DECIMAL POINT
                     INY                             ; 
                     STA AS_STACK-1,Y                   ; 
-AS_L_FOUT_2_10                 STY AS_STRNG2                      ; SAVE OUTPUT PNTR AGAIN
+AS_L_FOUT_2_10                 STY MS_BUFPTR                      ; SAVE OUTPUT PNTR AGAIN
                     LDY AS_VARPNT                      ; GET PNTR TO POWERS
                     TXA                             ; GET DIGIT WITH HI-BIT = DIRECTION
                     EOR #$FF                        ; CHANGE DIRECTION
@@ -5893,7 +5893,7 @@ AS_L_FOUT_2_10                 STY AS_STRNG2                      ; SAVE OUTPUT 
                                                     ; BACK AND LOP OFF TRAILING ZEROES AND A TRAILING
                                                     ; DECIMAL POINT.
                                                     ; --------------------------------
-AS_FOUT_3              LDY AS_STRNG2                      ; POINTS AT LAST STORED CHAR
+AS_FOUT_3              LDY MS_BUFPTR                      ; POINTS AT LAST STORED CHAR
 AS_L_FOUT_3_1                  LDA AS_STACK-1,Y                   ; SEE IF LOPPABLE
                     DEY                             ; 
                     CMP #("0"&%01111111)                        ; SUPPRESS TRAILING ZEROES
@@ -6081,11 +6081,11 @@ AS_POLYNOMIAL_ODD
                     STA AS_SERPNT                      ; SAVE ADDRESS OF COEFFICIENT TABLE
                     STY AS_SERPNT+1
                     JSR AS_STORE_FAC_IN_TEMP1_ROUNDED
-                    LDA #AS_TEMP1                      ; Y=0 ALREADY, SO Y,A POINTS AT TEMP1
+                    LDA #MS_HIGHDS                      ; Y=0 ALREADY, SO Y,A POINTS AT TEMP1
                     JSR AS_FMULT                       ; FORM X^2
                     JSR AS_SERMAIN                     ; DO SERIES IN X^2
-                    LDA #<AS_TEMP1                     ; GET X AGAIN
-                    LDY #>AS_TEMP1                     ; 
+                    LDA #<MS_HIGHDS                     ; GET X AGAIN
+                    LDY #>MS_HIGHDS                     ; 
                     JMP AS_FMULT                       ; MULTIPLY X BY P(X^2) AND EXIT
                                                     ; --------------------------------
                                                     ; NORMAL POLYNOMIAL SUBROUTINE
@@ -6234,8 +6234,8 @@ MS_TAN                 JSR AS_STORE_FAC_IN_TEMP1_ROUNDED
                     LDX #<AS_TEMP3                     ; SAVE SIN(X) IN TEMP3
                     LDY #>AS_TEMP3                     ; 
                     JSR AS_GO_MOVMF                    ; <<<FUNNY WAY TO CALL MOVMF! >>>
-                    LDA #<AS_TEMP1                     ; RETRIEVE X
-                    LDY #>AS_TEMP1                     ; 
+                    LDA #<MS_HIGHDS                     ; RETRIEVE X
+                    LDY #>MS_HIGHDS                     ; 
                     JSR AS_LOAD_FAC_FROM_YA
                     LDA #0                          ; AND COMPUTE COS(X)
                     STA AS_FAC_SIGN                    ; 
@@ -6299,8 +6299,8 @@ AS_L_ATN_1                  LDA AS_FAC                         ; IF .GE. 1, FORM
                     PHA                             ; SAVE FOR LATER UNFOLDING
                     CMP #$81                        ; (EXPONENT FOR .GE. 1
                     BCC AS_L_ATN_2                          ; X < 1
-                    LDA #<AS_CON_ONE                   ; FORM 1/X
-                    LDY #>AS_CON_ONE
+                    LDA #<MS_FONE                   ; FORM 1/X
+                    LDY #>MS_FONE
                     JSR AS_FDIV
                                                     ; --------------------------------
                                                     ; 0 <= X <= 1
@@ -6342,9 +6342,9 @@ AS_POLY_ATN            .BYT 11                        ; POWER OF POLYNOMIAL
                                                     ; (I DON'T REMEMBER WHICH OR EXACTLY WHEN)
                                                     ; --------------------------------
 AS_GENERIC_CHRGET
-                    INC AS_TXTPTR
+                    INC MS_TXTPTR
                     BNE AS_L_GENERIC_CHRGET_1
-                    INC AS_TXTPTR+1
+                    INC MS_TXTPTR+1
 AS_L_GENERIC_CHRGET_1                  LDA $EA60                       ; <<< ACTUAL ADDRESS FILLED IN LATER >>>
                     CMP #(":"&%01111111)                        ; EOS, ALSO TOP OF NUMERIC RANGE
                     BCS AS_L_GENERIC_CHRGET_2                          ; NOT NUMBER, MIGHT BE EOS
@@ -6366,7 +6366,7 @@ AS_GENERIC_END
                                                     ; --------------------------------
 AS_COLD_START
                     LDX #$FF                        ; SET DIRECT MODE FLAG
-                    STX AS_CURLIN+1                    ; 
+                    STX MS_CURLIN+1                    ; 
                     LDX #$FB                        ; SET STACK POINTER, LEAVING ROOM FOR
                     TXS                             ; LINE BUFFER DURING PARSING
                     LDA #<AS_COLD_START                ; SET RESTART TO COLD.START
@@ -6406,10 +6406,10 @@ AS_L_COLD_START_1                  LDA AS_GENERIC_CHRGET-1,X
                     PHA                             ; PUT $00 ON STACK (WHAT FOR?)
                     LDA #3                          ; SET LENGTH OF TEMP. STRING DESCRIPTORS
                     STA AS_DSCLEN                      ; FOR GARBAGE COLLECTION SUBROUTINE
-                    JSR AS_CRDO                        ; PRINT <RETURN>
+                    JSR MS_CRDO                        ; PRINT <RETURN>
                     LDA #1                          ; SET UP FAKE FORWARD LINK
-                    STA AS_INPUT_BUFFER-3
-                    STA AS_INPUT_BUFFER-4
+                    STA MS_BUF-3
+                    STA MS_BUF-4
                     LDX #AS_TEMPST                     ; INIT INDEX TO TEMP STRING DESCRIPTORS
                     STX AS_TEMPPT
                                                     ; --------------------------------
@@ -6417,26 +6417,26 @@ AS_L_COLD_START_1                  LDA AS_GENERIC_CHRGET-1,X
                                                     ; --------------------------------
                     LDA #<$0800                     ; SET UP POINTER TO LOW END OF RAM
                     LDY #>$0800
-                    STA AS_LINNUM
-                    STY AS_LINNUM+1
+                    STA MS_LINNUM
+                    STY MS_LINNUM+1
                     LDY #0
-AS_L_COLD_START_2                  INC AS_LINNUM+1                    ; TEST FIRST BYTE OF EACH PAGE
-                    LDA (AS_LINNUM),Y                  ; BY COMPLEMENTING IT AND WATCHING
+AS_L_COLD_START_2                  INC MS_LINNUM+1                    ; TEST FIRST BYTE OF EACH PAGE
+                    LDA (MS_LINNUM),Y                  ; BY COMPLEMENTING IT AND WATCHING
                     EOR #$FF                        ; IT CHANGE THE SAME WAY
-                    STA (AS_LINNUM),Y                  ; 
-                    CMP (AS_LINNUM),Y                  ; ROM OR EMPTY SOCKETS WON'T TRACK
+                    STA (MS_LINNUM),Y                  ; 
+                    CMP (MS_LINNUM),Y                  ; ROM OR EMPTY SOCKETS WON'T TRACK
                     BNE AS_L_COLD_START_3                          ; NOT RAM HERE
                     EOR #$FF                        ; RESTORE ORIGINAL VALUE
-                    STA (AS_LINNUM),Y                  ; 
-                    CMP (AS_LINNUM),Y                  ; DID IT TRACK AGAIN?
+                    STA (MS_LINNUM),Y                  ; 
+                    CMP (MS_LINNUM),Y                  ; DID IT TRACK AGAIN?
                     BEQ AS_L_COLD_START_2                          ; YES, STILL IN RAM
-AS_L_COLD_START_3                  LDY AS_LINNUM                      ; NO, END OF RAM
-                    LDA AS_LINNUM+1                    ; 
+AS_L_COLD_START_3                  LDY MS_LINNUM                      ; NO, END OF RAM
+                    LDA MS_LINNUM+1                    ; 
                     AND #$F0                        ; FORCE A MULTIPLE OF 4096 BYTES
                     STY AS_MEMSIZ                      ; (BAD RAM MAY HAVE YIELDED NON-MULTIPLE)
                     STA AS_MEMSIZ+1                    ; 
-                    STY AS_FRETOP                      ; SET HIMEM AND BOTTOM OF STRINGS
-                    STA AS_FRETOP+1                    ; 
+                    STY MS_FRETOP                      ; SET HIMEM AND BOTTOM OF STRINGS
+                    STA MS_FRETOP+1                    ; 
                     LDX #<$0800                     ; SET PROGRAM POINTER TO $0800
                     LDY #>$0800                     ; 
                     STX AS_TXTTAB                      ; 
@@ -6451,13 +6451,13 @@ AS_L_COLD_START_3                  LDY AS_LINNUM                      ; NO, END 
 AS_L_COLD_START_4                  LDA AS_TXTTAB                      ; 
                     LDY AS_TXTTAB+1                    ; 
                     JSR MS_REASON                      ; SET REST OF POINTERS UP
-                    JSR AS_SCRTCH                      ; MORE POINTERS
+                    JSR MS_SCRTCH                      ; MORE POINTERS
                     LDA #<AS_STROUT                    ; PUT CORRECT ADDRESSES IN TWO
                     LDY #>AS_STROUT                    ; USER VECTORS
                     STA AS_GOSTROUT+1
                     STY AS_GOSTROUT+2
-                    LDA #<AS_RESTART
-                    LDY #>AS_RESTART
+                    LDA #<MS_MAIN
+                    LDY #>MS_MAIN
                     STA AS_GOWARM+1
                     STY AS_GOWARM+2
                     JMP (AS_GOWARM+1)                  ; SILLY, WHY NOT JUST "JMP RESTART"
@@ -6476,7 +6476,7 @@ AS_L_COLD_START_4                  LDA AS_TXTTAB                      ;
                                                     ; --------------------------------
 AS_CALL                JSR AS_FRMNUM                      ; EVALUATE EXPRESSION FOR CALL ADDRESS
                     JSR AS_GETADR                      ; CONVERT EXPRESSION TO 16-BIT INTEGER
-                    JMP (AS_LINNUM)                    ; IN LINNUM, AND JUMP THERE.
+                    JMP (MS_LINNUM)                    ; IN LINNUM, AND JUMP THERE.
                                                     ; --------------------------------
                                                     ; "IN#" STATEMENT
                                                     ; 
@@ -6636,53 +6636,53 @@ AS_FLASH               LDA #$7F                        ; SET INVFLG = $7F
                                                     ; --------------------------------
 AS_HIMEM               JSR AS_FRMNUM                      ; GET VALUE SPECIFIED FOR HIMEM
                     JSR AS_GETADR                      ; AS 16-BIT INTEGER
-                    LDA AS_LINNUM                      ; MUST BE ABOVE VARIABLES AND ARRAYS
+                    LDA MS_LINNUM                      ; MUST BE ABOVE VARIABLES AND ARRAYS
                     CMP MS_STREND                      ; 
-                    LDA AS_LINNUM+1                    ; 
+                    LDA MS_LINNUM+1                    ; 
                     SBC MS_STREND+1                    ; 
                     BCS AS_SETHI                       ; IT IS ABOVE THEM
-AS_JMM                 JMP AS_MEMERR                      ; NOT ENOUGH MEMORY
-AS_SETHI               LDA AS_LINNUM                      ; STORE NEW HIMEM: VALUE
+AS_JMM                 JMP MS_OMERR                      ; NOT ENOUGH MEMORY
+AS_SETHI               LDA MS_LINNUM                      ; STORE NEW HIMEM: VALUE
                     STA AS_MEMSIZ                      ; 
-                    STA AS_FRETOP                      ; <<<NOTE THAT "HIMEM:" DOES NOT>>>
-                    LDA AS_LINNUM+1                    ; <<<CLEAR STRING VARIABLES.    >>>
+                    STA MS_FRETOP                      ; <<<NOTE THAT "HIMEM:" DOES NOT>>>
+                    LDA MS_LINNUM+1                    ; <<<CLEAR STRING VARIABLES.    >>>
                     STA AS_MEMSIZ+1                    ; <<<THIS COULD BE DISASTROUS.  >>>
-                    STA AS_FRETOP+1                    ; 
+                    STA MS_FRETOP+1                    ; 
                     RTS                             ; 
                                                     ; --------------------------------
                                                     ; "LOMEM:" STATEMENT
                                                     ; --------------------------------
 AS_LOMEM               JSR AS_FRMNUM                      ; GET VALUE SPECIFIED FOR LOMEM
                     JSR AS_GETADR                      ; AS 16-BIT INTEGER IN LINNUM
-                    LDA AS_LINNUM                      ; MUST BE BELOW HIMEM
+                    LDA MS_LINNUM                      ; MUST BE BELOW HIMEM
                     CMP AS_MEMSIZ                      ; 
-                    LDA AS_LINNUM+1                    ; 
+                    LDA MS_LINNUM+1                    ; 
                     SBC AS_MEMSIZ+1                    ; 
                     BCS AS_JMM                         ; ABOVE HIMEM, MEMORY ERROR
-                    LDA AS_LINNUM                      ; MUST BE ABOVE PROGRAM
-                    CMP AS_VARTAB                      ; 
-                    LDA AS_LINNUM+1                    ; 
-                    SBC AS_VARTAB+1                    ; 
+                    LDA MS_LINNUM                      ; MUST BE ABOVE PROGRAM
+                    CMP MS_VARTAB                      ; 
+                    LDA MS_LINNUM+1                    ; 
+                    SBC MS_VARTAB+1                    ; 
                     BCC AS_JMM                         ; NOT ABOVE PROGRAM, ERROR
-                    LDA AS_LINNUM                      ; STORE NEW LOMEM VALUE
-                    STA AS_VARTAB                      ; 
-                    LDA AS_LINNUM+1                    ; 
-                    STA AS_VARTAB+1                    ; 
-                    JMP AS_CLEARC                      ; LOMEM CLEARS VARIABLES AND ARRAYS
+                    LDA MS_LINNUM                      ; STORE NEW LOMEM VALUE
+                    STA MS_VARTAB                      ; 
+                    LDA MS_LINNUM+1                    ; 
+                    STA MS_VARTAB+1                    ; 
+                    JMP MS_CLEARC                      ; LOMEM CLEARS VARIABLES AND ARRAYS
                                                     ; --------------------------------
                                                     ; "ON ERR GO TO" STATEMENT
                                                     ; --------------------------------
 AS_ONERR               LDA #AS_TOKEN_GOTO                 ; MUST BE "GOTO" NEXT
                     JSR AS_SYNCHR
-                    LDA AS_TXTPTR                      ; SAVE TXTPTR FOR HANDLERR
+                    LDA MS_TXTPTR                      ; SAVE TXTPTR FOR HANDLERR
                     STA AS_TXTPSV                      ; 
-                    LDA AS_TXTPTR+1                    ; 
+                    LDA MS_TXTPTR+1                    ; 
                     STA AS_TXTPSV+1                    ; 
                     SEC                             ; SET SIGN BIT OF ERRFLG
                     ROR AS_ERRFLG                      ; 
-                    LDA AS_CURLIN                      ; SAVE LINE # OF CURRENT LINE
+                    LDA MS_CURLIN                      ; SAVE LINE # OF CURRENT LINE
                     STA AS_CURLSV                      ; 
-                    LDA AS_CURLIN+1                    ; 
+                    LDA MS_CURLIN+1                    ; 
                     STA AS_CURLSV+1                    ; 
                     JSR AS_REMN                        ; IGNORE REST OF LINE <<<WHY?>>>
                     JMP AS_ADDON                       ; CONTINUE PROGRAM
@@ -6696,22 +6696,22 @@ AS_HANDLERR                                            ;
                                                     ; <<<COULD ALSO HAVE DONE TXS  >>>
                                                     ; <<<HERE; SEE ONERR CORRECTION>>>
                                                     ; <<<IN APPLESOFT MANUAL.      >>>
-                    LDA AS_CURLIN                      ; GET LINE # OF OFFENDING STATEMENT
+                    LDA MS_CURLIN                      ; GET LINE # OF OFFENDING STATEMENT
                     STA AS_ERRLIN                      ; SO USER CAN SEE IT IF DESIRED
-                    LDA AS_CURLIN+1                    ; 
+                    LDA MS_CURLIN+1                    ; 
                     STA AS_ERRLIN+1                    ; 
                     LDA AS_OLDTEXT                     ; ALSO THE POSITION IN THE LINE
                     STA AS_ERRPOS                      ; IN CASE USER WANTS TO "RESUME"
                     LDA AS_OLDTEXT+1                   ; 
                     STA AS_ERRPOS+1                    ; 
                     LDA AS_TXTPSV                      ; SET UP TXTPTR TO READ TARGET LINE #
-                    STA AS_TXTPTR                      ; IN "ON ERR GO TO XXXX"
+                    STA MS_TXTPTR                      ; IN "ON ERR GO TO XXXX"
                     LDA AS_TXTPSV+1                    ; 
-                    STA AS_TXTPTR+1                    ; 
+                    STA MS_TXTPTR+1                    ; 
                     LDA AS_CURLSV                      ; 
-                    STA AS_CURLIN                      ; LINE # OF "ON ERR" STATEMENT
+                    STA MS_CURLIN                      ; LINE # OF "ON ERR" STATEMENT
                     LDA AS_CURLSV+1                    ; 
-                    STA AS_CURLIN+1                    ; 
+                    STA MS_CURLIN+1                    ; 
                     JSR AS_CHRGOT                      ; START CONVERSION
                     JSR MS_GOTO                        ; GOTO SPECIFIED ONERR LINE
                     JMP AS_NEWSTT                      ; 
@@ -6719,13 +6719,13 @@ AS_HANDLERR                                            ;
                                                     ; "RESUME" STATEMENT
                                                     ; --------------------------------
 AS_RESUME              LDA AS_ERRLIN                      ; RESTORE LINE # AND TXTPTR
-                    STA AS_CURLIN                      ; TO RE-TRY OFFENDING LINE
+                    STA MS_CURLIN                      ; TO RE-TRY OFFENDING LINE
                     LDA AS_ERRLIN+1                    ; 
-                    STA AS_CURLIN+1                    ; 
+                    STA MS_CURLIN+1                    ; 
                     LDA AS_ERRPOS                      ; 
-                    STA AS_TXTPTR                      ; 
+                    STA MS_TXTPTR                      ; 
                     LDA AS_ERRPOS+1                    ; 
-                    STA AS_TXTPTR+1                    ; 
+                    STA MS_TXTPTR+1                    ; 
                                                     ; <<< ONERR CORRECTION IN MANUAL IS EASILY >>>
                                                     ; <<< BY "CALL -3288", WHICH IS $F328 HERE >>>
                     LDX AS_ERRSTK                      ; RETRIEVE STACK PNTR AS IT WAS
@@ -6738,51 +6738,51 @@ AS_JSYN                JMP AS_SYNERR                      ;
                                                     ; --------------------------------
 AS_DEL                 BCS AS_JSYN                        ; ERROR IF # NOT SPECIFIED
                     LDX AS_PRGEND                      ; 
-                    STX AS_VARTAB                      ; 
+                    STX MS_VARTAB                      ; 
                     LDX AS_PRGEND+1                    ; 
-                    STX AS_VARTAB+1                    ; 
-                    JSR AS_LINGET                      ; GET BEGINNING OF RANGE
-                    JSR AS_FNDLIN                      ; FIND THIS LINE OR NEXT
+                    STX MS_VARTAB+1                    ; 
+                    JSR MS_LINGET                      ; GET BEGINNING OF RANGE
+                    JSR MS_FNDLIN                      ; FIND THIS LINE OR NEXT
                     LDA MS_LOWTR                       ; UPPER PORTION OF PROGRAM WILL
-                    STA AS_DEST                        ; BE MOVED DOWN TO HERE
+                    STA MS_INDEX2                        ; BE MOVED DOWN TO HERE
                     LDA MS_LOWTR+1                     ; 
-                    STA AS_DEST+1                      ; 
+                    STA MS_INDEX2+1                      ; 
                     LDA #(","&%01111111)                        ; MUST HAVE A COMMA NEXT
                     JSR AS_SYNCHR                      ; 
-                    JSR AS_LINGET                      ; GET END RANGE
+                    JSR MS_LINGET                      ; GET END RANGE
                                                     ; (DOES NOTHING IF END RANGE
                                                     ; IS NOT SPECIFIED)
-                    INC AS_LINNUM                      ; POINT ONE PAST IT
+                    INC MS_LINNUM                      ; POINT ONE PAST IT
                     BNE AS_L_DEL_1                          ; 
-                    INC AS_LINNUM+1                    ; 
-AS_L_DEL_1                  JSR AS_FNDLIN                      ; FIND START LINE AFTER SPECIFIED LINE
+                    INC MS_LINNUM+1                    ; 
+AS_L_DEL_1                  JSR MS_FNDLIN                      ; FIND START LINE AFTER SPECIFIED LINE
                     LDA MS_LOWTR                       ; WHICH IS BEGINNING OF PORTION
-                    CMP AS_DEST                        ; TO BE MOVED DOWN
+                    CMP MS_INDEX2                        ; TO BE MOVED DOWN
                     LDA MS_LOWTR+1                     ; IT MUST BE ABOVE THE TARGET
-                    SBC AS_DEST+1                      ; 
+                    SBC MS_INDEX2+1                      ; 
                     BCS AS_L_DEL_2                          ; IT IS OKAY
                     RTS                             ; NOTHING TO DELETE
 AS_L_DEL_2                  LDY #0                          ; MOVE UPPER PORTION DOWN NOW
 AS_L_DEL_3                  LDA (MS_LOWTR),Y                   ; SOURCE . . .
-                    STA (AS_DEST),Y                    ; ...TO DESTINATION
+                    STA (MS_INDEX2),Y                    ; ...TO DESTINATION
                     INC MS_LOWTR                       ; BUMP SOURCE PNTR
                     BNE AS_L_DEL_4                          ; 
                     INC MS_LOWTR+1                     ; 
-AS_L_DEL_4                  INC AS_DEST                        ; BUMP DESTINATION PNTR
+AS_L_DEL_4                  INC MS_INDEX2                        ; BUMP DESTINATION PNTR
                     BNE AS_L_DEL_5                          ; 
-                    INC AS_DEST+1                      ; 
-AS_L_DEL_5                  LDA AS_VARTAB                      ; REACHED END OF PROGRAM YET?
+                    INC MS_INDEX2+1                      ; 
+AS_L_DEL_5                  LDA MS_VARTAB                      ; REACHED END OF PROGRAM YET?
                     CMP MS_LOWTR                       ; 
-                    LDA AS_VARTAB+1                    ; 
+                    LDA MS_VARTAB+1                    ; 
                     SBC MS_LOWTR+1                     ; 
                     BCS AS_L_DEL_3                          ; NO, KEEP MOVING
-                    LDX AS_DEST+1                      ; STORE NEW END OF PROGRAM
-                    LDY AS_DEST                        ; MUST SUBTRACT 1 FIRST
+                    LDX MS_INDEX2+1                      ; STORE NEW END OF PROGRAM
+                    LDY MS_INDEX2                        ; MUST SUBTRACT 1 FIRST
                     BNE AS_L_DEL_6                          ; 
                     DEX                             ; 
 AS_L_DEL_6                  DEY                             ; 
-                    STX AS_VARTAB+1                    ; 
-                    STY AS_VARTAB                      ; 
+                    STX MS_VARTAB+1                    ; 
+                    STY MS_VARTAB                      ; 
                     JMP AS_FIX_LINKS                   ; RESET LINKS AFTER A DELETE
                                                     ; --------------------------------
                                                     ; "GR" STATEMENT
@@ -6810,8 +6810,8 @@ AS_STORE               JSR AS_GETARYPT                    ; GET ADDRESS OF ARRAY
                     SBC #1
                     BCS AS_L_STORE_1
                     DEX
-AS_L_STORE_1                  STA AS_LINNUM
-                    STX AS_LINNUM+1
+AS_L_STORE_1                  STA MS_LINNUM
+                    STX MS_LINNUM+1
                     JSR MON_WRITE
                     JSR AS_TAPEPNT
                     JMP MON_WRITE
@@ -6822,12 +6822,12 @@ AS_RECALL              JSR AS_GETARYPT                    ; FIND ARRAY IN MEMORY
                     JSR MON_READ                    ; READ HEADER
                     LDY #2                          ; MAKE SURE THE NEW DATA FITS
                     LDA (MS_LOWTR),Y                   ; 
-                    CMP AS_LINNUM                      ; 
+                    CMP MS_LINNUM                      ; 
                     INY                             ; 
                     LDA (MS_LOWTR),Y                   ; 
-                    SBC AS_LINNUM+1                    ; 
+                    SBC MS_LINNUM+1                    ; 
                     BCS AS_L_RECALL_1                          ; IT FITS
-                    JMP AS_MEMERR                      ; DOESN'T FIT
+                    JMP MS_OMERR                      ; DOESN'T FIT
 AS_L_RECALL_1                  JSR AS_TAPEPNT                     ; READ THE DATA
                     JMP MON_READ                    ; 
                                                     ; --------------------------------
@@ -7399,8 +7399,8 @@ AS_L_XDRAW1_5                  LDA (AS_HGR_SHAPE,X)               ; NEXT BYTE OF
                                                     ; --------------------------------
 AS_HFNS                JSR AS_FRMNUM                      ; EVALUATE EXPRESSION, MUST BE NUMERIC
                     JSR AS_GETADR                      ; CONVERT TO 2-BYTE INTEGER IN LINNUM
-                    LDY AS_LINNUM+1                    ; GET HORIZ COOR IN X,Y
-                    LDX AS_LINNUM                      ; 
+                    LDY MS_LINNUM+1                    ; GET HORIZ COOR IN X,Y
+                    LDX MS_LINNUM                      ; 
                     CPY #>280                       ; MAKE SURE IT IS < 280
                     BCC AS_L_HFNS_1                          ; IN RANGE
                     BNE AS_GGERR                       ; 
@@ -7452,13 +7452,13 @@ AS_COLORTBL            .BYT %00000000
                                                     ; HPLOT TO X,Y
                                                     ; HPLOT X1,Y1 TO X2,Y2
                                                     ; --------------------------------
-AS_HPLOT               CMP #AS_TOKEN_TO                   ; "PLOT TO" FORM?
+AS_HPLOT               CMP #MS_TOTK                   ; "PLOT TO" FORM?
                     BEQ AS_L_HPLOT_2                          ; YES, START FROM CURRENT LOCATION
                     JSR AS_HFNS                        ; NO, GET STARTING POINT OF LINE
                     JSR AS_HPLOT0                      ; PLOT THE POINT, AND SET UP FOR
                                                     ; DRAWING A LINE FROM THAT POINT
 AS_L_HPLOT_1                  JSR AS_CHRGOT                      ; CHARACTER AT END OF EXPRESSION
-                    CMP #AS_TOKEN_TO                   ; IS A LINE SPECIFIED?
+                    CMP #MS_TOTK                   ; IS A LINE SPECIFIED?
                     BNE AS_RTS_23                      ; NO, EXIT
 AS_L_HPLOT_2                  JSR AS_SYNCHR                      ; YES. ADV. TXTPTR (WHY NOT CHRGET)
                     JSR AS_HFNS                        ; GET COORDINATES OF LINE END
@@ -7531,10 +7531,10 @@ AS_XDRAW               JSR AS_DRWPNT
                                                     ; TO A POSITION JUST BELOW HIMEM.
                                                     ; HIMEM IS THEN MOVED TO JUST BELOW THE TABLE
                                                     ; --------------------------------
-AS_SHLOAD              LDA #>AS_LINNUM                    ; SET UP TO READ TWO BYTES
+AS_SHLOAD              LDA #>MS_LINNUM                    ; SET UP TO READ TWO BYTES
                     STA MON_A1H                     ; INTO LINNUM,LINNUM+1
                     STA MON_A2H                     ; 
-                    LDY #AS_LINNUM                     ; 
+                    LDY #MS_LINNUM                     ; 
                     STY MON_A1L                     ; 
                     INY                             ; LINNUM+1
                     STY MON_A2L                     ; 
@@ -7544,7 +7544,7 @@ AS_SHLOAD              LDA #>AS_LINNUM                    ; SET UP TO READ TWO B
                     TAX                             ; 
                     DEX                             ; FORMING HIMEM-1
                     STX MON_A2L                     ; 
-                    SBC AS_LINNUM                      ; FORMING HIMEM-(LINNUM)
+                    SBC MS_LINNUM                      ; FORMING HIMEM-(LINNUM)
                     PHA                             ; 
                     LDA AS_MEMSIZ+1                    ; 
                     TAY                             ; 
@@ -7552,19 +7552,19 @@ AS_SHLOAD              LDA #>AS_LINNUM                    ; SET UP TO READ TWO B
                     BNE AS_L_SHLOAD_1                          ; NO
                     DEY                             ; YES, HAVE TO DECREMENT HIGH BYTE
 AS_L_SHLOAD_1                  STY MON_A2H                     ; 
-                    SBC AS_LINNUM+1                    ; 
+                    SBC MS_LINNUM+1                    ; 
                     CMP MS_STREND+1                    ; RUNNING INTO VARIABLES?
                     BCC AS_L_SHLOAD_2                          ; YES, OUT OF MEMORY
                     BNE AS_L_SHLOAD_3                          ; NO, STILL ROOM
-AS_L_SHLOAD_2                  JMP AS_MEMERR                      ; MEM FULL ERR
+AS_L_SHLOAD_2                  JMP MS_OMERR                      ; MEM FULL ERR
 AS_L_SHLOAD_3                  STA AS_MEMSIZ+1                    ; 
-                    STA AS_FRETOP+1                    ; CLEAR STRING SPACE
+                    STA MS_FRETOP+1                    ; CLEAR STRING SPACE
                     STA MON_A1H                     ; (BUT NAMES ARE STILL IN VARTBL!)
                     STA AS_HGR_SHAPE_PNTR+1
                     PLA
                     STA AS_HGR_SHAPE_PNTR
                     STA AS_MEMSIZ
-                    STA AS_FRETOP
+                    STA MS_FRETOP
                     STA MON_A1L
                     JSR MON_RD2BIT                  ; READ TO TAPE TRANSITIONS
                     LDA #3                          ; SHORT DELAY FOR INTERMEDIATE HEADER
@@ -7575,10 +7575,10 @@ AS_L_SHLOAD_3                  STA AS_MEMSIZ+1                    ;
 AS_TAPEPNT
                     CLC
                     LDA MS_LOWTR
-                    ADC AS_LINNUM
+                    ADC MS_LINNUM
                     STA MON_A2L
                     LDA MS_LOWTR+1
-                    ADC AS_LINNUM+1
+                    ADC MS_LINNUM+1
                     STA MON_A2H
                     LDY #4
                     LDA (MS_LOWTR),Y
@@ -7611,7 +7611,7 @@ AS_L_HTAB_1                  CMP #40
                     BCC AS_L_HTAB_2
                     SBC #40
                     PHA
-                    JSR AS_CRDO
+                    JSR MS_CRDO
                     PLA
                     JMP AS_L_HTAB_1
 AS_L_HTAB_2                  STA MON_CH
@@ -9530,7 +9530,7 @@ MON_CANCEL   LDA   #("\\"|%10000000) ;BACKSLASH AFTER CANCELLED LINE
          JSR   MON_COUT
 MON_GETLNZ   JSR   MON_CROUT      ;OUTPUT CR
 
-MON_GETLN    LDA   $33
+MS_CQINLN    LDA   $33
          JSR   MON_COUT       ;OUTPUT PROMPT CHAR
          LDX   #$01       ;INIT INPUT INDEX
 MON_BCKSPC   TXA              ;  WILL BACKSPACE TO 0
