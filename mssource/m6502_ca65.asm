@@ -1,7 +1,7 @@
 REALIO .set 4
 INTPRC .set 1
 ADDPRC .set 1
-LNGERR .set 0
+LNGERR .set 1
 TIME .set 1
 EXTIO .set 1
 DISKO .set 1
@@ -16,9 +16,9 @@ STKEND .set 507
 BUFPAG .set 2
 LINLEN .set 40
 BUFLEN .set 240
-ROMLOC .set 2048
+ROMLOC .set 53248
 KIMROM .set 0
-RAMLOC .set 10752
+RAMLOC .set 2048
 linlen .set 40
 CQOPEN .set 65472
 CQCLOS .set 65475
@@ -253,14 +253,15 @@ CQCSIN .set 65277
 .undef BUF
 .define BUF BUFPAG*256
 BUFPAG .set 2
-ROMLOC .set 2048
-RAMLOC .set 10752
+ROMLOC .set 53248
+RAMLOC .set 2048
 OUTCH .set 65005
 CZGETL .set 64780
 LINLEN .set 40
 BUFLEN .set 240
 RORSW .set 1
 STKEND .set 507
+LNGERR .set 1
 .endif
 .if RORSW = 0
 
