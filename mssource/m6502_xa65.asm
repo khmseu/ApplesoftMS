@@ -244,6 +244,8 @@ _Z: ;STARTING POINT FOR M6502 SIMULATOR
 #endif
 #if REALIO-4 == 0
 
+#define LNGERR 1
+#define DISKO 1
 #define RORSW 1
 #define NULCMD 0
 #define GETCMD 1
@@ -262,7 +264,6 @@ _Z: ;STARTING POINT FOR M6502 SIMULATOR
 #define BUFLEN 240
 #define RORSW 1
 #define STKEND 507
-#define LNGERR 1
 #endif
 #if RORSW == 0
 

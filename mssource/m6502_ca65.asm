@@ -242,6 +242,8 @@ OUTCH .set 65035
 .endif
 .if REALIO-4 = 0
 
+LNGERR .set 1
+DISKO .set 1
 RORSW .set 1
 NULCMD .set 0
 GETCMD .set 1
@@ -261,7 +263,6 @@ LINLEN .set 40
 BUFLEN .set 240
 RORSW .set 1
 STKEND .set 507
-LNGERR .set 1
 .endif
 .if RORSW = 0
 
