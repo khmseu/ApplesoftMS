@@ -802,13 +802,13 @@ MS_FONE, 0xe913, 0, 0x0000
     asrom.s 5055 5056 6316 6317 1920 1921
 AS_LOAD_FAC_FROM_YA, 0xeaf9, 0, 0x0000
     asrom.s 5978 6157 6253 1922 2836 3185 5235
-AS_L_STEP_1, 0xd7c3, 0, 0x0000
+MS_ONEON, 0xd7c3, 0, 0x0000
     asrom.s 1925
 AS_SIGN, 0xeb82, 0, 0x0000
     asrom.s 5456 5505 6152 1928 5040
 AS_FRM_STACK_2, 0xde15, 0, 0x0000
     asrom.s 1929
-AS_L_NEWSTT_1, 0xd7e5, 0, 0x0000
+MS_DIRCON, 0xd7e5, 0, 0x0000
     asrom.s 1946
 AS_COLON_, 0xd842, 0, 0x0000
     asrom.s 1951
@@ -864,33 +864,33 @@ AS_L_LOAD_1, 0xd8ed, 0, 0x0000
     asrom.s 2115
 AS_L_RUN_1, 0xd91b, 0, 0x0000
     asrom.s 2146
-AS_GO_TO_LINE, 0xd935, 0, 0x0000
+MS_RUNC2, 0xd935, 0, 0x0000
     asrom.s 2149
-AS_REMN, 0xd9a6, 0, 0x0000
+MS_REMN, 0xd9a6, 0, 0x0000
     asrom.s 2288 6701 2180
-AS_L_GOTO_1, 0xd955, 0, 0x0000
+MS_LUK4IT, 0xd955, 0, 0x0000
     asrom.s 2183
-AS_L_GOTO_2, 0xd959, 0, 0x0000
+MS_LUKALL, 0xd959, 0, 0x0000
     asrom.s 2188 2190
-AS_UNDERR, 0xd97c, 0, 0x0000
+MS_USERR, 0xd97c, 0, 0x0000
     asrom.s 2194
-AS_RTS_5, 0xd96a, 0, 0x0000
+MS_GORTS, 0xd96a, 0, 0x0000
     asrom.s 2205
 AS_RETURN, 0xd984, 0, 0x0000
     asrom.s 2212
-AS_SYNERR_2, 0xd981, 0, 0x0000
+MS_SNERR2, 0xd981, 0, 0x0000
     asrom.s 2307
 AS_PULL3, 0xd9c5, 0, 0x0000
     asrom.s 2223
-AS_ADDON, 0xd998, 0, 0x0000
+MS_ADDON, 0xd998, 0, 0x0000
     asrom.s 2289 2761 6702
 AS_L_ADDON_1, 0xd9a2, 0, 0x0000
     asrom.s 2243
-AS_RTS_6, 0xd9a2, 0, 0x0000
+MS_REMRTS, 0xd9a2, 0, 0x0000
     asrom.s 2262 2264
-AS_L_REMN_1, 0xd9ae, 0, 0x0000
+MS_EXCHQT, 0xd9ae, 0, 0x0000
     asrom.s 2268
-AS_L_REMN_2, 0xd9b6, 0, 0x0000
+MS_REMER, 0xd9b6, 0, 0x0000
     asrom.s 2267
 AS_FRMEVL, 0xdd7b, 0, 0x0000
     asrom.s 3140 3210 2277 2378 2471 2871

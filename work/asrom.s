@@ -1922,10 +1922,10 @@ MS_LDFONE                LDA #<MS_FONE                   ; STEP DEFAULT=1
                     JSR AS_LOAD_FAC_FROM_YA
                     JSR MS_Z_CHRGOT
                     CMP #MS_STEPTK
-                    BNE AS_L_STEP_1                          ; USE DEFAULT VALUE OF 1.0
+                    BNE MS_ONEON                          ; USE DEFAULT VALUE OF 1.0
                     JSR MS_Z_CHRGET                      ; STEP SPECIFIED, GET IT
                     JSR AS_FRMNUM
-AS_L_STEP_1                  JSR AS_SIGN
+MS_ONEON                  JSR AS_SIGN
                     JSR AS_FRM_STACK_2
                     LDA MS_Z_FORPNT+1
                     PHA
@@ -1943,10 +1943,10 @@ AS_NEWSTT              TSX                             ; REMEMBER THE STACK POSI
                     LDY MS_Z_TXTPTR+1                    ; 
                     LDX MS_Z_CURLIN+1                    ; =$FF IF IN DIRECT MODE
                     INX                             ; $FF TURNS INTO $00
-                    BEQ AS_L_NEWSTT_1                          ; IN DIRECT MODE
+                    BEQ MS_DIRCON                          ; IN DIRECT MODE
                     STA MS_Z_OLDTXT                     ; IN RUNNING MODE
                     STY MS_Z_OLDTXT+1                   ; 
-AS_L_NEWSTT_1                  LDY #0                          ; 
+MS_DIRCON                  LDY #0                          ; 
                     LDA (MS_Z_TXTPTR),Y                  ; END OF LINE YET?
                     BNE AS_COLON_                      ; NO
                     LDY #2                          ; YES, SEE IF END OF PROGRAM
@@ -2146,7 +2146,7 @@ MS_RUN                 PHP                             ; SAVE STATUS WHILE SUBTR
                     BNE AS_L_RUN_1                          ; PROBABLY A LINE NUMBER
                     JMP MS_RUNC                     ; START AT BEGINNING OF PROGRAM
 AS_L_RUN_1                  JSR MS_CLEARC                      ; CLEAR VARIABLES
-                    JMP AS_GO_TO_LINE                  ; JOIN GOSUB STATEMENT
+                    JMP MS_RUNC2                  ; JOIN GOSUB STATEMENT
                                                     ; --------------------------------
                                                     ; "GOSUB" STATEMENT
                                                     ; 
@@ -2168,7 +2168,7 @@ MS_GOSUB               LDA #3                          ; BE SURE ENOUGH ROOM ON 
                     PHA
                     LDA #MS_GOSUTK
                     PHA
-AS_GO_TO_LINE
+MS_RUNC2
                     JSR MS_Z_CHRGOT
                     JSR MS_GOTO
                     JMP AS_NEWSTT
@@ -2177,32 +2177,32 @@ AS_GO_TO_LINE
                                                     ; ALSO USED BY "RUN" AND "GOSUB"
                                                     ; --------------------------------
 MS_GOTO                JSR MS_LINGET                      ; GET GOTO LINE
-                    JSR AS_REMN                        ; POINT Y TO EOL
+                    JSR MS_REMN                        ; POINT Y TO EOL
                     LDA MS_Z_CURLIN+1                    ; IS CURRENT PAGE < GOTO PAGE?
                     CMP MS_Z_LINNUM+1                    ; 
-                    BCS AS_L_GOTO_1                          ; SEARCH FROM PROG START IF NOT
+                    BCS MS_LUK4IT                          ; SEARCH FROM PROG START IF NOT
                     TYA                             ; OTHERWISE SEARCH FROM NEXT LINE
                     SEC                             ; 
                     ADC MS_Z_TXTPTR                      ; 
                     LDX MS_Z_TXTPTR+1                    ; 
-                    BCC AS_L_GOTO_2                          ; 
+                    BCC MS_LUKALL                          ; 
                     INX                             ; 
-                    BCS AS_L_GOTO_2                          ; 
-AS_L_GOTO_1                  LDA MS_Z_TXTTAB                      ; GET PROGRAM BEGINNING
+                    BCS MS_LUKALL                          ; 
+MS_LUK4IT                  LDA MS_Z_TXTTAB                      ; GET PROGRAM BEGINNING
                     LDX MS_Z_TXTTAB+1                    ; 
-AS_L_GOTO_2                  JSR MS_FNDLNC                         ; SEARCH FOR GOTO LINE
-                    BCC AS_UNDERR                      ; ERROR IF NOT THERE
+MS_LUKALL                  JSR MS_FNDLNC                         ; SEARCH FOR GOTO LINE
+                    BCC MS_USERR                      ; ERROR IF NOT THERE
                     LDA MS_Z_LOWTR                       ; TXTPTR = START OF THE DESTINATION LINE
                     SBC #1                          ; 
                     STA MS_Z_TXTPTR                      ; 
                     LDA MS_Z_LOWTR+1                     ; 
                     SBC #0                          ; 
                     STA MS_Z_TXTPTR+1                    ; 
-AS_RTS_5               RTS                             ; RETURN TO NEWSTT OR GOSUB
+MS_GORTS               RTS                             ; RETURN TO NEWSTT OR GOSUB
                                                     ; --------------------------------
                                                     ; "POP" AND "RETURN" STATEMENTS
                                                     ; --------------------------------
-MS_RETURN                 BNE AS_RTS_5
+MS_RETURN                 BNE MS_GORTS
                     LDA #$FF
                     STA MS_Z_FORPNT                      ; <<< BUG: SHOULD BE FORPNT+1 >>>
                                                     ; <<< SEE "ALL ABOUT APPLESOFT", PAGES 100,101 >>>
@@ -2212,10 +2212,10 @@ MS_RETURN                 BNE AS_RTS_5
                     BEQ AS_RETURN
                     LDX #MS_ERRRG
                     .BYT $2C                       ; FAKE
-AS_UNDERR              LDX #MS_ERRUS
+MS_USERR              LDX #MS_ERRUS
                     JMP MS_ERROR
                                                     ; --------------------------------
-AS_SYNERR_2            JMP AS_SYNERR
+MS_SNERR2            JMP AS_SYNERR
                                                     ; --------------------------------
 AS_RETURN              PLA                             ; DISCARD GOSUB TOKEN
                     PLA
@@ -2236,36 +2236,36 @@ MS_DATA                JSR MS_DATAN                       ; MOVE TO NEXT STATEME
                                                     ; --------------------------------
                                                     ; ADD (Y) TO TXTPTR
                                                     ; --------------------------------
-AS_ADDON               TYA
+MS_ADDON               TYA
                     CLC
                     ADC MS_Z_TXTPTR
                     STA MS_Z_TXTPTR
                     BCC AS_L_ADDON_1
                     INC MS_Z_TXTPTR+1
 AS_L_ADDON_1
-AS_RTS_6               RTS
+MS_REMRTS               RTS
                                                     ; --------------------------------
                                                     ; SCAN AHEAD TO NEXT ":" OR EOL
                                                     ; --------------------------------
 MS_DATAN               LDX #(":"&%01111111)                        ; GET OFFSET IN Y TO EOL OR ":"
                     .BYT $2C                       ; FAKE
                                                     ; --------------------------------
-AS_REMN                LDX #0                          ; TO EOL ONLY
+MS_REMN                LDX #0                          ; TO EOL ONLY
                     STX MS_Z_CHARAC
                     LDY #0
                     STY MS_Z_ENDCHR
-AS_L_REMN_1                  LDA MS_Z_ENDCHR                      ; TRICK TO COUNT QUOTE PARITY
+MS_EXCHQT                  LDA MS_Z_ENDCHR                      ; TRICK TO COUNT QUOTE PARITY
                     LDX MS_Z_CHARAC
                     STA MS_Z_CHARAC
                     STX MS_Z_ENDCHR
-AS_L_REMN_2                  LDA (MS_Z_TXTPTR),Y
-                    BEQ AS_RTS_6                       ; END OF LINE
+MS_REMER                  LDA (MS_Z_TXTPTR),Y
+                    BEQ MS_REMRTS                       ; END OF LINE
                     CMP MS_Z_ENDCHR
-                    BEQ AS_RTS_6                       ; COLON IF LOOKING FOR COLONS
+                    BEQ MS_REMRTS                       ; COLON IF LOOKING FOR COLONS
                     INY
                     CMP #$22
-                    BNE AS_L_REMN_2
-                    BEQ AS_L_REMN_1                          ; ...ALWAYS
+                    BNE MS_REMER
+                    BEQ MS_EXCHQT                          ; ...ALWAYS
                                                     ; --------------------------------
 AS_PULL3               PLA
                     PLA
@@ -2285,8 +2285,8 @@ AS_L_IF_1                  LDA MS_Z_FAC                         ; CONDITION TRUE
                                                     ; --------------------------------
                                                     ; "REM" STATEMENT, OR FALSE "IF" STATEMENT
                                                     ; --------------------------------
-MS_REM                 JSR AS_REMN                        ; SKIP REST OF LINE
-                    BEQ AS_ADDON                       ; ...ALWAYS
+MS_REM                 JSR MS_REMN                        ; SKIP REST OF LINE
+                    BEQ MS_ADDON                       ; ...ALWAYS
                                                     ; --------------------------------
 AS_IF_TRUE
                     JSR MS_Z_CHRGOT                      ; COMMAND OR NUMBER?
@@ -2304,7 +2304,7 @@ MS_ONGOTO              JSR AS_GETBYT                      ; EVALUATE <EXP>, AS B
                     CMP #MS_GOSUTK
                     BEQ AS_ON_2
 AS_ON_1                CMP #MS_GOTOTK
-                    BNE AS_SYNERR_2
+                    BNE MS_SNERR2
 AS_ON_2                DEC MS_Z_FAC+4                       ; COUNTED TO RIGHT ONE YET?
                     BNE AS_L_ON_2_3                          ; NO, KEEP LOOKING
                     PLA                             ; YES, RETRIEVE CMD
@@ -2758,7 +2758,7 @@ AS_FINDATA
                     STA MS_Z_DATLIN+1
 AS_L_FINDATA_1                  LDA (MS_Z_TXTPTR),Y                  ; GET 1ST TOKEN OF STATEMENT
                     TAX                             ; SAVE TOKEN IN X-REG
-                    JSR AS_ADDON                       ; ADD (Y) TO TXTPTR
+                    JSR MS_ADDON                       ; ADD (Y) TO TXTPTR
                     CPX #MS_DATATK                  ; DID WE FIND A "DATA" STATEMENT?
                     BNE AS_FINDATA                     ; NOT YET
                     JMP AS_INSTART                     ; YES, READ IT
@@ -6698,8 +6698,8 @@ AS_ONERR               LDA #MS_GOTOTK                 ; MUST BE "GOTO" NEXT
                     STA AS_CURLSV                      ; 
                     LDA MS_Z_CURLIN+1                    ; 
                     STA AS_CURLSV+1                    ; 
-                    JSR AS_REMN                        ; IGNORE REST OF LINE <<<WHY?>>>
-                    JMP AS_ADDON                       ; CONTINUE PROGRAM
+                    JSR MS_REMN                        ; IGNORE REST OF LINE <<<WHY?>>>
+                    JMP MS_ADDON                       ; CONTINUE PROGRAM
                                                     ; --------------------------------
                                                     ; ROUTINE TO HANDLE ERRORS IF ONERR GOTO ACTIVE
                                                     ; --------------------------------

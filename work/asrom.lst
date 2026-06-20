@@ -1897,10 +1897,10 @@ asrom.s
  1922 A:d7b3  20 f9 ea                           jsr AS_LOAD_FAC_FROM_YA
  1923 A:d7b6  20 b7 00                           jsr MS_Z_CHRGOT
  1924 A:d7b9  c9 c7                              cmp #MS_STEPTK
- 1925 A:d7bb  d0 06                              bne AS_L_STEP_1                ; USE DEFAULT VALUE OF 1.0
+ 1925 A:d7bb  d0 06                              bne MS_ONEON                ; USE DEFAULT VALUE OF 1.0
  1926 A:d7bd  20 b1 00                           jsr MS_Z_CHRGET                ; STEP SPECIFIED, GET IT
  1927 A:d7c0  20 67 dd                           jsr AS_FRMNUM
- 1928 A:d7c3  20 82 eb                 AS_L_STEP_1 jsr AS_SIGN
+ 1928 A:d7c3  20 82 eb                 MS_ONEON jsr AS_SIGN
  1929 A:d7c6  20 15 de                           jsr AS_FRM_STACK_2
  1930 A:d7c9  a5 86                              lda MS_Z_FORPNT+1
  1931 A:d7cb  48                                 pha 
@@ -1918,10 +1918,10 @@ asrom.s
  1943 A:d7da  a4 b9                              ldy MS_Z_TXTPTR+1          ; 
  1944 A:d7dc  a6 76                              ldx MS_Z_CURLIN+1          ; =$FF IF IN DIRECT MODE
  1945 A:d7de  e8                                 inx                    ; $FF TURNS INTO $00
- 1946 A:d7df  f0 04                              beq AS_L_NEWSTT_1                ; IN DIRECT MODE
+ 1946 A:d7df  f0 04                              beq MS_DIRCON                ; IN DIRECT MODE
  1947 A:d7e1  85 79                              sta MS_Z_OLDTXT                ; IN RUNNING MODE
  1948 A:d7e3  84 7a                              sty MS_Z_OLDTXT+1          ; 
- 1949 A:d7e5  a0 00                    AS_L_NEWSTT_1 ldy #0          ; 
+ 1949 A:d7e5  a0 00                    MS_DIRCON ldy #0          ; 
  1950 A:d7e7  b1 b8                              lda (MS_Z_TXTPTR),Y                  ; END OF LINE YET?
  1951 A:d7e9  d0 57                              bne AS_COLON_                ; NO
  1952 A:d7eb  a0 02                              ldy #2             ; YES, SEE IF END OF PROGRAM
@@ -2121,7 +2121,7 @@ asrom.s
  2146 A:d916  d0 03                              bne AS_L_RUN_1                ; PROBABLY A LINE NUMBER
  2147 A:d918  4c 65 d6                           jmp MS_RUNC                ; START AT BEGINNING OF PROGRAM
  2148 A:d91b  20 6c d6                 AS_L_RUN_1 jsr MS_CLEARC             ; CLEAR VARIABLES
- 2149 A:d91e  4c 35 d9                           jmp AS_GO_TO_LINE                ; JOIN GOSUB STATEMENT
+ 2149 A:d91e  4c 35 d9                           jmp MS_RUNC2                ; JOIN GOSUB STATEMENT
  2150 A:d921                                    ; --------------------------------
  2151 A:d921                                    ; "GOSUB" STATEMENT
  2152 A:d921                                    ; 
@@ -2143,7 +2143,7 @@ asrom.s
  2168 A:d931  48                                 pha 
  2169 A:d932  a9 b0                              lda #MS_GOSUTK
  2170 A:d934  48                                 pha 
- 2171 A:d935                           AS_GO_TO_LINE 
+ 2171 A:d935                           MS_RUNC2 
  2172 A:d935  20 b7 00                           jsr MS_Z_CHRGOT
  2173 A:d938  20 3e d9                           jsr MS_GOTO
  2174 A:d93b  4c d2 d7                           jmp AS_NEWSTT
@@ -2152,32 +2152,32 @@ asrom.s
  2177 A:d93e                                    ; ALSO USED BY "RUN" AND "GOSUB"
  2178 A:d93e                                    ; --------------------------------
  2179 A:d93e  20 0c da                 MS_GOTO   jsr MS_LINGET             ; GET GOTO LINE
- 2180 A:d941  20 a6 d9                           jsr AS_REMN                ; POINT Y TO EOL
+ 2180 A:d941  20 a6 d9                           jsr MS_REMN                ; POINT Y TO EOL
  2181 A:d944  a5 76                              lda MS_Z_CURLIN+1          ; IS CURRENT PAGE < GOTO PAGE?
  2182 A:d946  c5 51                              cmp MS_Z_LINNUM+1          ; 
- 2183 A:d948  b0 0b                              bcs AS_L_GOTO_1                ; SEARCH FROM PROG START IF NOT
+ 2183 A:d948  b0 0b                              bcs MS_LUK4IT                ; SEARCH FROM PROG START IF NOT
  2184 A:d94a  98                                 tya                    ; OTHERWISE SEARCH FROM NEXT LINE
  2185 A:d94b  38                                 sec                    ; 
  2186 A:d94c  65 b8                              adc MS_Z_TXTPTR                ; 
  2187 A:d94e  a6 b9                              ldx MS_Z_TXTPTR+1          ; 
- 2188 A:d950  90 07                              bcc AS_L_GOTO_2                ; 
+ 2188 A:d950  90 07                              bcc MS_LUKALL                ; 
  2189 A:d952  e8                                 inx                    ; 
- 2190 A:d953  b0 04                              bcs AS_L_GOTO_2                ; 
- 2191 A:d955  a5 67                    AS_L_GOTO_1 lda MS_Z_TXTTAB             ; GET PROGRAM BEGINNING
+ 2190 A:d953  b0 04                              bcs MS_LUKALL                ; 
+ 2191 A:d955  a5 67                    MS_LUK4IT lda MS_Z_TXTTAB             ; GET PROGRAM BEGINNING
  2192 A:d957  a6 68                              ldx MS_Z_TXTTAB+1          ; 
- 2193 A:d959  20 1e d6                 AS_L_GOTO_2 jsr MS_FNDLNC             ; SEARCH FOR GOTO LINE
- 2194 A:d95c  90 1e                              bcc AS_UNDERR                ; ERROR IF NOT THERE
+ 2193 A:d959  20 1e d6                 MS_LUKALL jsr MS_FNDLNC             ; SEARCH FOR GOTO LINE
+ 2194 A:d95c  90 1e                              bcc MS_USERR                ; ERROR IF NOT THERE
  2195 A:d95e  a5 9b                              lda MS_Z_LOWTR                ; TXTPTR = START OF THE DESTINATION LINE
  2196 A:d960  e9 01                              sbc #1             ; 
  2197 A:d962  85 b8                              sta MS_Z_TXTPTR                ; 
  2198 A:d964  a5 9c                              lda MS_Z_LOWTR+1          ; 
  2199 A:d966  e9 00                              sbc #0             ; 
  2200 A:d968  85 b9                              sta MS_Z_TXTPTR+1          ; 
- 2201 A:d96a  60                       AS_RTS_5  rts                 ; RETURN TO NEWSTT OR GOSUB
+ 2201 A:d96a  60                       MS_GORTS  rts                 ; RETURN TO NEWSTT OR GOSUB
  2202 A:d96b                                    ; --------------------------------
  2203 A:d96b                                    ; "POP" AND "RETURN" STATEMENTS
  2204 A:d96b                                    ; --------------------------------
- 2205 A:d96b  d0 fd                    MS_RETURN bne AS_RTS_5
+ 2205 A:d96b  d0 fd                    MS_RETURN bne MS_GORTS
  2206 A:d96d  a9 ff                              lda #$ff
  2207 A:d96f  85 85                              sta MS_Z_FORPNT                ; <<< BUG: SHOULD BE FORPNT+1 >>>
  2208 A:d971                                    ; <<< SEE "ALL ABOUT APPLESOFT", PAGES 100,101 >>>
@@ -2187,10 +2187,10 @@ asrom.s
  2212 A:d977  f0 0b                              beq AS_RETURN
  2213 A:d979  a2 16                              ldx #MS_ERRRG
  2214 A:d97b  2c                                 .byt $2c              ; FAKE
- 2215 A:d97c  a2 5a                    AS_UNDERR ldx #MS_ERRUS
+ 2215 A:d97c  a2 5a                    MS_USERR ldx #MS_ERRUS
  2216 A:d97e  4c 12 d4                           jmp MS_ERROR
  2217 A:d981                                    ; --------------------------------
- 2218 A:d981  4c c9 de                 AS_SYNERR_2 jmp AS_SYNERR
+ 2218 A:d981  4c c9 de                 MS_SNERR2 jmp AS_SYNERR
  2219 A:d984                                    ; --------------------------------
  2220 A:d984  68                       AS_RETURN pla                 ; DISCARD GOSUB TOKEN
  2221 A:d985  68                                 pla 
@@ -2211,36 +2211,36 @@ asrom.s
  2236 A:d998                                    ; --------------------------------
  2237 A:d998                                    ; ADD (Y) TO TXTPTR
  2238 A:d998                                    ; --------------------------------
- 2239 A:d998  98                       AS_ADDON  tya 
+ 2239 A:d998  98                       MS_ADDON  tya 
  2240 A:d999  18                                 clc 
  2241 A:d99a  65 b8                              adc MS_Z_TXTPTR
  2242 A:d99c  85 b8                              sta MS_Z_TXTPTR
  2243 A:d99e  90 02                              bcc AS_L_ADDON_1
  2244 A:d9a0  e6 b9                              inc MS_Z_TXTPTR+1
  2245 A:d9a2                           AS_L_ADDON_1 
- 2246 A:d9a2  60                       AS_RTS_6  rts 
+ 2246 A:d9a2  60                       MS_REMRTS  rts 
  2247 A:d9a3                                    ; --------------------------------
  2248 A:d9a3                                    ; SCAN AHEAD TO NEXT ":" OR EOL
  2249 A:d9a3                                    ; --------------------------------
  2250 A:d9a3  a2 3a                    MS_DATAN  ldx #(":"&%01111111)  ; GET OFFSET IN Y TO EOL OR ":"
  2251 A:d9a5  2c                                 .byt $2c              ; FAKE
  2252 A:d9a6                                    ; --------------------------------
- 2253 A:d9a6  a2 00                    AS_REMN   ldx #0          ; TO EOL ONLY
+ 2253 A:d9a6  a2 00                    MS_REMN   ldx #0          ; TO EOL ONLY
  2254 A:d9a8  86 0d                              stx MS_Z_CHARAC
  2255 A:d9aa  a0 00                              ldy #0
  2256 A:d9ac  84 0e                              sty MS_Z_ENDCHR
- 2257 A:d9ae  a5 0e                    AS_L_REMN_1 lda MS_Z_ENDCHR             ; TRICK TO COUNT QUOTE PARITY
+ 2257 A:d9ae  a5 0e                    MS_EXCHQT lda MS_Z_ENDCHR             ; TRICK TO COUNT QUOTE PARITY
  2258 A:d9b0  a6 0d                              ldx MS_Z_CHARAC
  2259 A:d9b2  85 0d                              sta MS_Z_CHARAC
  2260 A:d9b4  86 0e                              stx MS_Z_ENDCHR
- 2261 A:d9b6  b1 b8                    AS_L_REMN_2 lda (MS_Z_TXTPTR),Y
- 2262 A:d9b8  f0 e8                              beq AS_RTS_6                ; END OF LINE
+ 2261 A:d9b6  b1 b8                    MS_REMER lda (MS_Z_TXTPTR),Y
+ 2262 A:d9b8  f0 e8                              beq MS_REMRTS                ; END OF LINE
  2263 A:d9ba  c5 0e                              cmp MS_Z_ENDCHR
- 2264 A:d9bc  f0 e4                              beq AS_RTS_6                ; COLON IF LOOKING FOR COLONS
+ 2264 A:d9bc  f0 e4                              beq MS_REMRTS                ; COLON IF LOOKING FOR COLONS
  2265 A:d9be  c8                                 iny 
  2266 A:d9bf  c9 22                              cmp #$22
- 2267 A:d9c1  d0 f3                              bne AS_L_REMN_2
- 2268 A:d9c3  f0 e9                              beq AS_L_REMN_1                ; ...ALWAYS
+ 2267 A:d9c1  d0 f3                              bne MS_REMER
+ 2268 A:d9c3  f0 e9                              beq MS_EXCHQT                ; ...ALWAYS
  2269 A:d9c5                                    ; --------------------------------
  2270 A:d9c5  68                       AS_PULL3  pla 
  2271 A:d9c6  68                                 pla 
@@ -2260,8 +2260,8 @@ asrom.s
  2285 A:d9dc                                    ; --------------------------------
  2286 A:d9dc                                    ; "REM" STATEMENT, OR FALSE "IF" STATEMENT
  2287 A:d9dc                                    ; --------------------------------
- 2288 A:d9dc  20 a6 d9                 MS_REM    jsr AS_REMN             ; SKIP REST OF LINE
- 2289 A:d9df  f0 b7                              beq AS_ADDON                ; ...ALWAYS
+ 2288 A:d9dc  20 a6 d9                 MS_REM    jsr MS_REMN             ; SKIP REST OF LINE
+ 2289 A:d9df  f0 b7                              beq MS_ADDON                ; ...ALWAYS
  2290 A:d9e1                                    ; --------------------------------
  2291 A:d9e1                           AS_IF_TRUE 
  2292 A:d9e1  20 b7 00                           jsr MS_Z_CHRGOT                ; COMMAND OR NUMBER?
@@ -2279,7 +2279,7 @@ asrom.s
  2304 A:d9f0  c9 b0                              cmp #MS_GOSUTK
  2305 A:d9f2  f0 04                              beq AS_ON_2
  2306 A:d9f4  c9 ab                    AS_ON_1   cmp #MS_GOTOTK
- 2307 A:d9f6  d0 89                              bne AS_SYNERR_2
+ 2307 A:d9f6  d0 89                              bne MS_SNERR2
  2308 A:d9f8  c6 a1                    AS_ON_2   dec MS_Z_FAC+4       ; COUNTED TO RIGHT ONE YET?
  2309 A:d9fa  d0 04                              bne AS_L_ON_2_3                ; NO, KEEP LOOKING
  2310 A:d9fc  68                                 pla                    ; YES, RETRIEVE CMD
@@ -2733,7 +2733,7 @@ asrom.s
  2758 A:dcb7  85 7c                              sta MS_Z_DATLIN+1
  2759 A:dcb9  b1 b8                    AS_L_FINDATA_1 lda (MS_Z_TXTPTR),Y                  ; GET 1ST TOKEN OF STATEMENT
  2760 A:dcbb  aa                                 tax                    ; SAVE TOKEN IN X-REG
- 2761 A:dcbc  20 98 d9                           jsr AS_ADDON                ; ADD (Y) TO TXTPTR
+ 2761 A:dcbc  20 98 d9                           jsr MS_ADDON                ; ADD (Y) TO TXTPTR
  2762 A:dcbf  e0 83                              cpx #MS_DATATK               ; DID WE FIND A "DATA" STATEMENT?
  2763 A:dcc1  d0 dd                              bne AS_FINDATA                ; NOT YET
  2764 A:dcc3  4c 2b dc                           jmp AS_INSTART                ; YES, READ IT
@@ -6663,8 +6663,8 @@ asrom.s
  6698 A:f2dd  85 f6                              sta AS_CURLSV                ; 
  6699 A:f2df  a5 76                              lda MS_Z_CURLIN+1          ; 
  6700 A:f2e1  85 f7                              sta AS_CURLSV+1          ; 
- 6701 A:f2e3  20 a6 d9                           jsr AS_REMN                ; IGNORE REST OF LINE <<<WHY?>>>
- 6702 A:f2e6  4c 98 d9                           jmp AS_ADDON                ; CONTINUE PROGRAM
+ 6701 A:f2e3  20 a6 d9                           jsr MS_REMN                ; IGNORE REST OF LINE <<<WHY?>>>
+ 6702 A:f2e6  4c 98 d9                           jmp MS_ADDON                ; CONTINUE PROGRAM
  6703 A:f2e9                                    ; --------------------------------
  6704 A:f2e9                                    ; ROUTINE TO HANDLE ERRORS IF ONERR GOTO ACTIVE
  6705 A:f2e9                                    ; --------------------------------
