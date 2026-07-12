@@ -2957,7 +2957,7 @@ AS_SNTXERR:           JMP   AS_SYNERR
 AS_FRM_STACK_1:
                       LDA   AS_FAC_SIGN                ; Get fac.sign to push it
 ; Note: XA65 assembler (Andre Fachat) requires ! here when asm with "xa -R -bt 0" for some reason:
-                      LDX   !AS_MATHTBL,Y              ; Precedence byte from mathtbl
+                      LDX   AS_MATHTBL,Y              ; Precedence byte from mathtbl
                                                        ; --------------------------------
                                                        ; Enter here from "step", to push step sign and value
                                                        ; --------------------------------
