@@ -1,26 +1,26 @@
         .title  BASIC M6502 8K VER 1.1 BY MICRO-SOFT
         .include "M6502.lib.asm"
 ;Sall
-;RADIX 10			;THROUGHOUT ALL BUT MATH-PAK.
+;Radix 10			;throughout all but math-pak.
 
 $Z:
-                                     ;STARTING POINT FOR M6502 SIMULATOR
+                                     ;Starting point for m6502 simulator
         .org    0                    ;Start off at location zero.
         .subttl SWITCHES,MACROS.
 
-REALIO  =       4                    ;5=STM
-                                     ;4=APPLE.
-                                     ;3=COMMODORE.
-                                     ;2=OSI
-                                     ;1=MOS TECH,KIM
-                                     ;0=PDP-10 SIMULATING 6502
+REALIO  =       4                    ;5=Stm
+                                     ;4=Apple.
+                                     ;3=Commodore.
+                                     ;2=Osi
+                                     ;1=Mos tech,kim
+                                     ;0=Pdp-10 simulating 6502
 INTPRC  =       1                    ;Integer arrays.
 ADDPRC  =       1                    ;For additional precision.
 LNGERR  =       0                    ;Long error messages.
 TIME    =       0                    ;Capability to set and read a clk.
-EXTIO   =       0                    ;EXTERNAL I/O.
+EXTIO   =       0                    ;External i/o.
 DISKO   =       0                    ;Save and load commands
-NULCMD  =       1                    ;FOR THE "NULL" COMMAND
+NULCMD  =       1                    ;For the "null" command
 GETCMD  =       1
 RORSW   =       1
 ROMSW   =       1                    ;Tells if this is on rom.
@@ -39,9 +39,9 @@ KIMROM  =       0
 KIMROM  =       0
         .endif
         .if     ROMSW != 0
-RAMLOC  =       0o40000              ;USED ONLY IF ROMSW=1
+RAMLOC  =       0o40000              ;Used only if romsw=1
         .if     REALIO == 0
-ROMLOC  =       0o20000              ;START AT 8K.
+ROMLOC  =       0o20000              ;Start at 8k.
 RAMLOC  =       0o1400
         .endif
         .endif
@@ -65,7 +65,7 @@ CQSAVE  =       0o177730
 CQVERF  =       0o177733
 CQSYS   =       0o177736
 ISCNTC  =       0o177741
-CZGETL  =       0o177744             ;CALL POINT FOR "GET"
+CZGETL  =       0o177744             ;Call point for "get"
 CQCALL  =       0o177747             ;Close all channels
 CQTIMR  =       0o215
 BUFPAG  =       2
@@ -85,7 +85,7 @@ TRMPOS  =       0o306
         .if     REALIO == 1
 GETCMD  =       1
 DISKO   =       1
-OUTCH   =       0o17240              ;1EA0
+OUTCH   =       0o17240              ;1Ea0
 ROMLOC  =       0o20000
 RORSW   =       0
 CZGETL  =       0o17132
@@ -106,13 +106,13 @@ RORSW   =       1
 NULCMD  =       0
 GETCMD  =       1
 CQINLN  =       0o176547             ;fd67	GETLNZ
-CQPRMP  =       0o63                 ;33		PROMPT
+CQPRMP  =       0o63                 ;33		Prompt
 CQINCH  =       0o176414             ;fd0c	RDKEY
 CQCOUT  =       0o177315             ;fecd	WRITE
 CQCSIN  =       0o177375             ;fefd	READ
 BUFPAG  =       2
 BUF     =       BUFPAG * 256
-ROMLOC  =       0o150000             ;D000
+ROMLOC  =       0o150000             ;d000
 RAMLOC  =       0o4000               ;0800
 OUTCH   =       0o176755             ;fded	COUT
 CZGETL  =       0o176414             ;fd0c	RDKEY
@@ -215,7 +215,7 @@ IRPC	\Q,(IFDIF (\Q)("),(EXP "\Q"))
         .macro  BCSA, Q
         BCS     \Q
         .endmacro
-                                     ;THESE ARE USED ON THE 6502 BECAUSE
+                                     ;These are used on the 6502 because
         .macro  BEQA, Q
         BEQ     \Q
         .endmacro
@@ -297,36 +297,36 @@ IRPC	\Q,(IFDIF (\Q)("),(EXP "\Q"))
         .subttl INTRODUCTION AND COMPILATION PARAMETERS.
 
 ; --------- ---- -- ---------
-; COPYRIGHT 1976 BY MICROSOFT
+; Copyright 1976 by microsoft
 ; --------- ---- -- ---------
-; 7/27/78 FIXED BUG WHERE FOR VARIABLE AT BYTE FF MATCHED RETURN SEARCHING
+; 7/27/78 Fixed bug where for variable at byte ff matched return searching
 ; 	For gosub entry on stack in fndfor call by changing sta forpnt
-; 	TO STA FORPNT+1. THIS IS A SERIOUS BUG IN ALL VERSIONS.
-; 7/27/78 FIXED BUG AT NEWSTT UNDER IFN BUFPAG WHEN CHECK OF CURLIN
+; 	To sta forpnt+1. this is a serious bug in all versions.
+; 7/27/78 Fixed bug at newstt under ifn bufpag when check of curlin
 ; 	Was done before curlin set up so input retries of first statement
-; 	WAS GIVING SYNTAX ERROR INSTEAD OF REDO FROM START (CODE WAS 12/1/77 FIX)
-; 7/1/78	SAVED A FEW BYTES IN INIT FOR COMMODORE (14)
-; 7/1/78 FIXED BUG WHERE REPLACING A LINE OVERFLOWING MEMORY LEFT LINKS
-; 	IN A BAD STATE. (CODE AT NODEL AND FINI) BUG#4
-; 7/1/78 FIXED BUG WHERE GARBAGE COLLECTION NEVER(!) COLLECTS TEMPS
-; 	(STY GRBPNT  AT FNDVAR, LDA GRBPNT ORA GRBPNT+1 AT GRBPAS)
-; 	THIS WAS COMMODORE BUG #2
-; 7/1/78 FIXED BUG WHERE DELETE/INSERT OF LINE COULD CAUSE A GARBAGE COLLECTION WITH BAD VARTAB IF OUT OF MEMORY
-; 	 (LDWD MEMSIZ STWD FRETOP=JSR RUNC CLC ALSO AT NODEL)
-; 3/9/78 EDIT TO FIX COMMO TRMPOS AND CHANGE LEFT$ AND RIGHT$ TO ALLOW A SECOND ARGUMENT OF 0 AND RETURN A NULL STRING
-; 2/25/78 FIXED BUG THAT INPFLG WAS SET WRONG WHEN BUFPAG.NE.0
-; 	INCREASED NUMLEV FROM 19 TO 23
-; 2/11/78 DISALLOWED SPACES IN RESERVED WORDS. PUT IN SPECIAL CHECK FOR "GO TO"
-; 2/11/78 FIXED BUG WHERE ROUNDING OF THE FAC BEFORE PUSHING COULD CAUSE A STRING POINTER
+; 	Was giving syntax error instead of redo from start (code was 12/1/77 fix)
+; 7/1/78	Saved a few bytes in init for commodore (14)
+; 7/1/78 Fixed bug where replacing a line overflowing memory left links
+; 	In a bad state. (code at nodel and fini) bug#4
+; 7/1/78 Fixed bug where garbage collection never(!) collects temps
+; 	(Sty grbpnt  at fndvar, lda grbpnt ora grbpnt+1 at grbpas)
+; 	This was commodore bug #2
+; 7/1/78 Fixed bug where delete/insert of line could cause a garbage collection with bad vartab if out of memory
+; 	 (Ldwd memsiz stwd fretop=jsr runc clc also at nodel)
+; 3/9/78 Edit to fix commo trmpos and change left$ and right$ to allow a second argument of 0 and return a null string
+; 2/25/78 Fixed bug that inpflg was set wrong when bufpag.ne.0
+; 	Increased numlev from 19 to 23
+; 2/11/78 Disallowed spaces in reserved words. put in special check for "go to"
+; 2/11/78 Fixed bug where rounding of the fac before pushing could cause a string pointer
 ; 	In the fac to be incremented
 ; 1/24/78 fixed problem where user defined function undefined check fix was smashing error number in [x]
-; 12/1/77 FIXED PROBLEM WHERE PEEK WAS SMASHING (POKER) CAUSING POKE OF PEEK TO FAIL
-; 12/1/77 FIXED PROBLEM WHERE PROBLEM WITH VARTXT=LINNUM=BUF-2 CAUSING BUF-1 COMMA TO DISAPPEAR
-; 12/1/77 FIXED BUFPAG.NE.0 PROBLEM AT NEWSTT AND STOP : CODE WAS STILL
-; 	ASSUMING TXTPTR+1.EQ.0 IFF STATEMENT WAS DIRECT
+; 12/1/77 Fixed problem where peek was smashing (poker) causing poke of peek to fail
+; 12/1/77 Fixed problem where problem with vartxt=linnum=buf-2 causing buf-1 comma to disappear
+; 12/1/77 Fixed bufpag.ne.0 problem at newstt and stop : code was still
+; 	Assuming txtptr+1.eq.0 iff statement was direct
 
 NUMLEV  =       23                   ;Number of stack levels reserved
-                                     ;BY AN EXPLICIT CALL TO "GETSTK"*
+                                     ;By an explicit call to "getstk"*
 STRSIZ  =       3                    ;# Of locs per string descriptor.
 NUMTMP  =       3                    ;Number of string temporaries.
 CONTW   =       15                   ;Character to suppress output.
@@ -334,21 +334,21 @@ CONTW   =       15                   ;Character to suppress output.
         .page
         .subttl SOME EXPLANATION.
 
-; M6502 BASIC CONFIGURES BASIC AS FOLLOWS
+; M6502 basic configures basic as follows
 
 ; Low locations
 ; 	Page	zero
 
 ; 		Startup:
 ; 		Initially a jmp to initialization code but
-; 		CHANGED TO A JMP TO "READY".
-; 		RESTARTING THE MACHINE AT LOC 0 DURING PROGRAM
+; 		Changed to a jmp to "ready".
+; 		Restarting the machine at loc 0 during program
 ; 		Execution can leave things messed up.
 
 ; 		Loc of fac to integer and integer to fac
 ; 		Routines.
 
-; 		"DIRECT" MEMORY:
+; 		"Direct" memory:
 ; 		These are the most commonly used locations.
 ; 		They hold bookkeeping info and all other
 ; 		Frequently used information.
@@ -359,8 +359,8 @@ CONTW   =       15                   ;Character to suppress output.
 ; 		In this area since the juxtaposition of two locations
 ; 		Is often depended upon.
 
-; 		STILL IN RAM WE HAVE THE BEGINNING OF THE "CHRGET"
-; 		SUBROUTINE. IT IS HERE SO [TXTPTR] CAN BE THE
+; 		Still in ram we have the beginning of the "chrget"
+; 		Subroutine. it is here so [txtptr] can be the
 ; 		Extended address of a load instruction.
 ; 		This saves having to bother any registers.
 
@@ -374,57 +374,57 @@ CONTW   =       15                   ;Character to suppress output.
 ; 		Basic itself resides.
 
 ; 				A zero.
-; 		[TXTTAB]	POINTER TO NEXT LINE'S POINTER.
-; 				LINE # OF THIS LINE (2 BYTES).
+; 		[Txttab]	pointer to next line's pointer.
+; 				Line # of this line (2 bytes).
 ; 				Characters on this line.
 ; 				Zero.
 ; 				Pointer at next line's pointer
-; 					(POINTED TO BY THE ABOVE POINTER).
+; 					(Pointed to by the above pointer).
 ; 				... Repeats ...
 ; 		Last line:	pointer at zero pointer.
 ; 				Line # of this line.
 ; 				Characters on this line.
 ; 				Zero.
-; 				DOUBLE ZERO (POINTED TO BY THE ABOVE POINTER).
-; 		[VARTAB]	SIMPLE VARIABLES. 6 BYTES PER VALUE.
-; 				2 BYTES GIVE THE NAME, 4 BYTES THE VALUE.
+; 				Double zero (pointed to by the above pointer).
+; 		[Vartab]	simple variables. 6 bytes per value.
+; 				2 Bytes give the name, 4 bytes the value.
 ; 				... Repeats ...
-; 		[ARYTAB]	ARRAY VARIABLES. 2 BYTES NAME, 2 BYTE
+; 		[Arytab]	array variables. 2 bytes name, 2 byte
 ; 				Length, number of dimensions , extent of
-; 				EACH DIMENSION (2BYTES/), VALUES
+; 				Each dimension (2bytes/), values
 ; 				... Repeats ...
-; 		[STREND]	FREE SPACE.
+; 		[Strend]	free space.
 ; 				... Repeats ...
-; 		[FRETOP]	STRING SPACE IN USE.
+; 		[Fretop]	string space in use.
 ; 				... Repeats ...
-; 		[MEMSIZ]	HIGHEST MACHINE LOCATION.
+; 		[Memsiz]	highest machine location.
 ; 				Unused except by the val function.
 
 ; 		Rom -- constants and code.
 
-; 	FUNCTION DISPATCH ADDRESSES (AT ROMLOC)
-; 		"FUNDSP" CONTAINS THE ADDRESSES OF THE
+; 	Function dispatch addresses (at romloc)
+; 		"Fundsp" contains the addresses of the
 ; 		Function routines in the order of the
 ; 		Function names in the crunch list.
 ; 		The functions that take more than one argument
-; 		ARE AT THE END. SEE THE EXPLANATION AT "ISFUN".
+; 		Are at the end. see the explanation at "isfun".
 
 ; 	The operator list
-; 		THE "OPTAB" LIST CONTAINS AN OPERATOR'S PRECEDENCE
+; 		The "optab" list contains an operator's precedence
 ; 		Followed by the address of the routine to perform
 ; 		The operation. the index into the
 ; 		Operator list is made by subtracting off the crunch value
 ; 		Of the lowest numbered operator. the order
-; 		OF OPERATORS IN THE CRUNCH LIST AND IN "OPTAB" IS IDENTICAL.
+; 		Of operators in the crunch list and in "optab" is identical.
 ; 		The precedences are arbitrary except for their
 ; 		Comparative sizes. note that the precedence for
-; 		UNARY OPERATORS SUCH AS "NOT" AND NEGATION ARE
+; 		Unary operators such as "not" and negation are
 ; 		Setup specially without using the list.
 
 ; 	The reserved word or crunch list
 ; 		When a command or program line is typed in
-; 		IT IS STORED IN "BUF". AS SOON AS THE WHOLE LINE
-; 		HAS BEEN TYPED IN ("INLIN" RETURNS) "CRUNCH" IS
+; 		It is stored in "buf". as soon as the whole line
+; 		Has been typed in ("inlin" returns) "crunch" is
 ; 		Called to convert all reserved words to their
 ; 		Crunched values. this reduces the size of the
 ; 		Program and speeds up execution by allowing
@@ -436,7 +436,7 @@ CONTW   =       15                   ;Character to suppress output.
 ; 		The entire text of the matched word is taken out of
 ; 		The input line and a reserved word token is put
 ; 		In its place. a reserved word token is always equal
-; 		TO OCTAL 200 PLUS THE POSITION OF THE MATCHED WORD
+; 		To octal 200 plus the position of the matched word
 ; 		In the crunch list.
 
 ; 	Statement dispatch addresses
@@ -444,26 +444,26 @@ CONTW   =       15                   ;Character to suppress output.
 ; 		Character of the statement is examined
 ; 		To see if it is less than the reserved
 ; 		Word token for the lowest numbered statement name.
-; 		IF SO, THE "LET" CODE IS CALLED TO
+; 		If so, the "let" code is called to
 ; 		Treat the statement as an assignment statement.
 ; 		Otherwise a check is made to make sure the
 ; 		Reserved word number is not too large to be a
 ; 		Statement type number. if not the address
-; 		TO DISPATCH TO IS FETCHED FROM "STMDSP" (THE STATEMENT
-; 		DISPATCH LIST) USING THE RESERVED WORD
+; 		To dispatch to is fetched from "stmdsp" (the statement
+; 		Dispatch list) using the reserved word
 ; 		Number for the statement to calculate an index into
 ; 		The list.
 
 ; 	Error messages
 ; 		When an error condition is detected,
-; 		[ACCX] MUST BE SET UP TO INDICATE WHICH ERROR
+; 		[Accx] must be set up to indicate which error
 ; 		Message is appropriate and a branch must be made
-; 		TO "ERROR". THE STACK WILL BE RESET AND ALL
+; 		To "error". the stack will be reset and all
 ; 		Program context will be lost. variables
 ; 		Values and the actual program remain intact.
-; 		ONLY THE VALUE OF [ACCX] IS IMPORTANT WHEN
-; 		THE BRANCH IS MADE TO ERROR. [ACCX] IS USED AS AN
-; 		INDEX INTO "ERRTAB" WHICH GIVES THE TWO
+; 		Only the value of [accx] is important when
+; 		The branch is made to error. [accx] is used as an
+; 		Index into "errtab" which gives the two
 ; 		Character error message that will be printed on the
 ; 		User's terminal.
 
@@ -476,30 +476,30 @@ CONTW   =       15                   ;Character to suppress output.
 
 ; 	Fndfor
 ; 		Most small routines are fairly simple
-; 		AND ARE DOCUMENTED IN PLACE. "FNDFOR" IS
-; 		USED FOR FINDING "FOR" ENTRIES ON
-; 		THE STACK. WHENEVER A "FOR" IS EXECUTED, A
-; 		16-BYTE ENTRY IS PUSHED ONTO THE STACK.
+; 		And are documented in place. "fndfor" is
+; 		Used for finding "for" entries on
+; 		The stack. whenever a "for" is executed, a
+; 		16-Byte entry is pushed onto the stack.
 ; 		Before this is done, however, a check
 ; 		Must be made to see if there
-; 		ARE ANY "FOR" ENTRIES ALREADY ON THE STACK
-; 		FOR THE SAME LOOP VARIABLE. IF SO, THAT "FOR" ENTRY
-; 		AND ALL OTHER "FOR" ENTRIES THAT WERE MADE AFTER IT
+; 		Are any "for" entries already on the stack
+; 		For the same loop variable. if so, that "for" entry
+; 		And all other "for" entries that were made after it
 ; 		Are eliminated from the stack. this is so a
 ; 		Program that jumps out of the middle
-; 		OF A "FOR" LOOP AND THEN RESTARTS THE LOOP AGAIN
-; 		AND AGAIN WON'T USE UP 18 BYTES OF STACK
-; 		SPACE EVERY TIME. THE "NEXT" CODE ALSO
-; 		CALLS "FNDFOR" TO SEARCH FOR A "FOR" ENTRY WITH
+; 		Of a "for" loop and then restarts the loop again
+; 		And again won't use up 18 bytes of stack
+; 		Space every time. the "next" code also
+; 		Calls "fndfor" to search for a "for" entry with
 ; 		The loop variable in
-; 		THE "NEXT". AT WHATEVER POINT A MATCH IS FOUND
+; 		The "next". at whatever point a match is found
 ; 		The stack is reset. if no match is found a
-; 		"NEXT WITHOUT FOR"  ERROR OCCURS. GOSUB EXECUTION
-; 		ALSO PUTS A 5-BYTE ENTRY ON STACK.
-; 		WHEN A RETURN IS EXECUTED "FNDFOR" IS
+; 		"Next without for"  error occurs. gosub execution
+; 		Also puts a 5-byte entry on stack.
+; 		When a return is executed "fndfor" is
 ; 		Called with a variable pointer that can't
-; 		BE MATCHED. WHEN "FNDFOR" HAS RUN
-; 		THROUGH ALL THE "FOR" ENTRIES ON THE STACK
+; 		Be matched. when "fndfor" has run
+; 		Through all the "for" entries on the stack
 ; 		It returns and the return code makes
 ; 		Sure the entry that was stopped
 ; 		On is a gosub entry. this assures that
@@ -507,47 +507,47 @@ CONTW   =       15                   ;Character to suppress output.
 ; 		In which a for loop is entered but never
 ; 		Exited the return will still be
 ; 		Able to find the most recent
-; 		GOSUB ENTRY. THE "RETURN" CODE ELIMINATES THE
-; 		"GOSUB" ENTRY AND ALL "FOR" ENTRIES MADE AFTER
+; 		Gosub entry. the "return" code eliminates the
+; 		"Gosub" entry and all "for" entries made after
 ; 		The gosub entry.
 
 ; 	Non-runtime stuff
 ; 		The code to input a line, crunch it, give errors,
 ; 		Find a specific line in the program,
-; 		PERFORM A "NEW", "CLEAR", AND "LIST" ARE
+; 		Perform a "new", "clear", and "list" are
 ; 		All in this area. given the explanation of
 ; 		Program storage set forth above, these are
 ; 		All straightforward.
 
 ; 	Newstt
 ; 		Whenever a statement finishes execution it
-; 		DOES A "RTS" WHICH TAKES
-; 		EXECUTION BACK TO "NEWSTT". STATEMENTS THAT
+; 		Does a "rts" which takes
+; 		Execution back to "newstt". statements that
 ; 		Create or look at semi-permanent stack entries
-; 		MUST GET RID OF THE RETURN ADDRESS OF "NEWSTT" AND
-; 		JMP TO "NEWSTT" WHEN DONE. "NEWSTT" ALWAYS
+; 		Must get rid of the return address of "newstt" and
+; 		Jmp to "newstt" when done. "newstt" always
 ; 		Chrgets the first character after the statement
 ; 		Name before dispatching. when returning
-; 		BACK TO "NEWSTT" THE ONLY THING THAT
+; 		Back to "newstt" the only thing that
 ; 		Must be set up is the text pointer in
-; 		"TXTPTR". "NEWSTT" WILL CHECK TO MAKE SURE
-; 		"TXTPTR" IS POINTING TO A STATEMENT TERMINATOR.
+; 		"Txtptr". "newstt" will check to make sure
+; 		"Txtptr" is pointing to a statement terminator.
 ; 		If a statement shouldn't be performed unless
-; 		IT IS PROPERLY FORMATTED (I.E. "NEW") IT CAN
+; 		It is properly formatted (i.e. "new") it can
 ; 		Simply do a return after reading all of
 ; 		Its arguments. since the zero flag
 ; 		Being off indicates there is not
-; 		A STATEMENT TERMINATOR "NEWSTT" WILL
-; 		DO THE JMP TO THE "SYNTAX ERROR"
+; 		A statement terminator "newstt" will
+; 		Do the jmp to the "syntax error"
 ; 		Routine. if a statement should be started
 ; 		Over it can do ldwd oldtxt, stwd txtptr rts since the text pntr
-; 		AT "NEWSTT" IS ALWAYS STORED IN "OLDTXT".
-; 		THE ^C CODE STORES [CURLIN] (THE
-; 		CURRENT LINE NUMBER) IN "OLDLIN" SINCE THE ^C CHECK
+; 		At "newstt" is always stored in "oldtxt".
+; 		The ^c code stores [curlin] (the
+; 		Current line number) in "oldlin" since the ^c check
 ; 		Is made before the statement pointed to is
-; 		EXECUTED. "STOP" AND "END" STORE THE TEXT POINTER
-; 		FROM "TXTPTR", WHICH POINTS AT THEIR TERMINATING
-; 		CHARACTER, IN "OLDTXT".
+; 		Executed. "stop" and "end" store the text pointer
+; 		From "txtptr", which points at their terminating
+; 		Character, in "oldtxt".
 
 ; 	Statement code
 ; 		The individual statement code comes
@@ -557,174 +557,174 @@ CONTW   =       15                   ;Character to suppress output.
 
 ; 	Frmevl, the formula evaluator
 ; 		Given a text pointer pointing to the starting
-; 		CHARACTER OF A FORMULA, "FRMEVL"
+; 		Character of a formula, "frmevl"
 ; 		Evaluates the formula and leaves
-; 		THE VALUE IN THE FLOATING ACCUMULATOR (FAC).
-; 		"TXTPTR" IS RETURNED POINTING TO THE FIRST CHARACTER
+; 		The value in the floating accumulator (fac).
+; 		"Txtptr" is returned pointing to the first character
 ; 		That could not be interpreted as part of the
 ; 		Formula. the algorithm uses the stack
 ; 		To store temporary results:
 
-; 			0. PUT A DUMMY PRECEDENCE OF ZERO ON
+; 			0. Put a dummy precedence of zero on
 ; 				The stack.
-; 			1. READ LEXEME (CONSTANT,FUNCTION,
-; 				VARIABLE,FORMULA IN PARENS)
+; 			1. Read lexeme (constant,function,
+; 				Variable,formula in parens)
 ; 				And take the last precedence value
 ; 				Off the stack.
-; 			2. SEE IF THE NEXT CHARACTER IS AN OPERATOR.
+; 			2. See if the next character is an operator.
 ; 				If not, check previous one. this may cause
 ; 				Operator application or an actual
-; 				RETURN FROM "FRMEVL".
-; 			3. IF IT IS, SEE WHAT PRECEDENCE IT HAS
+; 				Return from "frmevl".
+; 			3. If it is, see what precedence it has
 ; 				And compare it to the precedence
 ; 				Of the last operator on the stack.
-; 			4. IF = OR LESS REMEMBER THE OPERATOR
+; 			4. If = or less remember the operator
 ; 				Pointer of this operator
-; 				AND BRANCH TO "QCHNUM" TO CAUSE
+; 				And branch to "qchnum" to cause
 ; 				Application of the last operator.
-; 				EVENTUALLY RETURN TO STEP 2
-; 				BY RETURNING TO JUST AFTER "DOPREC".
-; 			5. IF GREATER PUT THE LAST PRECEDENCE
+; 				Eventually return to step 2
+; 				By returning to just after "doprec".
+; 			5. If greater put the last precedence
 ; 				Back on, save the operator address,
 ; 				Current temporary result,
-; 				AND PRECEDENCE AND RETURN TO STEP 1.
+; 				And precedence and return to step 1.
 
 ; 		Relational operators are all handled through
 ; 		A common routine. special
-; 		CARE IS TAKEN TO DETECT TYPE MISMATCHES SUCH AS 3+"F".
+; 		Care is taken to detect type mismatches such as 3+"f".
 
 ; 	Eval -- the routine to read a lexeme
-; 		"EVAL" CHECKS FOR THE DIFFERENT TYPES OF
+; 		"Eval" checks for the different types of
 ; 		Entities it is supposed to detect.
 ; 		Leading pluses are ignored,
-; 		DIGITS AND "." CAUSE "FIN" (FLOATING INPUT)
+; 		Digits and "." cause "fin" (floating input)
 ; 		To be called. function names cause the
 ; 		Formula inside the parentheses to be evaluated
 ; 		And the function routine to be called. variable
-; 		NAMES CAUSE "PTRGET" TO BE CALLED TO GET A POINTER
+; 		Names cause "ptrget" to be called to get a pointer
 ; 		To the value, and then the value is put into
-; 		THE FAC. AN OPEN PARENTHESIS CAUSES "FRMEVL"
-; 		TO BE CALLED (RECURSIVELY), AND THE ")" TO
-; 		BE CHECKED FOR. UNARY OPERATORS (NOT AND
-; 		NEGATION)  PUT THEIR PRECEDENCE ON THE STACK
-; 		AND ENTER FORMULA EVALUATION AT STEP 1, SO
+; 		The fac. an open parenthesis causes "frmevl"
+; 		To be called (recursively), and the ")" to
+; 		Be checked for. unary operators (not and
+; 		Negation)  put their precedence on the stack
+; 		And enter formula evaluation at step 1, so
 ; 		That everything up to an operator greater than
 ; 		Their precedence or the end of the formula
 ; 		Will be evaluated.
 
 ; 	Dimension and variable searching
 ; 		Space is allocated for variables as they are
-; 		ENCOUNTERED. THUS "DIM" STATEMENTS MUST BE
-; 		EXECUTED TO HAVE EFFECT. 6 BYTES ARE ALLOCATED
+; 		Encountered. thus "dim" statements must be
+; 		Executed to have effect. 6 bytes are allocated
 ; 		For each simple variable, whether it is a string,
 ; 		Number or user defined function. the first two
 ; 		Bytes give the name of the variable and the last four
-; 		GIVE ITS VALUE. [VARTAB] GIVES THE FIRST LOCATION
-; 		WHERE A SIMPLE VARIABLE NAME IS FOUND AND [ARYTAB]
+; 		Give its value. [vartab] gives the first location
+; 		Where a simple variable name is found and [arytab]
 ; 		Gives the location to stop searching for simple
-; 		VARIABLES. A "FOR" ENTRY HAS A TEXT POINTER
+; 		Variables. a "for" entry has a text pointer
 ; 		And a pointer to a variable value so neither
 ; 		The program or the simple variables can be
-; 		MOVED WHILE THERE ARE ACTIVE "FOR" ENTRIES ON THE STACK.
+; 		Moved while there are active "for" entries on the stack.
 ; 		User defined function values also contain
 ; 		Pointers into simple variable space so no user-defined
 ; 		Function values can be retained if simple variables
 ; 		Are moved. adding a simple variable is just
-; 		ADDING SIX TO [ARYTAB] AND [STREND], BLOCK TRANSFERING
+; 		Adding six to [arytab] and [strend], block transfering
 ; 		The array variables up by six and making sure the
-; 		NEW [STREND] IS NOT TOO CLOSE TO THE STRINGS.
+; 		New [strend] is not too close to the strings.
 ; 		This movement of array variables means
 ; 		That no pointer to an array will stay valid when
 ; 		New simple variables can be encountered. this is
-; 		WHY ARRAY VARIABLES ARE NOT ALLOWED FOR "FOR"
+; 		Why array variables are not allowed for "for"
 ; 		Loop variables. setting up a new array variable
 ; 		Merely involves building the descriptor,
-; 		UPDATING [STREND], AND MAKING SURE THERE IS
-; 		STILL ENOUGH ROOM BETWEEN [STREND] AND STRING SPACE.
-; 		"PTRGET", THE ROUTINE WHICH RETURNS A POINTER
+; 		Updating [strend], and making sure there is
+; 		Still enough room between [strend] and string space.
+; 		"Ptrget", the routine which returns a pointer
 ; 		To a variable value, has two important flags. one is
-; 		"DIMFLG" WHICH INDICATES WHETHER "DIM" CALLED "PTRGET"
+; 		"Dimflg" which indicates whether "dim" called "ptrget"
 ; 		Or not. if so, no prior entry for the variable in
 ; 		Question should be found, and the index indicates
 ; 		How much space to set aside. simple variables can
-; 		BE "DIMENSIONED", BUT THE ONLY EFFECT WILL BE TO
+; 		Be "dimensioned", but the only effect will be to
 ; 		Set aside space for the variable if it hasn't been
-; 		ENCOUNTERED YET. THE OTHER IMPORTANT FLAG IS "SUBFLG"
+; 		Encountered yet. the other important flag is "subflg"
 ; 		Which indicates whether a subscripted variable should be
-; 		ALLOWED IN THE CURRENT CONTEXT. IF [SUBFLG] IS NON-ZERO
+; 		Allowed in the current context. if [subflg] is non-zero
 ; 		The open parenthesis for a subscripted variable
-; 		WILL NOT BE SCANNED BY "PTRGET", AND "PTRGET" WILL RETURN
-; 		WITH A TEXT POINTER POINTING TO THE "(", IF
+; 		Will not be scanned by "ptrget", and "ptrget" will return
+; 		With a text pointer pointing to the "(", if
 ; 		There was one.
 ; 	Strings
 ; 		In the variable tables strings are stored just like
 ; 		Numeric variables. simple strings have three value
-; 		BYTES WHICH ARE INITIALIZED TO ALL ZEROS (WHICH
-; 		REPRESENTS THE NULL STRING). THE ONLY DIFFERENCE
-; 		IN HANDLING IS THAT WHEN "PTRGET" SEES A "$" AFTER THE
-; 		NAME OF A VARIABLE, "PTRGET" SETS [VALTYP]
+; 		Bytes which are initialized to all zeros (which
+; 		Represents the null string). the only difference
+; 		In handling is that when "ptrget" sees a "$" after the
+; 		Name of a variable, "ptrget" sets [valtyp]
 ; 		To negative one and turns
-; 		ON THE MSB (MOST-SIGNIFIGANT-BIT) OF THE VALUE OF
+; 		On the msb (most-signifigant-bit) of the value of
 ; 		The first character of the variable name.
 ; 		Having this bit on in the name of the variable ensures
 ; 		That the search routine will not match
-; 		'A' WITH 'A$' OR 'A$' WITH 'A'. THE MEANING OF
+; 		'A' with 'a$' or 'a$' with 'a'. the meaning of
 ; 		The three value bytes are:
 ; 			Low
 ; 				Length of the string
-; 				LOW 8 BITS
-; 				HIGH 8 BITS  OF THE ADDRESS
+; 				Low 8 bits
+; 				High 8 bits  of the address
 ; 					Of the characters in the
-; 					STRING IF LENGTH.NE.0.
+; 					String if length.ne.0.
 ; 					Meaningless otherwise.
 ; 			High
-; 		THE VALUE OF A STRING VARIABLE (THESE 3 BYTES)
+; 		The value of a string variable (these 3 bytes)
 ; 		Is called the string descriptor to distinguish
 ; 		It from the actual string data. whenever a
 ; 		String constant is encountered in a formula or as
-; 		PART OF AN INPUT STRING, OR AS PART OF DATA, "STRLIT"
+; 		Part of an input string, or as part of data, "strlit"
 ; 		Is called, causing a descriptor to be built for
 ; 		The string. when assignment is made to a string pointing into
-; 		"BUF" THE VALUE IS COPIED INTO STRING SPACE SINCE [BUF]
+; 		"Buf" the value is copied into string space since [buf]
 ; 		Is always changing.
 
-; 		STRING FUNCTIONS AND THE ONE STRING OPERATOR "+"
+; 		String functions and the one string operator "+"
 ; 		Always return their values in string space.
 ; 		Assigning a string a constant value in a program
-; 		THROUGH A "READ" OR ASSIGNMENT STATEMENT
+; 		Through a "read" or assignment statement
 ; 		Will not use any string space since
 ; 		The string descriptor  will point into the
 ; 		Program itself. in general, copying is done
-; 		WHEN A STRING VALUE IS IN "BUF", OR IT IS IN STRING
+; 		When a string value is in "buf", or it is in string
 ; 		Space and there is an active pointer to it.
-; 		THUS F$=G$ WILL CAUSE COPYING IF G$ HAS ITS
-; 		STRING DATA IN STRING SPACE. F$=CHR$(7)
+; 		Thus f$=g$ will cause copying if g$ has its
+; 		String data in string space. f$=chr$(7)
 ; 		Will use one byte of string space to store the
-; 		NEW ONE CHARACTER STRING CREATED BY "CHR$", BUT
+; 		New one character string created by "chr$", but
 ; 		The assignment itself will cause no copying since
 ; 		The only pointer at the new string is a
-; 		TEMPORARY DESCRIPTOR CREATED BY "FRMEVL" WHICH WILL
+; 		Temporary descriptor created by "frmevl" which will
 ; 		Go away as soon as the assignment is done.
 ; 		It is the nature of garbage collection that
 ; 		Disallows having two string descriptors point to the same
 ; 		Area in string space. string functions and operators
 ; 		Must proceed as follows:
-; 			1) FIGURE OUT THE LENGTH OF THEIR RESULT.
+; 			1) Figure out the length of their result.
 
-; 			2) CALL "GETSPA" TO FIND SPACE FOR THEIR
+; 			2) Call "getspa" to find space for their
 ; 			Result. the arguments to the function
 ; 			Or operator may change since garbage collection
 ; 			May be invoked. the only thing that can
-; 			BE SAVED DURING THE CALL TO "GETSPA" IS A POINTER
+; 			Be saved during the call to "getspa" is a pointer
 ; 			To the descriptors of the arguments.
-; 			3) CONSTRUCT THE RESULT DESCRIPTOR IN "DSCTMP".
-; 			"GETSPA" RETURNS THE LOCATION OF THE AVAILABLE
+; 			3) Construct the result descriptor in "dsctmp".
+; 			"Getspa" returns the location of the available
 ; 			Space.
-; 			4) CREATE THE NEW VALUE BY COPYING PARTS
+; 			4) Create the new value by copying parts
 ; 			Of the arguments or whatever.
-; 			5) FREE UP THE ARGUMENTS BY CALLING "FRETMP".
-; 			6) JUMP TO "PUTNEW" TO GET THE DESCRIPTOR IN
-; 			"DSCTMP" TRANSFERRED INTO A NEW STRING TEMPORARY.
+; 			5) Free up the arguments by calling "fretmp".
+; 			6) Jump to "putnew" to get the descriptor in
+; 			"Dsctmp" transferred into a new string temporary.
 
 ; 		The reason for string temporaries is that garbage
 ; 		Collection has to know about all active string descriptors
@@ -738,61 +738,61 @@ CONTW   =       15                   ;Character to suppress output.
 ; 		Stored in the fac, and it is this pointer
 ; 		That gets saved on the stack by formula evaluation.
 ; 		String functions cannot free their arguments up right
-; 		AWAY SINCE "GETSPA" MAY FORCE
+; 		Away since "getspa" may force
 ; 		Garbage collection and the argument strings
 ; 		May be over-written since garbage collection
 ; 		Will not be able to find an active pointer to
 ; 		Them. function and operator results are built in
-; 		"DSCTMP" SINCE STRING TEMPORARIES ARE ALLOCATED
-; 		(PUTNEW) AND DEALLOCATED (FRETMP) IN A FIFO ORDERING
-; 		(I.E. A STACK) SO THE NEW TEMPORARY CANNOT
-; 		BE SET UP UNTIL THE OLD ONE(S) ARE FREED. TRYING
+; 		"Dsctmp" since string temporaries are allocated
+; 		(Putnew) and deallocated (fretmp) in a fifo ordering
+; 		(I.e. a stack) so the new temporary cannot
+; 		Be set up until the old one(s) are freed. trying
 ; 		To build a result in a temporary after
 ; 		Freeing up the argument temporaries could result
 ; 		In one of the argument temporaries being overwritten
 ; 		Too soon by the new result.
 
 ; 		String space is allocated at the very top
-; 		OF MEMORY. "MEMSIZ" POINTS BEYOND THE LAST LOCATION OF
+; 		Of memory. "memsiz" points beyond the last location of
 ; 		String space. strings are stored in high locations
-; 		FIRST. WHENEVER STRING SPACE IS ALLOCATED (GETSPA).
-; 		[FRETOP], WHICH IS INITIALIZED TO [MEMSIZ], IS UPDATED
+; 		First. whenever string space is allocated (getspa).
+; 		[Fretop], which is initialized to [memsiz], is updated
 ; 		To give the highest location in string space
 ; 		That is not in use. the result is that
-; 		[FRETOP] GETS SMALLER AND SMALLER, UNTIL SOME
-; 		ALLOCATION WOULD MAKE [FRETOP] LESS THAN OR EQUAL TO
-; 		[STREND]. THIS MEANS STRING SPACE HAS RUN INTO THE
+; 		[Fretop] gets smaller and smaller, until some
+; 		Allocation would make [fretop] less than or equal to
+; 		[Strend]. this means string space has run into the
 ; 		The arrays and that garbage collection must be called.
 
 ; 		Garbage collection:
-; 			0. [MINPTR]=[STREND] [FRETOP]=[MEMSIZ]
-; 			1. [REMMIN]=0
-; 			2. FOR EACH STRING DESCRIPTOR
-; 			(TEMPORARIES, SIMPLE STRINGS, STRING ARRAYS)
+; 			0. [Minptr]=[strend] [fretop]=[memsiz]
+; 			1. [Remmin]=0
+; 			2. For each string descriptor
+; 			(Temporaries, simple strings, string arrays)
 ; 			If the string is not null and its pointer is
 ; 			.Gt.minptr and .lt.fretop,
-; 			[MINPTR]=THIS STRING DESCRIPTOR'S POINTER,
-; 			[REMMIN]=POINTER AT THIS STRING DESCRIPTOR.
+; 			[Minptr]=this string descriptor's pointer,
+; 			[Remmin]=pointer at this string descriptor.
 ; 			End.
-; 			3. IF REMMIN.NE.0 (WE FOUND AN UNCOLLECTED STRING),
+; 			3. If remmin.ne.0 (we found an uncollected string),
 ; 			Block transfer the string data pointed
-; 			TO IN THE STRING DESCRIPTOR POINTED TO BY "REMMIN"
+; 			To in the string descriptor pointed to by "remmin"
 ; 			So that the last byte of string data is at
-; 			[FRETOP]. UPDATE [FRETOP] SO THAT IT
+; 			[Fretop]. update [fretop] so that it
 ; 			Points to the location just below the one
 ; 			The string data was moved into. update
 ; 			The pointer in the descriptor so it points
 ; 			To the new location of the string data.
-; 			GO TO STEP 1.
+; 			Go to step 1.
 
-; 		AFTER CALLING GARBAGE COLLECTION "GETSPA" AGAIN CHECKS
-; 		TO SEE IF [ACCA] CHARACTERS ARE AVAILABLE BETWEEN
-; 		[STREND] AND [FRETOP]; IF NOT, AN "OUT OF STRING"
+; 		After calling garbage collection "getspa" again checks
+; 		To see if [acca] characters are available between
+; 		[Strend] and [fretop]; if not, an "out of string"
 ; 		Error is invoked.
 
 ; 	Math package
-; 		THE MATH PACKAGE CONTAINS FLOATING INPUT (FIN),
-; 		FLOATING OUTPUT (FOUT), FLOATING COMPARE (FCOMP)
+; 		The math package contains floating input (fin),
+; 		Floating output (fout), floating compare (fcomp)
 ; 		... And all the numeric operators and functions.
 ; 		The formats, conventions and entry points are all
 ; 		Described in the math package itself.
@@ -802,15 +802,15 @@ CONTW   =       15                   ;Character to suppress output.
 ; 		Terminal width, and which functions to be retained
 ; 		Are ascertained from the user. a zero is put down
 ; 		At the first location not used by the math-package
-; 		AND [TXTTAB] IS SET UP TO POINT AT THE NEXT LOCATION.
+; 		And [txttab] is set up to point at the next location.
 ; 		This determines where program storage will start.
 ; 		Special checks are made to make sure
-; 		ALL QUESTIONS IN "INIT" ARE ANSWERED REASONABLY, SINCE
-; 		ONCE "INIT" FINISHES, THE LOCATIONS IT USES ARE
-; 		USED FOR PROGRAM STORAGE. THE LAST THING "INIT" DOES IS
-; 		CHANGE LOCATION ZERO TO BE A JUMP TO "READY" INSTEAD
-; 		OF "INIT". ONCE THIS IS DONE THERE IS NO WAY TO RESTART
-; 		"INIT".
+; 		All questions in "init" are answered reasonably, since
+; 		Once "init" finishes, the locations it uses are
+; 		Used for program storage. the last thing "init" does is
+; 		Change location zero to be a jump to "ready" instead
+; 		Of "init". once this is done there is no way to restart
+; 		"Init".
 ; High locations
 
         .page
@@ -819,20 +819,20 @@ CONTW   =       15                   ;Character to suppress output.
 START:
         JMP     INIT                 ;Initialize - setup certain locations
                                      ;And delete functions if not needed
-                                     ;AND CHANGE THIS TO "JMP READY"
+                                     ;And change this to "jmp ready"
                                      ;In case user restarts at loc zero.
 RDYJSR:
-        JMP     INIT                 ;CHANGED TO "JMP STROUT" BY "INIT"
+        JMP     INIT                 ;Changed to "jmp strout" by "init"
                                      ;To handle errors.
 ADRAYI:
         .word   AYINT                ;Store here the addr of the
                                      ;Routine to turn the fac into a
-                                     ;TWO BYTE SIGNED INTEGER IN [Y,A]
+                                     ;Two byte signed integer in [y,a]
 ADRGAY:
         .word   GIVAYF
         .endif
                                      ;Store here the addr of the
-                                     ;ROUTINE TO CONVERT [Y,A] TO A FLOATING
+                                     ;Routine to convert [y,a] to a floating
                                      ;Point number in the fac.
         .if     ROMSW != 0
 USRPOK:
@@ -840,7 +840,7 @@ USRPOK:
         .endif
                                      ;Set up orig by init.
 
-; THIS IS THE "VOLATILE" STORAGE AREA AND NONE OF IT
+; This is the "volatile" storage area and none of it
 ; Can be kept in rom. any constants in this area cannot
 ; Be kept in a rom, but must be loaded in by the
 ; Program instructions in rom.
@@ -848,7 +848,7 @@ USRPOK:
 ; --- General ram ---:
 CHARAC:
         .fill   1                    ;A delimiting character.
-INTEGR  =       CHARAC               ;A ONE-BYTE INTEGER FROM "QINT"*
+INTEGR  =       CHARAC               ;A one-byte integer from "qint"*
 ENDCHR:
         .fill   1                    ;The other delimiting character.
 COUNT:
@@ -858,13 +858,13 @@ COUNT:
 DIMFLG:
         .fill   1                    ;In getting a pointer to a variable
                                      ;It is important to remember whether it
-                                     ;IS BEING DONE FOR "DIM" OR NOT.
+                                     ;Is being done for "dim" or not.
                                      ;Dimflg and valtyp must be
                                      ;Consecutive locations.
 KIMY    =       DIMFLG               ;Place to preserve y during out.
 VALTYP:
         .fill   1                    ;The type indicator.
-                                     ;0=NUMERIC 1=STRING.
+                                     ;0=Numeric 1=string.
         .if     INTPRC != 0
 INTFLG:
         .fill   1
@@ -872,21 +872,21 @@ INTFLG:
                                      ;Tells if integer.
 DORES:
         .fill   1                    ;Whether can or can't crunch res'd words.
-                                     ;TURNED ON WHEN "DATA"
+                                     ;Turned on when "data"
                                      ;Being scanned by crunch so unquoted
                                      ;Strings won't be crunched.
 GARBFL  =       DORES                ;Whether to do garbage collection.
 SUBFLG:
         .fill   1                    ;Flag whether sub'd variable allowed.
-                                     ;"FOR" AND USER-DEFINED FUNCTION
+                                     ;"For" and user-defined function
                                      ;Pointer fetching turn
-                                     ;THIS ON BEFORE CALLING "PTRGET"
+                                     ;This on before calling "ptrget"
                                      ;So arrays won't be detected.
-                                     ;"STKINI" AND "PTRGET" CLEAR IT.
+                                     ;"Stkini" and "ptrget" clear it.
                                      ;Also disallows integers there.
 INPFLG:
-        .fill   1                    ;FLAGS WHETHER WE ARE DOING "INPUT"
-                                     ;OR "READ"*
+        .fill   1                    ;Flags whether we are doing "input"
+                                     ;Or "read"*
 TANSGN:
         .fill   1                    ;Used in determining sign of tangent.
         .if     REALIO != 0
@@ -895,13 +895,13 @@ CNTWFL:
         .endif
                                      ;Suppress output flag.
                                      ;Non-zero means suppress.
-                                     ;RESET BY "INPUT", READY AND ERRORS.
+                                     ;Reset by "input", ready and errors.
                                      ;Complemented by input of ^o.
 
         .if     REALIO == 4
         .org    80
         .endif
-                                     ;ROOM FOR APPLE PAGE 0 STUFF.
+                                     ;Room for apple page 0 stuff.
 ; --- Ram dealing with terminal handling ---:
         .if     EXTIO != 0
 CHANNL:
@@ -919,14 +919,14 @@ TRMPOS:
         .endif
                                      ;Position of terminal carriage.
 LINWID:
-        .byte   LINLEN               ;LENGTH OF LINE (WIDTH)*
+        .byte   LINLEN               ;Length of line (width)*
 NCMWID:
         .byte   NCMPOS               ;Position beyond which there are
                                      ;No more fields.
 LINNUM:
         .byte   0                    ;Location to store line number before buf
-                                     ;SO THAT "BLTUC" CAN STORE IT ALL AWAY AT ONCE.
-        .byte   44                   ;A COMMA (PRELOAD OR FROM ROM)
+                                     ;So that "bltuc" can store it all away at once.
+        .byte   44                   ;A comma (preload or from rom)
                                      ;Used by input statement since the
                                      ;Data pointer always starts on a
                                      ;Comma or terminator.
@@ -936,12 +936,12 @@ BUF:
         .endif
                                      ;Type in stored here.
                                      ;Direct statements execute out of
-                                     ;HERE. REMEMBER "INPUT" SMASHES BUF.
+                                     ;Here. remember "input" smashes buf.
                                      ;Must be on page zero
                                      ;Or assignment of string
                                      ;Values in direct statements won't copy
                                      ;Into string space -- which it must.
-                                     ;N.B. TWO NONZERO BYTES MUST PRECEDE "BUFLNM"*
+                                     ;N.b. two nonzero bytes must precede "buflnm"*
 
 ; --- Storage for temporary things ---:
 TEMPPT:
@@ -967,31 +967,31 @@ RESMO:
         .fill   1
 RESLO:
         .fill   1
-ADDEND  =       RESMO                ;TEMPORARY USED BY "UMULT"*
+ADDEND  =       RESMO                ;Temporary used by "umult"*
         .byte   0                    ;Overflow for res.
 
 ; --- Pointers into dynamic data structures ---;
 TXTTAB:
         .fill   2                    ;Pointer to beginning of text.
                                      ;Doesn't change after being
-                                     ;SETUP BY "INIT"*
+                                     ;Setup by "init"*
 VARTAB:
         .fill   2                    ;Pointer to start of simple
                                      ;Variable space.
                                      ;Updated whenever the size of the
-                                     ;PROGRAM CHANGES, SET TO [TXTTAB]
-                                     ;BY "SCRATCH" ("NEW")*
+                                     ;Program changes, set to [txttab]
+                                     ;By "scratch" ("new")*
 ARYTAB:
         .fill   2                    ;Pointer to beginning of array
                                      ;Table.
-                                     ;INCREMENTED BY 6 WHENEVER
+                                     ;Incremented by 6 whenever
                                      ;A new simple variable is found, and
-                                     ;SET TO [VARTAB] BY "CLEARC"*
+                                     ;Set to [vartab] by "clearc"*
 STREND:
         .fill   2                    ;End of storage in use.
                                      ;Increased whenever a new array
                                      ;Or simple variable is encountered.
-                                     ;SET TO [VARTAB] BY "CLEARC"*
+                                     ;Set to [vartab] by "clearc"*
 FRETOP:
         .fill   2                    ;Top of string free space.
 FRESPC:
@@ -1002,10 +1002,10 @@ MEMSIZ:
 ; --- Line numbers and textual pointers ---:
 CURLIN:
         .fill   2                    ;Current line #*
-                                     ;SET TO 0,255 FOR DIRECT STATEMENTS.
+                                     ;Set to 0,255 for direct statements.
 OLDLIN:
-        .fill   2                    ;OLD LINE NUMBER (SETUP BY ^C,"STOP"
-                                     ;OR "END" IN A PROGRAM)*
+        .fill   2                    ;Old line number (setup by ^c,"stop"
+                                     ;Or "end" in a program)*
 POKER   =       LINNUM               ;Set up location used by poke.
                                      ;Temporary for input and read code
 OLDTXT:
@@ -1015,9 +1015,9 @@ DATLIN:
         .fill   2                    ;Data line # -- remember for errors.
 DATPTR:
         .fill   2                    ;Pointer to data. initialized to point
-                                     ;AT THE ZERO IN FRONT OF [TXTTAB]
-                                     ;BY "RESTORE" WHICH IS CALLED BY "CLEARC"*
-                                     ;UPDATED BY EXECUTION OF A "READ"*
+                                     ;At the zero in front of [txttab]
+                                     ;By "restore" which is called by "clearc"*
+                                     ;Updated by execution of a "read"*
 INPPTR:
         .fill   2                    ;This remembers where input is coming from.
 
@@ -1026,15 +1026,15 @@ VARNAM:
         .fill   2                    ;Variable's name is stored here.
 VARPNT:
         .fill   2                    ;Pointer to variable in memory.
-FDECPT  =       VARPNT               ;POINTER INTO POWER OF TENS OF "FOUT"*
+FDECPT  =       VARPNT               ;Pointer into power of tens of "fout"*
 FORPNT:
-        .fill   2                    ;A VARIABLE'S POINTER FOR "FOR" LOOPS
-                                     ;AND "LET" STATEMENTS.
+        .fill   2                    ;A variable's pointer for "for" loops
+                                     ;And "let" statements.
 LSTPNT  =       FORPNT               ;Pntr to list string.
 ANDMSK  =       FORPNT               ;The mask used by wait for anding.
 EORMSK  =       FORPNT + 1           ;The mask for eoring in wait.
 OPPTR:
-        .fill   2                    ;POINTER TO CURRENT OP'S ENTRY IN "OPTAB"*
+        .fill   2                    ;Pointer to current op's entry in "optab"*
 VARTXT  =       OPPTR                ;Pointer into list of variables.
 OPMASK:
         .fill   1                    ;Mask created by current operator.
@@ -1047,7 +1047,7 @@ DSCPNT:
         .if     ADDPRC != 0
         .fill   1
         .endif
-                                     ;FOR TEMPF3.
+                                     ;For tempf3.
 FOUR6:
         .word   STRSIZ               ;Variable constant used by garb collect.
 
@@ -1056,12 +1056,12 @@ JMPER:
         JMP     60000
 SIZE    =       JMPER + 1
 OLDOV   =       JMPER + 2            ;The old overflow.
-TEMPF3  =       DEFPNT               ;A THIRD FAC TEMPORARY (4 BYTES)*
+TEMPF3  =       DEFPNT               ;A third fac temporary (4 bytes)*
 TEMPF1:
         .if     ADDPRC != 0
         .byte   0
         .endif
-                                     ;FOR TEMPF1S EXTRA BYTE.
+                                     ;For tempf1s extra byte.
 HIGHDS:
         .fill   2                    ;Desination of highest element in blt.
 HIGHTR:
@@ -1070,7 +1070,7 @@ TEMPF2:
         .if     ADDPRC != 0
         .byte   0
         .endif
-                                     ;FOR TEMPF2S EXTRA BYTE.
+                                     ;For tempf2s extra byte.
 LOWDS:
         .fill   2                    ;Location of last byte transferred into.
 LOWTR:
@@ -1098,16 +1098,16 @@ FACMO:
 FACLO:
         .byte   0                    ;Least sig byte of mantissa.
 FACSGN:
-        .byte   0                    ;SIGN OF FAC (0 OR -1) WHEN UNPACKED.
+        .byte   0                    ;Sign of fac (0 or -1) when unpacked.
 SGNFLG:
-        .byte   0                    ;SIGN OF FAC IS PRESERVED BERE BY "FIN"*
+        .byte   0                    ;Sign of fac is preserved bere by "fin"*
 DEGREE  =       SGNFLG               ;A count used by polynomials.
 DSCTMP  =       FAC                  ;This is where temp descs are built.
-INDICE  =       FACMO                ;INDICE IS SET UP HERE BY "QINT"*
+INDICE  =       FACMO                ;Indice is set up here by "qint"*
 BITS:
-        .byte   0                    ;SOMETHING FOR "SHIFTR" TO USE.
+        .byte   0                    ;Something for "shiftr" to use.
 
-; --- THE FLOATING ARGUMENT (UNPACKED) ---:
+; --- The floating argument (unpacked) ---:
 ARGEXP:
         .byte   0
 ARGHO:
@@ -1131,7 +1131,7 @@ STRNG1  =       ARISGN               ;Pointer to a string or descriptor.
 
 FBUFPT:
         .fill   2                    ;Pointer into fbuffr used by fout.
-BUFPTR  =       FBUFPT               ;POINTER TO BUF USED BY "CRUNCH"*
+BUFPTR  =       FBUFPT               ;Pointer to buf used by "crunch"*
 STRNG2  =       FBUFPT               ;Pointer to string or desc.
 POLYPT  =       FBUFPT               ;Pointer into polynomial coefficients.
 CURTOL  =       FBUFPT               ;Absolute linear index is formed here.
@@ -1139,16 +1139,16 @@ CURTOL  =       FBUFPT               ;Absolute linear index is formed here.
         .subttl RAM CODE.
 ; This code gets changed throughout execution.
 ; It is made to be fast this way.
-; ALSO, [X] AND [Y] ARE NOT DISTURBED
+; Also, [x] and [y] are not disturbed
 
-; "CHRGET" USING [TXTPTR] AS THE CURRENT TEXT PNTR
-; FETCHES A NEW CHARACTER INTO ACCA AFTER INCREMENTING [TXTPTR]
+; "Chrget" using [txtptr] as the current text pntr
+; Fetches a new character into acca after incrementing [txtptr]
 ; And sets condition codes according to what's in acca.
-;	NOT C=	NUMERIC	  ("0" THRU "9")
-;	Z=	":" OR END-OF-LINE (A NULL)
+;	Not c=	numeric	  ("0" thru "9")
+;	Z=	":" or end-of-line (a null)
 
-; [ACCA] = NEW CHAR.
-; [TXTPTR]=[TXTPTR]+1
+; [Acca] = new char.
+; [Txtptr]=[txtptr]+1
 
 ; The following exists in rom if rom exists and is loaded
 ; Down here by init. otherwise it is just loaded into this
@@ -1164,10 +1164,10 @@ TXTPTR  =       CHRGOT + 1
         CMP     #" "                 ;Skip spaces.
         BEQ     CHRGET
 QNUM:
-        CMP     #":"                 ;IS IT A ":"?
-        BCS     CHRRTS               ;IT IS .GE. ":"
+        CMP     #":"                 ;Is it a ":"?
+        BCS     CHRRTS               ;It is .ge. ":"
         SEC
-        SBC     #"0"                 ;ALL CHARS .GT. "9" HAVE RET'D SO
+        SBC     #"0"                 ;All chars .gt. "9" have ret'd so
         SEC
         SBC     #256 - "0"           ;See if numeric.
                                      ;Turn carry on if numeric.
@@ -1185,14 +1185,14 @@ RNDX:
         .endif
                                      ;One more byte.
 
-        .org    255                  ;PAGE 1 STUFF COMING UP.
+        .org    255                  ;Page 1 stuff coming up.
 LOFBUF:
         .fill   1                    ;The low fac buffer. copyable.
-;---  PAGE ZERO/ONE BOUNDARY ---*
-                                     ;MUST HAVE 13 CONTIGUOUS BYTES.
+;---  Page zero/one boundary ---*
+                                     ;Must have 13 contiguous bytes.
 FBUFFR:
-        .fill   3 * ADDPRC + 13      ;BUFFER FOR "FOUT"*
-                                     ;ON PAGE 1 SO THAT STRING IS NOT COPIED.
+        .fill   3 * ADDPRC + 13      ;Buffer for "fout"*
+                                     ;On page 1 so that string is not copied.
 
 ;Stack is located here. ie from the end of fbuffr to stkend.
         .page
@@ -1272,7 +1272,7 @@ STMDSP:
         .if     GETCMD != 0
         .word   GET - 1
         .endif
-                                     ;FILL W/ GET ADDR.
+                                     ;Fill w/ get addr.
         .word   SCRATH - 1
 
 FUNDSP:
@@ -1433,7 +1433,7 @@ FNTK    =       Q
         .byte   83
         .byte   80
         .byte   67
-        .byte   "(" + 128            ;MACRO DOESNT LIKE ('S IN ARGUMENTS.
+        .byte   "(" + 128            ;Macro doesnt like ('s in arguments.
 Q       =       Q + 1
 SPCTK   =       Q
         DCI     "THEN"
@@ -1462,11 +1462,11 @@ LESSTK  =       Q
 
 ; Note danger of one reserved word being a part
 ; Of another:
-; IE * * IF 2 GREATER THAN F OR T=5 THEN...
-; WILL NOT WORK!!! SINCE "FOR" WILL BE CRUNCHED!!
+; Ie * * if 2 greater than f or t=5 then...
+; Will not work!!! since "for" will be crunched!!
 ; In any case make sure the smaller word appears
-; SECOND IN THE RESERVED WORD TABLE ("INP" AND "INPUT")
-; ANOTHER EXAMPLE: IF T OR Q THEN ... "TO" IS CRUNCHED
+; Second in the reserved word table ("inp" and "input")
+; Another example: if t or q then ... "to" is crunched
 
         DCI     "SGN"
 ONEFUN  =       Q
@@ -1549,7 +1549,7 @@ ERRUF   =       Q
         .if     LNGERR != 0
 Q       =       0
 ; Note: this error count technique will not work if there are more
-; THAN 256 CHARACTERS OF ERROR MESSAGES
+; Than 256 characters of error messages
 ERRTAB:
         .textc  "NEXT WITHOUT FOR"
 ERRNF   =       Q
@@ -1633,7 +1633,7 @@ BRKTXT:
         .page
         .subttl GENERAL STORAGE MANAGEMENT ROUTINES.
 
-; FIND A "FOR" ENTRY ON THE STACK VIA "VARPNT"*
+; Find a "for" entry on the stack via "varpnt"*
 
 FORSIZ  =       2 * ADDPRC + 16
 FNDFOR:
@@ -1644,8 +1644,8 @@ FNDFOR:
                                      ;IGNORE .word NEWSTT AND RTS ADDR.
 FFLOOP:
         LDA     257,X                ;Get stack entry.
-        CMP     #FORTK               ;IS IT A "FOR" TOKEN?
-        BNE     FFRTS                ;NO, NO "FOR" LOOPS WITH THIS PNTR.
+        CMP     #FORTK               ;Is it a "for" token?
+        BNE     FFRTS                ;No, no "for" loops with this pntr.
         LDA     FORPNT + 1           ;Get high.
         BNE     CMPFOR
         LDA     258,X                ;Pntr is zero, so assume this one.
@@ -1660,7 +1660,7 @@ CMPFOR:
         BEQ     FFRTS                ;We got it! we got it!
 ADDFRS:
         TXA
-        CLC                          ;ADD 16 TO X.
+        CLC                          ;Add 16 to x.
         ADC     #FORSIZ
         TAX                          ;Result back into x.
         BNE     FFLOOP
@@ -1671,19 +1671,19 @@ FFRTS:
 ; It makes space by shoving everything forward.
 
 ; On entry:
-; [Y,A]=[HIGHDS]    (FOR REASON)*
-; [HIGHDS]= DESTINATION OF [HIGH ADDRESS]*
-; [LOWTR]= LOWEST ADDR TO BE TRANSFERRED.
-; [HIGHTR]= HIGHEST ADDR TO BE TRANSFERRED.
+; [Y,a]=[highds]    (for reason)*
+; [Highds]= destination of [high address]*
+; [Lowtr]= lowest addr to be transferred.
+; [Hightr]= highest addr to be transferred.
 
 ; A check is made to ascertain that a reasonable
 ; Amount of space remains between the bottom
 ; Of the strings and the highest location transferred into.
 
 ; On exit:
-; [LOWTR] ARE UNCHANGED.
-; [HIGHTR]=[LOWTR]-200 OCTAL.
-; [HIGHDS]=LOWEST ADDR TRANSFERRED INTO MINUS 200 OCTAL.
+; [Lowtr] are unchanged.
+; [Hightr]=[lowtr]-200 octal.
+; [Highds]=lowest addr transferred into minus 200 octal.
 
 BLTU:
         JSR     REASON               ;Ascertain that string space won't
@@ -1703,10 +1703,10 @@ BLTUC:
         BEQ     DECBLT               ;Yes, go start moving blocks.
         LDA     HIGHTR               ;No, must modify base addr.
         SEC
-        SBC     INDEX                ;BORROW IS OFF SINCE [HIGHTR].GT.[LOWTR]*
+        SBC     INDEX                ;Borrow is off since [hightr].gt.[lowtr]*
         STA     HIGHTR               ;Save modified base addr.
         BCS     BLT1                 ;If no borrow, go shove it.
-        DEC     HIGHTR + 1           ;BORROW IMPLIES SUB 1 FROM HIGH ORDER.
+        DEC     HIGHTR + 1           ;Borrow implies sub 1 from high order.
         SEC
 BLT1:
         LDA     HIGHDS               ;Mod base of dest addr.
@@ -1733,34 +1733,34 @@ DECBLT:
 ; This routine is used to ascertain that a given
 ; Number of locs remain available for the stack.
 ;    The call is:
-;	LDA #NUMBER OF 2-BYTE ENTRIES NEEDED.
+;	Lda #number of 2-byte entries needed.
 ;	Jsr	getstk
 
 ; This routine must be called by any routine which puts
 ; An arbitrary amount of stuff on the stack
-; I.E., ANY RECURSIVE ROUTINE LIKE "FRMEVL"*
-; IT IS ALSO CALLED BY ROUTINES SUCH AS "GOSUB" AND "FOR"
+; I.e., any recursive routine like "frmevl"*
+; It is also called by routines such as "gosub" and "for"
 ; Which make permanent entries on the stack.
 
 ; Routines which merely use and free up the guaranteed
 ; Numlev locations need not call this.
 
 ; On exit:
-;    [A] AND [X] HAVE BEEN MODIFIED.
+;    [A] and [x] have been modified.
 
 GETSTK:
-        ASL     A                    ;MULT [A] BY 2. NB, CLEARS C BIT.
-        ADC     #2 * NUMLEV + 3 * ADDPRC + 13 ;MAKE SURE 2*NUMLEV+13 LOCS
-                                     ;(13 BECAUSE OF FBUFFR)
+        ASL     A                    ;Mult [a] by 2. nb, clears c bit.
+        ADC     #2 * NUMLEV + 3 * ADDPRC + 13 ;Make sure 2*numlev+13 locs
+                                     ;(13 Because of fbuffr)
         BCS     OMERR                ;Will remain in stack.
         STA     INDEX
         TSX                          ;Get stacked.
         CPX     INDEX                ;Compare.
-        BCC     OMERR                ;IF STACK.LE.INDEX1, OM.
+        BCC     OMERR                ;If stack.le.index1, om.
         RTS
 
-; [Y,A] IS A CERTAIN ADDRESS. "REASON" MAKES SURE
-; IT IS LESS THAN [FRETOP]*
+; [Y,a] is a certain address. "reason" makes sure
+; It is less than [fretop]*
 
 REASON:
         CPY     FRETOP + 1
@@ -1770,13 +1770,13 @@ REASON:
         BCC     REARTS
 TRYMOR:
         PHA
-        LDX     #8 + ADDPRC          ;IF TEMPF2 HAS ZERO IN BETWEEN.
+        LDX     #8 + ADDPRC          ;If tempf2 has zero in between.
         TYA
 REASAV:
         PHA
         LDA     HIGHDS - 1,X         ;Save highds on stack.
         DEX
-        BPL     REASAV               ;PUT 8 OF THEM ON STK.
+        BPL     REASAV               ;Put 8 of them on stk.
         JSR     GARBA2               ;Go garb collect.
         LDX     #256 - 8 - ADDPRC
 REASTO:
@@ -1834,11 +1834,11 @@ GETERR:
                                      ;No. go get next and output it.
 TYPERR:
         JSR     STKINI               ;Reset the stack and flags.
-        LDWDI   ERR                  ;GET PNTR TO " ERROR"*
+        LDWDI   ERR                  ;Get pntr to " error"*
 ERRFIN:
         JSR     STROUT               ;Output it.
         LDY     CURLIN + 1
-        INY                          ;WAS NUMBER 64000?
+        INY                          ;Was number 64000?
         BEQ     READY                ;Yes, don't type line number.
         JSR     INPRT
 READY:
@@ -1846,7 +1846,7 @@ READY:
         LSR     CNTWFL
         .endif
                                      ;Turn output back on if supressed
-        LDWDI   REDDY                ;SAY "OK"*
+        LDWDI   REDDY                ;Say "ok"*
         .if     REALIO != 3
         JSR     RDYJSR
         .endif
@@ -1859,8 +1859,8 @@ MAIN:
         JSR     INLIN                ;Get a line from terminal.
         STXY    TXTPTR
         JSR     CHRGET
-        TAX                          ;SET ZERO FLAG BASED ON [A]
-                                     ;THIS DISTINGUISHES ":" AND 0
+        TAX                          ;Set zero flag based on [a]
+                                     ;This distinguishes ":" and 0
         BEQ     MAIN                 ;If blank line, get another.
         LDX     #255                 ;Set direct line number.
         STX     CURLIN + 1
@@ -1868,7 +1868,7 @@ MAIN:
         JSR     CRUNCH               ;Compactify.
         JMP     GONE                 ;Execute it.
 MAIN1:
-        JSR     LINGET               ;READ LINE NUMBER INTO "LINNUM"*
+        JSR     LINGET               ;Read line number into "linnum"*
         JSR     CRUNCH
         STY     COUNT                ;Retain character count.
         JSR     FNDLIN
@@ -1948,11 +1948,11 @@ STOLOP:
         BPL     STOLOP
 FINI:
         JSR     RUNC                 ;Do clear & set up stack.
-                                     ;AND SET [TXTPTR] TO [TXTTAB]-1.
+                                     ;And set [txtptr] to [txttab]-1.
         JSR     LNKPRG               ;Fix up program links
         JMP     MAIN
 LNKPRG:
-        LDWD    TXTTAB               ;SET [INDEX] TO [TXTTAB]*
+        LDWD    TXTTAB               ;Set [index] to [txttab]*
         STWD    INDEX
         CLC
 
@@ -1987,8 +1987,8 @@ LNKRTS:
         RTS
 
 ; This is the line input routine.
-; IT READS CHARACTERS INTO BUF USING BACKARROW (UNDERSCORE, OR
-; SHIFT O) AS THE DELETE CHARACTER AND @ AS THE
+; It reads characters into buf using backarrow (underscore, or
+; Shift o) as the delete character and @ as the
 ; Line delete character. if more than buflen characters
 ; Are typed, no echoing is done until a backarrow or @ or cr
 ; Is typed. control-g will be typed for each extra character.
@@ -1998,7 +1998,7 @@ LNKRTS:
 INLIN:
         LDX     #128                 ;No prompt character
         STX     CQPRMP
-        JSR     CQINLN               ;GET A LINE ONTO PAGE 2
+        JSR     CQINLN               ;Get a line onto page 2
         CPX     #BUFLEN - 1
         BCS     GDBUFS               ;Not too many characters
         LDX     #BUFLEN - 1
@@ -2107,9 +2107,9 @@ INCHRL:
         .if     REALIO == 1
         JSR     0o17132
         .endif
-                                     ;1E5A FOR MOS TECH.
+                                     ;1E5a for mos tech.
         .if     REALIO == 4
-        JSR     CQINCH               ;FD0C FOR APPLE COMPUTER.
+        JSR     CQINCH               ;Fd0c for apple computer.
         AND     #127
         .endif
         .if     REALIO == 0
@@ -2122,7 +2122,7 @@ INCHRL:
         LDY     CHANNL               ;Cnt-o has no effect if not from term.
         BNE     INCRTS
         .endif
-        CMP     #CONTW               ;SUPPRESS OUTPUT CHARACTER (^W)*
+        CMP     #CONTW               ;Suppress output character (^w)*
         BNE     INCRTS               ;No, return.
         PHA
         COM     CNTWFL               ;Complement its state.
@@ -2131,7 +2131,7 @@ INCHRL:
 INCRTS:
         RTS                          ;End of inchr.
 
-; ALL "RESERVED" WORDS ARE TRANSLATED INTO SINGLE
+; All "reserved" words are translated into single
 ; Bytes with the msb on. this saves space and time
 ; By allowing for table dispatch during execution.
 ; Therefore all statements appear together in the
@@ -2169,12 +2169,12 @@ CMPSPC:
         BVS     STUFFH               ;No crunch, just store.
         CMP     #"?"                 ;A qmark?
         BNE     KLOOP1
-        LDA     #PRINTK              ;YES, STUFF A "PRINT" TOKEN.
+        LDA     #PRINTK              ;Yes, stuff a "print" token.
         BNE     STUFFH               ;Always go to stuffh.
 KLOOP1:
         CMP     #"0"                 ;Skip numerics.
         BCC     MUSTCR
-        CMP     #60                  ;":" AND ";" ARE ENTERED STRAIGHTAWAY.
+        CMP     #60                  ;":" And ";" are entered straightaway.
         BCC     STUFFH
 MUSTCR:
         STY     BUFPTR               ;Save buffer pointer.
@@ -2204,7 +2204,7 @@ STUFFH:
         LDA     BUF - 5,Y
         BEQ     CRDONE               ;Null implies end of line.
         SEC                          ;Prepare to substarct.
-        SBC     #":"                 ;IS IT A ":"?
+        SBC     #":"                 ;Is it a ":"?
         BEQ     COLIS                ;Yes, allow crunching again.
         CMP     #DATATK - ":"        ;Is it a datatk?
         BNE     NODATT               ;No, see if it is rem token.
@@ -2214,7 +2214,7 @@ NODATT:
         SEC                          ;Prep to sbcq
         SBC     #REMTK - ":"         ;Rem only stops on null.
         BNE     KLOOP                ;No, continue crunching.
-        STA     ENDCHR               ;REM STOPS ONLY ON NULL, NOT : OR "*
+        STA     ENDCHR               ;Rem stops only on null, not : or "*
 STR1:
         LDA     BUFOFS,X
         BEQ     STUFFH               ;Yes, end of line, so done.
@@ -2234,8 +2234,8 @@ NTHIS1:
         BPL     NTHIS1               ;End of entry?
         LDA     RESLST,Y             ;Yes. is it the end?
         BNE     RESCON               ;No, try the next word.
-        LDA     BUFOFS,X             ;YES, END OF TABLE. GET 1ST CHR.
-        BPL     GETBPT               ;STORE IT AWAY (ALWAYS BRANCHES)*
+        LDA     BUFOFS,X             ;Yes, end of table. get 1st chr.
+        BPL     GETBPT               ;Store it away (always branches)*
 CRDONE:
         STA     BUF - 3,Y            ;So that if this is a dir statement
                                      ;Its end will look like end of program.
@@ -2248,23 +2248,23 @@ LISTRT:
         RTS                          ;Return to caller.
 
 ; Fndlin searches the program text for the line
-; WHOSE NUMBER IS PASSED IN "LINNUM"*
+; Whose number is passed in "linnum"*
 ; There are two possible returns:
 
-;	1) CARRY SET.
+;	1) Carry set.
 ;	   Lowtr points to the link field in the line
 ;	   Which is the one searched for.
 
-;	2) CARRY NOT SET.
-;	   LINE NOT FOUND. [LOWTR] POINTS TO THE LINE IN THE
+;	2) Carry not set.
+;	   Line not found. [lowtr] points to the line in the
 ;	   Program greater than the one sought after.
 
 FNDLIN:
-        LDWX    TXTTAB               ;LOAD [X,A] WITH [TXTTAB]
+        LDWX    TXTTAB               ;Load [x,a] with [txttab]
 FNDLNC:
         LDY     #1
-        STWX    LOWTR                ;STORE [X,A] INTO LOWTR
-        LDA     (LOWTR),Y            ;SEE IF LINK IS 0
+        STWX    LOWTR                ;Store [x,a] into lowtr
+        LDA     (LOWTR),Y            ;See if link is 0
         BEQ     FLINRT
         INY
         INY
@@ -2292,7 +2292,7 @@ FLINRT:
 FLNRTS:
         RTS                          ;Return to caller.
 
-; THE "NEW" COMMAND CLEARS THE PROGRAM TEXT AS WELL
+; The "new" command clears the program text as well
 ; As variable space.
 
 SCRATH:
@@ -2306,7 +2306,7 @@ SCRTCH:
         LDA     TXTTAB
         CLC
         ADC     #2
-        STA     VARTAB               ;SETUP [VARTAB]*
+        STA     VARTAB               ;Setup [vartab]*
         LDA     TXTTAB + 1
         ADC     #0
         STA     VARTAB + 1
@@ -2320,8 +2320,8 @@ CLEAR:
         BNE     STKRTS               ;Syntax error if no terminator.
 
 ; Clear initializes the variable and
-; ARRAY SPACE BY RESETING ARYTAB (THE END OF SIMPLE VARIABLE SPACE)
-; AND STREND (THE END OF ARRAY STORAGE)* IT FALLS INTO "STKINI"
+; Array space by reseting arytab (the end of simple variable space)
+; And strend (the end of array storage)* it falls into "stkini"
 ; Which resets the stack.
 
 CLEARC:
@@ -2340,8 +2340,8 @@ FLOAD:
 ; Stkini resets the stack pointer eliminating
 ; Gosub and for context. string temporaries are freed
 ; Up, subflg is reset. continuing is prohibited.
-; AND A DUMMY ENTRY IS LEFT AT THE BOTTOM OF THE STACK SO "FNDFOR" WILL ALWAYS
-; FIND A NON-"FOR" ENTRY AT THE BOTTOM OF THE STACK.
+; And a dummy entry is left at the bottom of the stack so "fndfor" will always
+; Find a non-"for" entry at the bottom of the stack.
 
 STKINI:
         LDX     #TEMPST              ;Initialize string temporaries.
@@ -2379,7 +2379,7 @@ LIST:
         BNE     STKRTS               ;No, so syntax error.
 GOLST:
         JSR     LINGET               ;Get line number into numlin.
-        JSR     FNDLIN               ;FIND LINE .GE. [NUMLIN]*
+        JSR     FNDLIN               ;Find line .ge. [numlin]*
         JSR     CHRGOT               ;Get last character.
         BEQ     LSTEND               ;If end of line, # is the end.
         CMP     #MINUTK              ;Dash?
@@ -2389,7 +2389,7 @@ GOLST:
         BNE     FLNRTS               ;If not terminator, error.
 LSTEND:
         PLA
-        PLA                          ;GET RID OF "NEWSTT" RTS ADDR.
+        PLA                          ;Get rid of "newstt" rts addr.
         LDA     LINNUM               ;See if it was existent.
         ORA     LINNUM + 1
         BNE     LIST4                ;It was typed.
@@ -2436,7 +2436,7 @@ PLOOP:
                                      ;If quote, complement flag.
 PLOOP1:
         INY
-        BEQ     GRODY                ;IF WE HAVE PRINTED 256 CHARACTERS
+        BEQ     GRODY                ;If we have printed 256 characters
                                      ;The program must be misformated in
                                      ;Memory due to a bad load or bad
                                      ;Hardware. let the guy recover
@@ -2463,7 +2463,7 @@ QPLOP:
         .endif
                                      ;Yes, just type the character.
         SEC
-        SBC     #127                 ;GET RID OF SIGN BIT AND ADD 1.
+        SBC     #127                 ;Get rid of sign bit and add 1.
         TAX                          ;Make it a counter.
         STY     LSTPNT               ;Save pointer to line.
         LDY     #255                 ;Look at res'd word list.
@@ -2484,19 +2484,19 @@ PRIT3:
         .page
         .subttl THE "FOR" STATEMENT.
 
-; A "FOR" ENTRY ON THE STACK HAS THE FOLLOWING FORMAT:
+; A "for" entry on the stack has the following format:
 
 ; Low address
-;	TOKEN (FORTK) 1 BYTE
-;	A POINTER TO THE LOOP VARIABLE 2 BYTES
-;	THE STEP 4+ADDPRC BYTES
-;	A BYTE REFLECTING THE SIGN OF THE INCREMENT 1 BYTE
-;	THE UPPER VALUE 4+ADDPRC BYTES
-;	THE LINE NUMBER OF THE "FOR" STATEMENT 2 BYTES
-;	A TEXT POINTER INTO THE "FOR" STATEMENT 2 BYTES
+;	Token (fortk) 1 byte
+;	A pointer to the loop variable 2 bytes
+;	The step 4+addprc bytes
+;	A byte reflecting the sign of the increment 1 byte
+;	The upper value 4+addprc bytes
+;	The line number of the "for" statement 2 bytes
+;	A text pointer into the "for" statement 2 bytes
 ; High address
 
-; TOTAL 16+2*ADDPRC BYTES.
+; Total 16+2*addprc bytes.
 
 FOR:
         LDA     #128                 ;Don't recognize
@@ -2508,16 +2508,16 @@ FOR:
         BNE     NOTOL                ;If no match, don't eliminate anything.
         TXA                          ;Make it arithmetical.
         ADC     #FORSIZ - 3          ;Eliminate almost all.
-        TAX                          ;NOTE C=1, THEN PLA, PLA.
+        TAX                          ;Note c=1, then pla, pla.
         TXS                          ;Manifest.
 NOTOL:
         PLA                          ;Get rid of newstt return address
         PLA                          ;In case this is a totally new entry.
         LDA     #8 + ADDPRC
-        JSR     GETSTK               ;MAKE SURE 16 BYTES ARE AVAILABLE.
-        JSR     DATAN                ;GET A COUNT IN [Y] OF THE NUMBER OF
-                                     ;CHACRACTERS LEFT IN THE "FOR" STATEMENT
-                                     ;[TXTPTR] IS UNAFFECTED.
+        JSR     GETSTK               ;Make sure 16 bytes are available.
+        JSR     DATAN                ;Get a count in [y] of the number of
+                                     ;Chacracters left in the "for" statement
+                                     ;[Txtptr] is unaffected.
         CLC                          ;Prep to add.
         TYA                          ;Save it for pushing.
         ADC     TXTPTR
@@ -2526,7 +2526,7 @@ NOTOL:
         ADC     #0
         PHA
         PSHWD   CURLIN               ;Put line number on stack.
-        SYNCHK  TOTK                 ;"TO" IS NECESSARY.
+        SYNCHK  TOTK                 ;"To" is necessary.
         JSR     CHKNUM               ;Value must be a number.
         JSR     FRMNUM               ;Get upper value into fac.
         LDA     FACSGN               ;Pack fac.
@@ -2537,16 +2537,16 @@ NOTOL:
         STWD    INDEX1
         JMP     FORPSH               ;Put fac onto stack, packed.
 LDFONE:
-        LDWDI   FONE                 ;PUT 1.0 INTO FAC.
+        LDWDI   FONE                 ;Put 1.0 into fac.
         JSR     MOVFM
         JSR     CHRGOT
         CMP     #STEPTK              ;A step is given?
-        BNE     ONEON                ;NO. ASSUME 1.0.
+        BNE     ONEON                ;No. assume 1.0.
         JSR     CHRGET               ;Yes. advance pointer.
         JSR     FRMNUM               ;Read the step.
 ONEON:
         JSR     SIGN                 ;Get sign in acca.
-        JSR     PUSHF                ;PUSH FAC ONTO STACK (THRU A)*
+        JSR     PUSHF                ;Push fac onto stack (thru a)*
         PSHWD   FORPNT               ;Put pntr to variable on stack.
 NXTCON:
         LDA     #FORTK               ;Put a fortk onto stack.
@@ -2556,7 +2556,7 @@ NXTCON:
         .subttl NEW STATEMENT FETCHER.
 
 ; Back here for new statement. character pointed to by txtptr
-; IS ":" OR END-OF-LINE. THE ADDRESS OF THIS LOC IS LEFT
+; Is ":" or end-of-line. the address of this loc is left
 ; On the stack when a statement is executed so that
 ; It can merely do a rts when it is done.
 
@@ -2582,7 +2582,7 @@ DIRCON:
         LDA     (TXTPTR),Y
         BNE     MORSTS               ;Not null -- check what it is
         LDY     #2                   ;Look at link.
-        LDA     (TXTPTR),Y           ;IS LINK 0?
+        LDA     (TXTPTR),Y           ;Is link 0?
         CLC                          ;Clear carry for endcon and math that follows
         JEQ     ENDCON               ;Yes - ran off the end.
         INY                          ;Put line number in curlin.
@@ -2606,7 +2606,7 @@ GONE3:
                                      ;Be on if non-numeric and numerics
                                      ;Will cause a syntax error like they should
 GONE2:
-        SBC     #ENDTK               ;" ON ... GOTO AND GOSUB" COME HERE.
+        SBC     #ENDTK               ;" On ... goto and gosub" come here.
         BCC     GLET
         CMP     #SCRATK - ENDTK + 1
         BCS     SNERRX               ;Some res'd word but not
@@ -2622,13 +2622,13 @@ GLET:
         JMP     LET                  ;Must be a let
 MORSTS:
         CMP     #":"
-        BEQ     GONE                 ;IF A ":" CONTINUE STATEMENT
+        BEQ     GONE                 ;If a ":" continue statement
 SNERR1:
-        JMP     SNERR                ;NEITHER 0 OR ":" SO SYNTAX ERROR
+        JMP     SNERR                ;Neither 0 or ":" so syntax error
 SNERRX:
         CMP     #GOTK - ENDTK
         BNE     SNERR1
-        JSR     CHRGET               ;READ IN THE CHARACTER AFTER "GO "
+        JSR     CHRGET               ;Read in the character after "go "
         SYNCHK  TOTK
         JMP     GOTO
         .page
@@ -2642,7 +2642,7 @@ RESTOR:
         BCS     RESFIN
         DEY
 RESFIN:
-        STWD    DATPTR               ;READ FINISHES COME TO "RESFIN"*
+        STWD    DATPTR               ;Read finishes come to "resfin"*
 ISCRTS:
         RTS
 
@@ -2679,13 +2679,13 @@ ISCCAP:
         CMP     #0o203
         .endif
 STOP:
-        BCS     STOPC                ;MAKE [C] NONZERO AS A FLAG.
+        BCS     STOPC                ;Make [c] nonzero as a flag.
 END:
         CLC
 STOPC:
         BNE     CONTRT               ;Return if not cont-c or
                                      ;If no terminator for stop or end.
-                                     ;[C]=0 SO WILL NOT PRINT "BREAK"*
+                                     ;[C]=0 so will not print "break"*
         LDWD    TXTPTR
         .if     BUFPAG != 0
         LDX     CURLIN + 1
@@ -2705,16 +2705,16 @@ ENDCON:
         LDX     #0
         STX     CNTWFL
         .endif
-        BCC     GORDY                ;CARRY CLEAR SO DON'T PRINT "BREAK"*
+        BCC     GORDY                ;Carry clear so don't print "break"*
         JMP     ERRFIN
 GORDY:
-        JMP     READY                ;TYPE "READY"*
+        JMP     READY                ;Type "ready"*
 
         .if     REALIO == 0
 DDT:
         PLA                          ;Get rid of newstt return.
         PLA
-                                     ; HRRZ	14,.JBDDT##
+                                     ; Hrrz	14,.jbddt##
 	JRST	0(14)
         .endif
 CONT:
@@ -2723,8 +2723,8 @@ CONT:
         LDY     OLDTXT + 1           ;A stored txtptr of zero is setup
                                      ;By stkini and indicates there is
                                      ;Nothing to continue.
-        JEQ     ERROR                ;"STOP", "END", TYPING CRLF TO
-                                     ;"INPUT" AND  ^C SETUP OLDTXT.
+        JEQ     ERROR                ;"Stop", "end", typing crlf to
+                                     ;"Input" and  ^c setup oldtxt.
         LDA     OLDTXT
         STWD    TXTPTR
         LDWD    OLDLIN
@@ -2738,8 +2738,8 @@ NULL:
         BNE     CONTRT               ;Make sure there is terminator.
         INX
         CPX     #240                 ;Is the number reasonable?
-        BCS     FCERR1               ;"FUNCTION CALL" ERROR.
-        DEX                          ;BACK -1
+        BCS     FCERR1               ;"Function call" error.
+        DEX                          ;Back -1
         STX     NULCNT
         RTS
 FCERR1:
@@ -2749,7 +2749,7 @@ FCERR1:
         .subttl LOAD AND SAVE SUBROUTINES.
 
         .if     REALIO == 1
-                                     ;KIM CASSETTE I/O
+                                     ;Kim cassette i/o
 SAVE:
         TSX                          ;Save stack pointer
         STX     INPFLG
@@ -2793,7 +2793,7 @@ RTLOAD:
         JSR     STROUT
         LDXY    0o13755              ;Get last location
         TXA                          ;Its one too big
-        BNE     DECVRT               ;DECREMENT [X,Y]
+        BNE     DECVRT               ;Decrement [x,y]
         NOP
 DECVRT:
         NOP
@@ -2811,7 +2811,7 @@ SAVE:
         SBC     TXTTAB + 1
         STA     POKER + 1
         JSR     VARTIO
-        JSR     CQCOUT               ;WRITE PROGRAM SIZE [POKER]
+        JSR     CQCOUT               ;Write program size [poker]
         JSR     PROGIO
         JMP     CQCOUT               ;Write program.
 
@@ -2875,11 +2875,11 @@ GOSUB:
         PHA                          ;Push on a gosub token.
 RUNC2:
         JSR     CHRGOT               ;Get character and set codes for linget.
-        JSR     GOTO                 ;USE RTS SCHEME TO "NEWSTT"*
+        JSR     GOTO                 ;Use rts scheme to "newstt"*
         JMP     NEWSTT
 
 GOTO:
-        JSR     LINGET               ;PICK UP THE LINE NUMBER IN "LINNUM"*
+        JSR     LINGET               ;Pick up the line number in "linnum"*
         JSR     REMN                 ;Skip to end of line.
         LDA     CURLIN + 1
         CMP     LINNUM + 1
@@ -2894,7 +2894,7 @@ GOTO:
 LUK4IT:
         LDWX    TXTTAB
 LUKALL:
-        JSR     FNDLNC               ;[X,A] ARE ALL SET UP.
+        JSR     FNDLNC               ;[X,a] are all set up.
 QFOUND:
         BCC     USERR                ;Goto line is nonexistant.
         LDA     LOWTR
@@ -2906,32 +2906,32 @@ QFOUND:
 GORTS:
         RTS                          ;Process the statement.
 
-; "RETURN" RESTORES THE LINE NUMBER AND TEXT PNTR FROM THE STACK
-; AND ELIMINATES ALL THE "FOR" ENTRIES IN FRONT OF THE "GOSUB" ENTRY.
+; "Return" restores the line number and text pntr from the stack
+; And eliminates all the "for" entries in front of the "gosub" entry.
 
 RETURN:
-        BNE     GORTS                ;NO TERMINATOR=BLOW HIM UP.
+        BNE     GORTS                ;No terminator=blow him up.
         LDA     #255
         STA     FORPNT + 1           ;Make sure the variable's pntr
                                      ;Never gets matched.
-        JSR     FNDFOR               ;GO PAST ALL THE "FOR" ENTRIES.
+        JSR     FNDFOR               ;Go past all the "for" entries.
         TXS
         CMP     #GOSUTK              ;Return without gosub?
         BEQ     RETU1
         LDX     #ERRRG
         SKIP2
 USERR:
-        LDX     #ERRUS               ;NO MATCH SO "US" ERROR.
+        LDX     #ERRUS               ;No match so "us" error.
         JMP     ERROR                ;Yes.
 SNERR2:
         JMP     SNERR
 RETU1:
         PLA                          ;Remove gosutk.
-        PULWD   CURLIN               ;GET LINE NUMBER "GOSUB" WAS FROM.
-        PULWD   TXTPTR               ;GET TEXT PNTR FROM "GOSUB"*
+        PULWD   CURLIN               ;Get line number "gosub" was from.
+        PULWD   TXTPTR               ;Get text pntr from "gosub"*
 DATA:
         JSR     DATAN                ;Skip to end of statement
-                                     ;SINCE WHEN "GOSUB" STUCK THE TEXT  PNTR
+                                     ;Since when "gosub" stuck the text  pntr
                                      ;Onto the stack, the line number arg
                                      ;Hadn't been read yet.
 ADDON:
@@ -2942,15 +2942,15 @@ ADDON:
         BCC     REMRTS
         INC     TXTPTR + 1
 REMRTS:
-        RTS                          ;"NEWSTT" RTS ADDR IS STILL THERE.
+        RTS                          ;"Newstt" rts addr is still there.
 
 DATAN:
-        LDX     #":"                 ;"DATA" TERMINATES ON ":" AND NULL.
+        LDX     #":"                 ;"Data" terminates on ":" and null.
         SKIP2
 REMN:
         LDX     #0                   ;The only terminator is null.
         STX     CHARAC               ;Preserve it.
-        LDY     #0                   ;THIS MAKES CHARAC=0 AFTER SWAP.
+        LDY     #0                   ;This makes charac=0 after swap.
         STY     ENDCHR
 EXCHQT:
         LDA     ENDCHR
@@ -2973,9 +2973,9 @@ IF:
         JSR     CHRGOT               ;Get current character.
         CMP     #GOTOTK              ;Is terminating character a gototk?
         BEQ     OKGOTO               ;Yes.
-        SYNCHK  THENTK               ;NO, IT MUST BE "THEN"*
+        SYNCHK  THENTK               ;No, it must be "then"*
 OKGOTO:
-        LDA     FACEXP               ;0=FALSE. ALL OTHERS TRUE.
+        LDA     FACEXP               ;0=False. all others true.
         BNE     DOCOND               ;True !
 REM:
         JSR     REMN                 ;Skip rest of statement.
@@ -2991,10 +2991,10 @@ DOCO:
 ONGOTO:
         JSR     GETBYT               ;Get value in faclo.
         PHA                          ;Save for later.
-        CMP     #GOSUTK              ;AN "ON ... GOSUB" PERHAPS?
+        CMP     #GOSUTK              ;An "on ... gosub" perhaps?
         BEQ     ONGLOP               ;Yes.
 SNERR3:
-        CMP     #GOTOTK              ;MUST BE "GOTOTK"*
+        CMP     #GOTOTK              ;Must be "gototk"*
         BNE     SNERR2
 ONGLOP:
         DEC     FACLO
@@ -3006,19 +3006,19 @@ ONGLP1:
         JSR     LINGET
         CMP     #44                  ;Is it a comma?
         BEQ     ONGLOP
-        PLA                          ;REMOVE STACK ENTRY (TOKEN)*
+        PLA                          ;Remove stack entry (token)*
 ONGRTS:
         RTS                          ;Either end-of-line or syntax error.
         .page
         .subttl LINGET -- READ A LINE NUMBER INTO LINNUM
 
-; "LINGET" READS A LINE NUMBER FROM THE CURRENT TEXT POSITION.
+; "Linget" reads a line number from the current text position.
 
-; LINE NUMBERS RANGE FROM 0 TO 64000-1.
+; Line numbers range from 0 to 64000-1.
 
-; THE ANSWER IS RETURNED IN "LINNUM"*
-; "TXTPTR" IS UPDATED TO POINT TO THE TERMINATING CHARCTER
-; AND [A] = THE TERMINATING CHARACTER WITH CONDITION
+; The answer is returned in "linnum"*
+; "Txtptr" is updated to point to the terminating charcter
+; And [a] = the terminating character with condition
 ; Codes set up to reflect its value.
 
 LINGET:
@@ -3027,14 +3027,14 @@ LINGET:
         STX     LINNUM + 1
 MORLIN:
         BCS     ONGRTS               ;It is not a digit.
-        SBC     #"0" - 1             ;-1 SINCE C=0.
+        SBC     #"0" - 1             ;-1 Since c=0.
         STA     CHARAC               ;Save character.
         LDA     LINNUM + 1
         STA     INDEX
-        CMP     #25                  ;LINE NUMBER WILL BE .LT. 64000?
+        CMP     #25                  ;Line number will be .lt. 64000?
         BCS     SNERR3
         LDA     LINNUM
-        ASL     A                    ;MULTIPLY BY 10.
+        ASL     A                    ;Multiply by 10.
         ROL     INDEX
         ASL     A
         ROL     INDEX
@@ -3057,20 +3057,20 @@ NXTLGC:
         .page
         .subttl "LET" CODE.
 LET:
-        JSR     PTRGET               ;GET PNTR TO VARIABLE INTO "VARPNT"*
+        JSR     PTRGET               ;Get pntr to variable into "varpnt"*
         STWD    FORPNT               ;Preserve pointer.
-        SYNCHK  EQULTK               ;"=" IS NECESSARY.
+        SYNCHK  EQULTK               ;"=" Is necessary.
         .if     INTPRC != 0
         LDA     INTFLG               ;Save for later.
         PHA
         .endif
         LDA     VALTYP               ;Retain the variable's value type.
         PHA
-        JSR     FRMEVL               ;GET VALUE OF FORMULA INTO "FAC"*
+        JSR     FRMEVL               ;Get value of formula into "fac"*
         PLA
         ROL     A                    ;Carry set for string, off for
                                      ;Numeric.
-        JSR     CHKVAL               ;MAKE SURE "VALTYP" MATCHES CARRY.
+        JSR     CHKVAL               ;Make sure "valtyp" matches carry.
                                      ;And set zero flag for numeric.
         BNE     COPSTR               ;If numeric, copy it.
 COPNUM:
@@ -3079,7 +3079,7 @@ COPNUM:
 QINTGR:
         BPL     COPFLT               ;Store a flting number.
         JSR     ROUND                ;Round integer.
-        JSR     AYINT                ;MAKE 2-BYTE NUMBER.
+        JSR     AYINT                ;Make 2-byte number.
         LDY     #0
         LDA     FACMO                ;Get high.
         STA     (FORPNT),Y           ;Store it.
@@ -3098,9 +3098,9 @@ COPSTR:
                                      ;If string, no intflg.
 INPCOM:
         .if     TIME != 0
-        LDY     FORPNT + 1           ;TI$?
-        CPY     #ZERO / 256          ;ONLY TI$ CAN BE THIS ON ASSIG.
-        BNE     GETSPT               ; WAS NOT TI$*
+        LDY     FORPNT + 1           ;Ti$?
+        CPY     #ZERO / 256          ;Only ti$ can be this on assig.
+        BNE     GETSPT               ; Was not ti$*
         JSR     FREFAC               ;We wont needit.
         CMP     #6                   ;Length correct?
         BNE     FCERR2
@@ -3110,16 +3110,16 @@ INPCOM:
 TIMELP:
         STY     FBUFPT               ;Save posotion.
         JSR     TIMNUM               ;Get a digit.
-        JSR     MUL10                ;WHOLE QTY BY 10.
+        JSR     MUL10                ;Whole qty by 10.
         INC     FBUFPT
         LDY     FBUFPT
         JSR     TIMNUM
         JSR     MOVAF
-        TAX                          ;IF NUM=0 THEN NO MULT.
-        BEQ     NOML6                ;IF =0, GO TIT.
+        TAX                          ;If num=0 then no mult.
+        BEQ     NOML6                ;If =0, go tit.
         INX                          ;Mult by two.
         TXA
-        JSR     FINML6               ;ADD IN AND MULT BY 2 GIVES *6.
+        JSR     FINML6               ;Add in and mult by 2 gives *6.
 NOML6:
         LDY     FBUFPT
         INY
@@ -3133,7 +3133,7 @@ TIMEST:
         LDA     FACMOH,X
         STA     CQTIMR,X
         DEX
-        BPL     TIMEST               ;LOOP 3 TIMES.
+        BPL     TIMEST               ;Loop 3 times.
         CLI                          ;Turn on ints again.
         RTS
 TIMNUM:
@@ -3152,7 +3152,7 @@ GETSPT:
         LDY     #2                   ;Get pntr to descriptor.
         LDA     (FACMO),Y
         CMP     FRETOP + 1           ;See if it points into string space.
-        BCC     DNTCPY               ;IF [FRETOP],GT.[2&3,FACMO], DON'T COPY.
+        BCC     DNTCPY               ;If [fretop],gt.[2&3,facmo], don't copy.
         BNE     QVARIA               ;It is less.
         DEY
         LDA     (FACMO),Y
@@ -3160,7 +3160,7 @@ GETSPT:
         BCC     DNTCPY
 QVARIA:
         LDY     FACLO
-        CPY     VARTAB + 1           ;IF [VARTAB].GT.[FACMO], DON'T COPY.
+        CPY     VARTAB + 1           ;If [vartab].gt.[facmo], don't copy.
         BCC     DNTCPY
         BNE     COPY                 ;It is less.
         LDA     FACMO
@@ -3215,7 +3215,7 @@ NEWCHR:
 PRINT:
         BEQ     CRDO                 ;Terminator so type crlf.
 PRINTC:
-        BEQ     PRTRTS               ;HERE AFTER SEEING TAB(X) OR , OR ;
+        BEQ     PRTRTS               ;Here after seeing tab(x) or , or ;
                                      ;In which case a terminator does not
                                      ;Mean type a crlf but just rts.
         CMP     #TABTK               ;Tab function?
@@ -3236,7 +3236,7 @@ PRINTC:
         LDY     #0                   ;Get the pointer.
         LDA     (FACMO),Y
         CLC
-        ADC     TRMPOS               ;MAKE SURE LEN+POS.LT.WIDTH.
+        ADC     TRMPOS               ;Make sure len+pos.lt.width.
         CMP     LINWID               ;Greater than line length?
                                      ;Remember space printed after number.
         BCC     LINCHK               ;Go type.
@@ -3299,7 +3299,7 @@ CRFIN:
         EOR     #255
         .endif
         .if     NULCMD != 0
-        TXA                          ;PRESERVE [ACCX]* SOME NEED IT.
+        TXA                          ;Preserve [accx]* some need it.
         PHA
         LDX     NULCNT               ;Get number of nulls.
         BEQ     CLRPOS
@@ -3321,7 +3321,7 @@ COMPRT:
 NCMPOS  =       (LINLEN / CLMWID - 1) * CLMWID ;Clmwid beyond which there are
         .if     REALIO != 3
                                      ;No more comma fields.
-        CMP     NCMWID               ;SO ALL COMMA DOES IS "CRDO"*
+        CMP     NCMWID               ;So all comma does is "crdo"*
 
         BCC     MORCOM
         JSR     CRDO                 ;Type crlf.
@@ -3331,11 +3331,11 @@ NCMPOS  =       (LINLEN / CLMWID - 1) * CLMWID ;Clmwid beyond which there are
 MORCOM:
         SEC
 MORCO1:
-        SBC     #CLMWID              ;GET [A] MODULUS CLMWID.
+        SBC     #CLMWID              ;Get [a] modulus clmwid.
         BCS     MORCO1
         EOR     #255                 ;Fill print pos out to even clmwid so
         ADC     #1
-        BNE     ASPAC                ;PRINT [A] SPACES.
+        BNE     ASPAC                ;Print [a] spaces.
 
 TABER:
         PHP                          ;Remember if spc or tab function.
@@ -3343,7 +3343,7 @@ TABER:
         CMP     #41
         BNE     SNERR4
         PLP
-        BCC     XSPAC                ;PRINT [X] SPACES.
+        BCC     XSPAC                ;Print [x] spaces.
         TXA
         SBC     TRMPOS
         BCC     NOTABR               ;Negative, don't print any.
@@ -3361,7 +3361,7 @@ XSPAC1:
         JSR     OUTSPC
         BNEA    XSPAC2
 
-; PRINT THE STRING POINTED TO BY [Y,A] WHICH ENDS WITH A ZERO.
+; Print the string pointed to by [y,a] which ends with a zero.
 ; If the string is below dsctmp it will be copied into string space.
 
 STROUT:
@@ -3386,7 +3386,7 @@ STRPR2:
         JMP     STRPR2               ;And on and on.
 
 ; Outdo outputs the character in acca, using cntwfl
-; (SUPPRESS OR NOT), TRMPOS (PRINT HEAD POSITION)
+; (Suppress or not), trmpos (print head position)
 ; Timing, etcq. no registers are changed.
 
 OUTSPC:
@@ -3407,7 +3407,7 @@ OUTQST:
         LDA     #"?"
 OUTDO:
         .if     REALIO != 0
-        BIT     CNTWFL               ;SHOULDN'T AFFECT CHANNEL I/O!
+        BIT     CNTWFL               ;Shouldn't affect channel i/o!
         BMI     OUTRTS
         .endif
         .if     REALIO != 3
@@ -3415,7 +3415,7 @@ OUTDO:
         CMP     #32                  ;Is this a printing char?
         BCC     TRYOUT               ;No, don't include it in trmpos.
         LDA     TRMPOS
-        CMP     LINWID               ;LENGTH = TERMINAL WIDTH?
+        CMP     LINWID               ;Length = terminal width?
         BNE     OUTDO1
         JSR     CRDO                 ;Yes, type crlf
 OUTDO1:
@@ -3437,7 +3437,7 @@ TRYOUT:
         .if     REALIO == 4
         ORA     #0o200
         .endif
-                                     ;TURN ON B7 FOR APPLE.
+                                     ;Turn on b7 for apple.
         .if     REALIO != 0
 OUTLOC:
         JSR     OUTCH
@@ -3455,23 +3455,23 @@ OUTLOC:
         .if     REALIO == 4
         AND     #0o177
         .endif
-                                     ;GET [A] BACK FROM APPLE.
+                                     ;Get [a] back from apple.
 
         .if     REALIO == 0
 	TJSR	OUTSIM##
         .endif
                                      ;Call simulator output routine
 OUTRTS:
-        AND     #255                 ;SET Z=0.
+        AND     #255                 ;Set z=0.
 GETRTS:
         RTS
 
         .page
         .subttl INPUT AND READ CODE.
 
-; HERE WHEN THE DATA THAT WAS TYPED IN OR IN "DATA" STATEMENTS
-; IS IMPROPERLY FORMATTED. FOR "INPUT" WE START AGAIN.
-; FOR "READ" WE GIVE A SYNTAX ERROR AT THE DATA LINE.
+; Here when the data that was typed in or in "data" statements
+; Is improperly formatted. for "input" we start again.
+; For "read" we give a syntax error at the data line.
 
 TRMNOK:
         LDA     INPFLG
@@ -3496,15 +3496,15 @@ TRMNO1:
         .endif
 DOAGIN:
         LDWDI   TRYAGN
-        JSR     STROUT               ;PRINT "?REDO FROM START"*
+        JSR     STROUT               ;Print "?redo from start"*
         LDWD    OLDTXT               ;Point at start
         STWD    TXTPTR               ;Of this current line.
-        RTS                          ;GO TO "NEWSTT"*
+        RTS                          ;Go to "newstt"*
         .if     GETCMD != 0
 GET:
         JSR     ERRDIR               ;Direct is not ok.
         .if     EXTIO != 0
-        CMP     #"#"                 ;SEE IF "GET#"*
+        CMP     #"#"                 ;See if "get#"*
         BNE     GETTTY               ;No, just get tty input.
         JSR     CHRGET               ;Move up to next byte.
         JSR     GETBYT               ;Get channel into x
@@ -3513,7 +3513,7 @@ GET:
         STX     CHANNL
         .endif
 GETTTY:
-        LDXYI   BUF + 1              ;POINT TO 0.
+        LDXYI   BUF + 1              ;Point to 0.
         .if     BUFPAG != 0
         LDA     #0                   ;To stuff and to point.
         STA     BUF + 1
@@ -3563,7 +3563,7 @@ NOTQTI:
         STA     BUF - 1
                                      ;Is also illegal.
 GETAGN:
-        JSR     QINLIN               ;TYPE "?" AND INPUT A LINE OF TEXT.
+        JSR     QINLIN               ;Type "?" and input a line of text.
         .if     EXTIO != 0
         LDA     CHANNL
         BEQ     BUFFUL
@@ -3609,19 +3609,19 @@ INPCO1:
         STA     INPFLG               ;Store the flag.
 
 ; In the processing of data and read statements:
-; ONE POINTER POINTS TO THE DATA (IE, THE NUMBERS BEING FETCHED)
+; One pointer points to the data (ie, the numbers being fetched)
 ; And another points to the list of variables.
 
 ; The pointer into the data always starts pointing to a
 ; Terminator -- a , : or end-of-line.
 
 ; At this point txtptr points to list of variables and
-; [Y,X] POINTS TO DATA OR INPUT LINE.
+; [Y,x] points to data or input line.
 
         STXY    INPPTR
 INLOOP:
         JSR     PTRGET               ;Read variable list.
-        STWD    FORPNT               ;SAVE POINTER FOR "LET" STRING STUFFING.
+        STWD    FORPNT               ;Save pointer for "let" string stuffing.
                                      ;Returns pntr top var in varpnt.
         LDWD    TXTPTR               ;Save text pntr.
         STWD    VARTXT
@@ -3656,7 +3656,7 @@ QDATA:
 GETNTH:
         JSR     QINLIN               ;Get another line.
 DATBK:
-        STXY    TXTPTR               ;SET FOR "CHRGET"*
+        STXY    TXTPTR               ;Set for "chrget"*
 DATBK1:
         JSR     CHRGET
         BIT     VALTYP               ;Get value type.
@@ -3674,7 +3674,7 @@ SETQUT:
         STA     CHARAC               ;Assume quoted string.
         CMP     #34                  ;Terminators ok?
         BEQ     NOWGET               ;Yes.
-        LDA     #":"                 ;SET TERMINATORS TO ":" AND
+        LDA     #":"                 ;Set terminators to ":" and
         STA     CHARAC
         LDA     #44                  ;Comma.
 RESETC:
@@ -3703,7 +3703,7 @@ NUMINS:
                                      ;Go decide on float.
 STRDN2:
         JSR     CHRGOT               ;Read last character.
-        BEQ     TRMOK                ;":" OR EOL IS OK.
+        BEQ     TRMOK                ;":" Or eol is ok.
         CMP     #44                  ;A comma?
         JNE     TRMNOK
 TRMOK:
@@ -3719,8 +3719,8 @@ TRMOK:
 ; Subroutine to find data
 ; The search is made by using the execution code for data to
 ; Skip over statements. the start word of each statement
-; IS COMPARED WITH "DATATK"* EACH NEW LINE NUMBER
-; IS STORED IN "DATLIN" SO THAT IF AN ERROR OCCURS
+; Is compared with "datatk"* each new line number
+; Is stored in "datlin" so that if an error occurs
 ; While reading data the error message can give the line
 ; Number of the ill-formatted data.
 
@@ -3729,7 +3729,7 @@ DATLOP:
         INY
         TAX                          ;End of line?
         BNE     NOWLIN               ;Sho ain't.
-        LDX     #ERROD               ;YES = "NO DATA" ERROR.
+        LDX     #ERROD               ;Yes = "no data" error.
         INY
         LDA     (TXTPTR),Y
         BEQ     ERRGO5
@@ -3743,8 +3743,8 @@ DATLOP:
 NOWLIN:
         LDA     (TXTPTR),Y           ;How is it?
         TAX
-        JSR     ADDON                ;ADD [Y] TO [TXTPTR]*
-        CPX     #DATATK              ;IS IT A "DATA" STATEMENT.
+        JSR     ADDON                ;Add [y] to [txtptr]*
+        CPX     #DATATK              ;Is it a "data" statement.
         BNE     DATLOP               ;Not quite right. keep looking.
         JMP     DATBK1               ;This is the one !
 VAREND:
@@ -3762,7 +3762,7 @@ VARY0:
         BNE     INPRTS
         .endif
         LDWDI   EXIGNT
-        JMP     STROUT               ;TYPE "?EXTRA IGNORED"
+        JMP     STROUT               ;Type "?extra ignored"
 INPRTS:
         RTS                          ;Do next statement.
 EXIGNT:
@@ -3776,31 +3776,31 @@ TRYAGN:
         .page
         .subttl THE NEXT CODE IS THE "NEXT CODE"
 
-; A "FOR" ENTRY ON THE STACK HAS THE FOLLOWING FORMAT:
+; A "for" entry on the stack has the following format:
 
 ; Low address
-;	TOKEN (FORTK) 1 BYTE
-;	A POINTER TO THE LOOP VARIABLE 2 BYTES
-;	THE STEP 4+ADDPRC BYTES
-;	A BYTE REFLECTING THE SIGN OF THE INCREMENT 1 BYTE
-;	THE UPPER VALUE (PACKED) 4+ADDPRC BYTES
-;	THE LINE NUMBER OF THE "FOR" STATEMENT 2 BYTES
-;	A TEXT POINTER INTO THE "FOR" STATEMENT 2 BYTES
+;	Token (fortk) 1 byte
+;	A pointer to the loop variable 2 bytes
+;	The step 4+addprc bytes
+;	A byte reflecting the sign of the increment 1 byte
+;	The upper value (packed) 4+addprc bytes
+;	The line number of the "for" statement 2 bytes
+;	A text pointer into the "for" statement 2 bytes
 ; High address
 
-; TOTAL 16+2*ADDPRC BYTES.
+; Total 16+2*addprc bytes.
 
 NEXT:
         BNE     GETFOR
-        LDY     #0                   ;WITHOUT ARG CALL "FNDFOR" WITH
-        BEQA    STXFOR               ;[FORPNT]=0.
+        LDY     #0                   ;Without arg call "fndfor" with
+        BEQA    STXFOR               ;[Forpnt]=0.
 GETFOR:
         JSR     PTRGET               ;Get a pointer to loop variable
 STXFOR:
-        STWD    FORPNT               ;INTO "FORPNT"*
+        STWD    FORPNT               ;Into "forpnt"*
         JSR     FNDFOR               ;Find the matching entry if any.
         BEQ     HAVFOR
-        LDX     #ERRNF               ;"NEXT WITHOUT FOR"*
+        LDX     #ERRNF               ;"Next without for"*
 ERRGO5:
         BEQ     ERRGO4
 HAVFOR:
@@ -3808,7 +3808,7 @@ HAVFOR:
         TXA
         CLC
         ADC     #4                   ;Point to increment
-        PHA                          ;SAVE THIS POINTER TO RESTORE TO [A]
+        PHA                          ;Save this pointer to restore to [a]
         ADC     #5 + ADDPRC          ;Point to upper limit
         STA     INDEX2               ;Save as index
         PLA                          ;Restore pointer to increment
@@ -3825,22 +3825,22 @@ HAVFOR:
         TSX
         SEC
         SBC     257 + 7 + ADDPRC,X   ;Subtract sign of inc from sign of
-                                     ;OF (CURRENT VALUE-FINAL VALUE)*
-        BEQ     LOOPDN               ;IF SIGN (FINAL-CURRENT)-SIGN STEP=0
+                                     ;Of (current value-final value)*
+        BEQ     LOOPDN               ;If sign (final-current)-sign step=0
                                      ;Then loop is done.
         LDA     2 * ADDPRC + 12 + 257,X
-        STA     CURLIN               ;STORE LINE NUMBER OF "FOR" STATEMENT.
+        STA     CURLIN               ;Store line number of "for" statement.
         LDA     257 + 13 + 2 * ADDPRC,X
         STA     CURLIN + 1
         LDA     2 * ADDPRC + 15 + 257,X
-        STA     TXTPTR               ;STORE TEXT PNTR INTO "FOR" STATEMENT.
+        STA     TXTPTR               ;Store text pntr into "for" statement.
         LDA     2 * ADDPRC + 14 + 257,X
         STA     TXTPTR + 1
 NEWSGO:
         JMP     NEWSTT               ;Process next statement.
 LOOPDN:
         TXA
-        ADC     #2 * ADDPRC + 15     ;ADDS 16 WITH CARRY.
+        ADC     #2 * ADDPRC + 15     ;Adds 16 with carry.
         TAX
         TXS                          ;New stack pntr.
         JSR     CHRGOT
@@ -3848,13 +3848,13 @@ LOOPDN:
         BNE     NEWSGO
         JSR     CHRGET
         JSR     GETFOR               ;Do next but don't allow blank variable
-                                     ;PNTR. [VARPNT] IS THE STK PNTR WHICH
+                                     ;Pntr. [varpnt] is the stk pntr which
                                      ;Never matches any pointer.
                                      ;Jsr to put on dummy newstt addr.
         .subttl FORMULA EVALUATION CODE.
 
-; THESE ROUTINES CHECK FOR CERTAIN "VALTYP"*
-; [C] IS NOT PRESERVED.
+; These routines check for certain "valtyp"*
+; [C] is not preserved.
 
 FRMNUM:
         JSR     FRMEVL
@@ -3864,7 +3864,7 @@ CHKNUM:
 CHKSTR:
         SEC                          ;Set carry.
 CHKVAL:
-        BIT     VALTYP               ;WILL NOT F UP "VALTYP"*
+        BIT     VALTYP               ;Will not f up "valtyp"*
         BMI     DOCSTR
         BCS     CHKERR
 CHKOK:
@@ -3877,12 +3877,12 @@ ERRGO4:
         JMP     ERROR
 
 ; The formula evaluator starts with
-; [TXTPTR] POINTING TO THE FIRST CHARACTER OF THE FORMULA.
-; AT THE END [TXTPTR] POINTS TO THE TERMINATOR.
+; [Txtptr] pointing to the first character of the formula.
+; At the end [txtptr] points to the terminator.
 ; The result is left in the fac.
-; ON RETURN [A] DOES NOT REFLECT THE TERMINATOR.
+; On return [a] does not reflect the terminator.
 
-; THE FORMULA EVALUATOR USES THE OPERATOR LIST (OPTAB)
+; The formula evaluator uses the operator list (optab)
 ; To determine precedence and dispatch addresses for
 ; Each operator.
 ; A temporary result on the stack has the following format.
@@ -3896,10 +3896,10 @@ FRMEVL:
         DEC     TXTPTR + 1
 FRMEV1:
         DEC     TXTPTR
-        LDX     #0                   ;INITIAL DUMMY PRECEDENCE IS 0.
+        LDX     #0                   ;Initial dummy precedence is 0.
         SKIP1
 LPOPER:
-        PHA                          ;SAVE LOW PRECEDENCE. (MASK.)
+        PHA                          ;Save low precedence. (mask.)
         TXA
         PHA                          ;Save high precedence.
         LDA     #1
@@ -3916,7 +3916,7 @@ LOPREL:
         CMP     #LESSTK - GREATK + 1 ;Really relational?
         BCS     ENDREL               ;No -- just big.
         CMP     #1                   ;Reset carry for zero only.
-        ROL     A                    ;0 TO 1, 1 TO 2, 2 TO 4.
+        ROL     A                    ;0 To 1, 1 to 2, 2 to 4.
         EOR     #1
         EOR     OPMASK               ;Bring in the old bits.
         CMP     OPMASK               ;Make sure the new mask is bigger.
@@ -3931,10 +3931,10 @@ ENDREL:
         ADC     #GREATK - PLUSTK
         BCC     QOP                  ;Not an operator.
         ADC     VALTYP               ;[C]=1.
-        JEQ     CAT                  ;ONLY IF [A]=0 AND [VALTYP]=-1 (A STR)*
-        ADC     #0o377               ;GET BACK ORIGINAL [A]*
+        JEQ     CAT                  ;Only if [a]=0 and [valtyp]=-1 (a str)*
+        ADC     #0o377               ;Get back original [a]*
         STA     INDEX1
-        ASL     A                    ;MULTIPLY BY 2.
+        ASL     A                    ;Multiply by 2.
         ADC     INDEX1               ;By three.
         TAY                          ;Set up for later.
 QPREC:
@@ -3953,7 +3953,7 @@ NEGPRC:
         BEQ     QOPGO                ;Done !
         BNE     PULSTK
 FINREL:
-        LSR     VALTYP               ;GET VALUE TYPE INTO "C"*
+        LSR     VALTYP               ;Get value type into "c"*
         TXA
         ROL     A                    ;Put valtyp into low order bit of mask.
         LDX     TXTPTR               ;Decrement text pointer.
@@ -3961,10 +3961,10 @@ FINREL:
         DEC     TXTPTR + 1
 FINRE2:
         DEC     TXTPTR
-        LDY     #PTDORL - OPTAB      ;MAKE [YREG] POINT AT OPERATOR ENTRY.
+        LDY     #PTDORL - OPTAB      ;Make [yreg] point at operator entry.
         STA     OPMASK               ;Save the operation mask.
         BNE     QPREC                ;Save it all. br always.
-                                     ;NOTE B7(VALTYP)=0 SO CHKNUM CALL IS OK.
+                                     ;Note b7(valtyp)=0 so chknum call is ok.
 QPREC1:
         CMP     OPTAB,Y              ;Last precedence is greater?
         BCS     PULSTK               ;Yes, go operate.
@@ -3975,7 +3975,7 @@ DOPRE1:
         LDA     OPTAB + 1,Y
         PHA
         JSR     PUSHF1               ;Save fac on stack unpacked.
-        LDA     OPMASK               ;[ACCA] MAY BE MASK FOR REL.
+        LDA     OPMASK               ;[Acca] may be mask for rel.
         JMP     LPOPER
 SNERR5:
         JMP     SNERR                ;Go to an error.
@@ -4020,8 +4020,8 @@ UNPSTK:
         STY     OPPTR                ;Save operator's pointer for next time.
 PULSTK:
         PLA                          ;Get mask for rel op if it is one.
-        LSR     A                    ;SETUP [C] FOR DOREL'S "CHKVAL"*
-        STA     DOMASK               ;SAVE FOR "DOCMP"*
+        LSR     A                    ;Setup [c] for dorel's "chkval"*
+        STA     DOMASK               ;Save for "docmp"*
         PLA                          ;Unpack stack into arg.
         STA     ARGEXP
         PLA
@@ -4078,16 +4078,16 @@ QDOT:
         BNE     EVAL3
 STRTXT:
         LDWD    TXTPTR
-        ADC     #0                   ;TO INC, ADD C=1.
+        ADC     #0                   ;To inc, add c=1.
         BCC     STRTX2
         INY
 STRTX2:
         JSR     STRLIT               ;Yes. go process it.
         JMP     ST2TXT
 EVAL3:
-        CMP     #NOTTK               ;CHECK FOR "NOT" OPERATOR.
+        CMP     #NOTTK               ;Check for "not" operator.
         BNE     EVAL4
-        LDY     #NOTTAB - OPTAB      ;"NOT" HAS PRECEDENCE 90.
+        LDY     #NOTTAB - OPTAB      ;"Not" has precedence 90.
         BNE     GONPRC               ;Go do its evaluation.
 NOTOP:
         JSR     AYINT                ;Integerize.
@@ -4096,7 +4096,7 @@ NOTOP:
         TAY
         LDA     FACMO
         EOR     #255
-        JMP     GIVAYF               ;FLOAT [Y,A] AS RESULT IN FAC.
+        JMP     GIVAYF               ;Float [y,a] as result in fac.
                                      ;And return.
 EVAL4:
         CMP     #FNTK                ;User-defined function?
@@ -4118,12 +4118,12 @@ CHKOPN:
 CHKCOM:
         LDA     #44
 
-; "SYNCHK" LOOKS AT THE CURRENT CHARACTER TO MAKE SURE IT
+; "Synchk" looks at the current character to make sure it
 ; Is the specific thing loaded into acca just before the call to
-; "SYNCHK"* IF NOT, IT CALLS THE "SYNTAX ERROR" ROUTINE.
+; "Synchk"* if not, it calls the "syntax error" routine.
 ; Otherwise it gobbles the next char and returns
 
-; [A]=NEW CHAR AND TXTPTR IS ADVANCED BY "CHRGET"*
+; [A]=new char and txtptr is advanced by "chrget"*
 
 SYNCHR:
         LDY     #0
@@ -4132,10 +4132,10 @@ SYNCHR:
 CHRGO5:
         JMP     CHRGET
 SNERR:
-        LDX     #ERRSN               ;"SYNTAX ERROR"
+        LDX     #ERRSN               ;"Syntax error"
         JMP     ERROR
 DOMIN:
-        LDY     #NEGTAB - OPTAB      ;A PRECEDENCE BELOW "^"*
+        LDY     #NEGTAB - OPTAB      ;A precedence below "^"*
 GONPRC:
         PLA                          ;Get rid of rts addr.
         PLA
@@ -4148,7 +4148,7 @@ ISVRET:
         .if     (TIME | EXTIO) != 0
         LDWD    VARNAM
         .endif
-                                     ;CHECK TIME,TIME$,STATUS.
+                                     ;Check time,time$,status.
         LDX     VALTYP
         BEQ     GOOO                 ;The string is set up.
         LDX     #0
@@ -4156,12 +4156,12 @@ ISVRET:
         .if     TIME != 0
         BIT     FACLO                ;An array?
         BPL     STRRTS               ;Yes.
-        CMP     #"T"                 ;TI$?
+        CMP     #"T"                 ;Ti$?
         BNE     STRRTS
         CPY     #"I" + 128
         BNE     STRRTS
         JSR     GETTIM               ;Yes. put time in facmoh-lo.
-        STY     TENEXP               ;Y=0.
+        STY     TENEXP               ;y=0.
         DEY
         STY     FBUFPT
         LDY     #6                   ;Six	digits to print.
@@ -4227,21 +4227,21 @@ ISFUN:
         PHA
         TAX
         JSR     CHRGET               ;Set up for synchk.
-        CPX     #2 * LASNUM - 256 + 1 ;IS IT PAST "LASNUM"?
+        CPX     #2 * LASNUM - 256 + 1 ;Is it past "lasnum"?
         BCC     OKNORM               ;No, must be normal function.
 
 ; Most functions take a single argument.
-; THE RETURN ADDRESS OF THESE FUNCTIONS IS "CHKNUM"
-; WHICH ASCERTAINS THAT [VALTYP]=0  (NUMERIC)*
+; The return address of these functions is "chknum"
+; Which ascertains that [valtyp]=0  (numeric)*
 ; Normal functions that return string results
-; (E.G., CHR$) MUST POP OFF THAT RETURN ADDR AND
-; RETURN DIRECTLY TO "FRMEVL"*
+; (E.g., chr$) must pop off that return addr and
+; Return directly to "frmevl"*
 
-; THE SO-CALLED "FUNNY" FUNCTIONS CAN TAKE MORE THAN ONE ARGUMENT
+; The so-called "funny" functions can take more than one argument
 ; The first of which must be string and the second of which
-; MUST BE A NUMBER BETWEEN 0 AND 255.
+; Must be a number between 0 and 255.
 ; The closed parenthesis must be checked and return is directly
-; TO "FRMEVL" WITH THE TEXT PNTR POINTING BEYOND THE ")"*
+; To "frmevl" with the text pntr pointing beyond the ")"*
 ; The pointer to the descriptor of the string argument
 ; Is stored on the stack underneath the value of the
 ; Integer argument.
@@ -4256,7 +4256,7 @@ ISFUN:
         TXA
         PHA                          ;Resave function number.
                                      ;This must be on stack since recursive.
-        JSR     GETBYT               ;[X]=VALUE OF FORMULA.
+        JSR     GETBYT               ;[X]=value of formula.
         PLA                          ;Get function number.
         TAY
         TXA
@@ -4281,7 +4281,7 @@ OROP:
 ANDOP:
         LDY     #0
         STY     COUNT                ;Operator.
-        JSR     AYINT                ;[FACMO&LO]=INT VALUE AND CHECK SIZE.
+        JSR     AYINT                ;[Facmo&lo]=int value and check size.
         LDA     FACMO                ;Use demorgan's law on high
         EOR     COUNT
         STA     INTEGR
@@ -4289,7 +4289,7 @@ ANDOP:
         EOR     COUNT
         STA     INTEGR + 1
         JSR     MOVFA
-        JSR     AYINT                ;[FACMO&LO]=INT OF ARG.
+        JSR     AYINT                ;[Facmo&lo]=int of arg.
         LDA     FACLO
         EOR     COUNT
         AND     INTEGR + 1
@@ -4299,11 +4299,11 @@ ANDOP:
         EOR     COUNT
         AND     INTEGR
         EOR     COUNT
-        JMP     GIVAYF               ;FLOAT [A.Y] AND RET TO USER.
+        JMP     GIVAYF               ;Float [a.y] and ret to user.
 
 ; Time to perform a relational operator.
-; [DOMASK] CONTAINS THE BITS AS TO WHICH RELATIONAL
-; OPERATOR IT WAS. CARRY BIT ON=STRING COMPARE.
+; [Domask] contains the bits as to which relational
+; Operator it was. carry bit on=string compare.
 
 DOREL:
         JSR     CHKVAL               ;Check for match.
@@ -4327,15 +4327,15 @@ STRCMP:
         STXY    ARGMO
         TAX                          ;Copy count into x.
         SEC
-        SBC     DSCTMP               ;WHICH IS GREATER. IF 0, ALL SET UP.
+        SBC     DSCTMP               ;Which is greater. if 0, all set up.
         BEQ     STASGN               ;Just put sign of difference away.
         LDA     #1
         BCC     STASGN               ;Sign is positive.
         LDX     DSCTMP               ;Length of fac is shorter.
-        LDA     #0o377               ;GET A MINUS 1 FOR NEGATIVES.
+        LDA     #0o377               ;Get a minus 1 for negatives.
 STASGN:
         STA     FACSGN               ;Keep for later.
-        LDY     #255                 ;SET POINTER TO FIRST STRING. (ARG.)
+        LDY     #255                 ;Set pointer to first string. (arg.)
         INX                          ;To loop properly.
 NXTCMP:
         INY
@@ -4355,34 +4355,34 @@ GETCMP:
         BCS     DOCMP                ;Put stack back together.
         LDX     #1                   ;Set a negative difference.
 DOCMP:
-        INX                          ;-1 TO 1, 0 TO 2, 1 TO 4.
+        INX                          ;-1 To 1, 0 to 2, 1 to 4.
         TXA
         ROL     A
         AND     DOMASK
         BEQ     GOFLOT
-        LDA     #0o377               ;MAP 0 TO 0. ALL OTHERS TO -1.
+        LDA     #0o377               ;Map 0 to 0. all others to -1.
 GOFLOT:
         JMP     FLOAT                ;Float the one-byte result into fac.
 
         .page
         .subttl DIMENSION AND VARIABLE SEARCHING.
 
-; THE "DIM" CODE SETS [DIMFLG] AND THEN FALLS INTO THE VARIABLE SEARCH
+; The "dim" code sets [dimflg] and then falls into the variable search
 ; Routine, which looks at dimflg at three different points.
-;	1) IF AN ENTRY IS FOUND, "DIMFLG" BEING ON INDICATES
-;		A "DOUBLY" DIMENSIONED VARIABLE.
-;	2) WHEN A NEW ENTRY IS BEING BUILT "DIMFLG" BEING ON
+;	1) If an entry is found, "dimflg" being on indicates
+;		A "doubly" dimensioned variable.
+;	2) When a new entry is being built "dimflg" being on
 ;		Indictaes the indices should be used for the
 ;		Size of each index. otherwise the default of ten
 ;		Is used.
-;	3) WHEN THE BUILD ENTRY CODE FINISHES, ONLY IF "DIMFLG" IS OFF
+;	3) When the build entry code finishes, only if "dimflg" is off
 ;		Will indexing be done.
 
 DIM3:
         JSR     CHKCOM               ;Must be a comma
 DIM:
-        TAX                          ;SET [ACCX] NONZERO.
-                                     ;[ACCA] MUST BE NONZERO TO WORK RIGHT.
+        TAX                          ;Set [accx] nonzero.
+                                     ;[Acca] must be nonzero to work right.
 DIM1:
         JSR     PTRGT1
 DIMCON:
@@ -4391,13 +4391,13 @@ DIMCON:
         RTS
 
 ; Routine to read the variable name at the current text position
-; AND  PUT A POINTER TO ITS VALUE IN VARPNT. [TXTPTR]
+; And  put a pointer to its value in varpnt. [txtptr]
 ; Points to the terminating charcter.. not that evaluating subscripts
-; IN A VARIABLE NAME CAN CAUSE RECURSIVE CALLS TO "PTRGET" SO AT
+; In a variable name can cause recursive calls to "ptrget" so at
 ; That point all values must be stored on the stack.
 
 PTRGET:
-        LDX     #0                   ;MAKE [ACCX]=0.
+        LDX     #0                   ;Make [accx]=0.
         JSR     CHRGOT               ;Retrieve last character.
 PTRGT1:
         STX     DIMFLG               ;Store flag away.
@@ -4429,8 +4429,8 @@ EATEM:
         BCS     EATEM                ;Skip alphabetics.
 NOSEC:
         CMP     #"$"                 ;Is it a string?
-        BNE     NOTSTR               ;IF NOT, [VALTYP]=0.
-        LDA     #0o377               ;SET [VALTYP]=255 (STRING !)*
+        BNE     NOTSTR               ;If not, [valtyp]=0.
+        LDA     #0o377               ;Set [valtyp]=255 (string !)*
         STA     VALTYP
         .if     INTPRC != 0
         BNEA    TURNON               ;Always goes.
@@ -4448,7 +4448,7 @@ TURNON:
         TXA
         ORA     #128                 ;Turn on msb of second character.
         TAX
-        JSR     CHRGET               ;GET CHARACTER AFTER $*
+        JSR     CHRGET               ;Get character after $*
         .if     INTPRC == 0
 NOTSTR:
         .endif
@@ -4456,7 +4456,7 @@ STRNAM:
         STX     VARNAM + 1           ;Store away second character.
         SEC
         ORA     SUBFLG               ;Add flag whether to allow arrays.
-        SBC     #40                  ;(CHECK FOR "(") WON'T MATCH IF SUBFLG SET.
+        SBC     #40                  ;(Check for "(") won't match if subflg set.
         JEQ     ISARY                ;It is!
         CLR     SUBFLG               ;Allow subscripts again.
         LDA     VARTAB               ;Place to start search.
@@ -4487,15 +4487,15 @@ NOTIT:
         INX
         BNEA    STXFND               ;Always branches.
 
-; TEST FOR A LETTER.	/ CARRY OFF= NOT A LETTER.
-;			  CARRY ON= A LETTER.
+; Test for a letter.	/ carry off= not a letter.
+;			  Carry on= a letter.
 
 ISLETC:
         CMP     #"A"
-        BCC     ISLRTS               ;IF LESS THAN "A", RET.
+        BCC     ISLRTS               ;If less than "a", ret.
         SBC     #"Z" + 1
         SEC
-        SBC     #256 - "Z" - 1       ;RESET CARRY IF [A] .GT. "Z"*
+        SBC     #256 - "Z" - 1       ;Reset carry if [a] .gt. "z"*
 ISLRTS:
         RTS                          ;Return to caller.
 
@@ -4549,7 +4549,7 @@ VAROK:
 NOTEVE:
         STWD    HIGHDS               ;Place to stuff it.
         JSR     BLTU                 ;Move it all.
-                                     ;NOTE [Y,A] HAS [HIGHDS] FOR REASON.
+                                     ;Note [y,a] has [highds] for reason.
         LDWD    HIGHDS               ;And set up
         INY
         STWD    ARYTAB               ;New start of array table.
@@ -4613,10 +4613,10 @@ POSINT:
         BMI     NONONO               ;If negative, blow him out.
 AYINT:
         LDA     FACEXP
-        CMP     #144                 ;FAC .GT. 32767?
+        CMP     #144                 ;Fac .gt. 32767?
         BCC     QINTGO
-        LDWDI   N32768               ;GET ADDR OF -32768.
-        JSR     FCOMP                ;SEE IF FAC=[[Y,A]]*
+        LDWDI   N32768               ;Get addr of -32768.
+        JSR     FCOMP                ;See if fac=[[y,a]]*
 NONONO:
         BNE     FCERR                ;No, fac is too big.
 QINTGO:
@@ -4625,12 +4625,12 @@ QINTGO:
 ; Format of arrays in core.
 
 ; Descriptor:
-;	LOWBYTE = FIRST CHARACTER.
-;	HIGHBYTE = SECOND CHARACTER (200 BIT IS STRING FLAG)*
-; LENGTH OF ARRAY IN CORE IN BYTES (INCLUDES EVERYTHING)*
+;	Lowbyte = first character.
+;	Highbyte = second character (200 bit is string flag)*
+; Length of array in core in bytes (includes everything)*
 ; Number of dimensions.
 ; For each dimension starting with the first a list
-; (2 BYTES EACH) OF THE MAX INDICE+1
+; (2 Bytes each) of the max indice+1
 ; The values
 
 ISARY:
@@ -4638,9 +4638,9 @@ ISARY:
         .if     INTPRC != 0
         ORA     INTFLG
         .endif
-        PHA                          ;SAVE [DIMFLG] FOR RECURSION.
+        PHA                          ;Save [dimflg] for recursion.
         LDA     VALTYP
-        PHA                          ;SAVE [VALTYP] FOR RECURSION.
+        PHA                          ;Save [valtyp] for recursion.
         LDY     #0                   ;Set number of dimensions to zero.
 INDLOP:
         TYA                          ;Save number of dims.
@@ -4648,7 +4648,7 @@ INDLOP:
         PSHWD   VARNAM               ;Save looks.
         JSR     INTIDX               ;Evaluate indice into facmo&lo.
         PULWD   VARNAM               ;Get back all... we're home.
-        PLA                          ;(# OF DIMS)*
+        PLA                          ;(# Of dims)*
         TAY
         TSX
         LDA     258,X
@@ -4705,11 +4705,11 @@ BSERR:
         LDX     #ERRBS               ;Get bad sub error number.
         SKIP2
 FCERR:
-        LDX     #ERRFC               ;TOO BIG. "FUNCTION CALL" ERROR.
+        LDX     #ERRFC               ;Too big. "function call" error.
 ERRGO3:
         JMP     ERROR
 GOTARY:
-        LDX     #ERRDD               ;PERHAPS A "RE-DIMENSION" ERROR
+        LDX     #ERRDD               ;Perhaps a "re-dimension" error
         LDA     DIMFLG               ;Test the dimflg
         BNE     ERRGO3
         JSR     FMAPTR
@@ -4726,15 +4726,15 @@ GOTARY:
 ;	Put down the descriptor.
 ;	Setup number of dimensions.
 ;	Make sure there is room for the new entry.
-;	REMEMBER "VARPNT"*
-;	TALLY=4.
-;	SKIP 2 LOCS FOR LATER FILL IN OF SIZE.
+;	Remember "varpnt"*
+;	Tally=4.
+;	Skip 2 locs for later fill in of size.
 ; Loop: get an indice
-;	PUT DOWN NUMBER+1 AND INCREMENT VARPTR.
-;	TALLY=TALLY*NUMBER+1.
+;	Put down number+1 and increment varptr.
+;	Tally=tally*number+1.
 ;	Decrement number-dims.
 ;	Bne loop
-;	CALL "REASON" WITH [Y,A] REFLECTING LAST LOC OF VARIABLE.
+;	Call "reason" with [y,a] reflecting last loc of variable.
 ;	Update strend.
 ;	Zero all.
 ;	Make tally include maxdims and descriptor.
@@ -4755,8 +4755,8 @@ NOTFDD:
         .if     ADDPRC != 0
         LDX     #5
         .endif
-        LDA     VARNAM               ;THIS CODE ONLY WORKS FOR INTPRC=1
-        STA     (LOWTR),Y            ;IF ADDPRC=1.
+        LDA     VARNAM               ;This code only works for intprc=1
+        STA     (LOWTR),Y            ;If addprc=1.
         .if     ADDPRC != 0
         BPL     NOTFLT
         DEX
@@ -4794,7 +4794,7 @@ NOTDIM:
         INY
         TXA
         STA     (LOWTR),Y            ;Store low order of indice.
-        JSR     UMULT                ;[X,A]=[CURTOL]*[LOWTR,Y]
+        JSR     UMULT                ;[X,a]=[curtol]*[lowtr,y]
         STX     CURTOL               ;Save new tally.
         STA     CURTOL + 1
         LDY     INDEX
@@ -4812,7 +4812,7 @@ NOTDIM:
 GREASE:
         JSR     REASON               ;Get room.
         STWD    STREND               ;New end of storage.
-        LDA     #0                   ;STORING [ACCA] IS FASTER THAN CLEAR.
+        LDA     #0                   ;Storing [acca] is faster than clear.
         INC     CURTOL + 1
         LDY     CURTOL
         BEQ     DECCUR
@@ -4826,7 +4826,7 @@ DECCUR:
         BNE     ZERITA               ;Do another block.
         INC     ARYPNT + 1           ;Bump back up. will use later.
         SEC
-        LDA     STREND               ;RESTORE [ACCA]*
+        LDA     STREND               ;Restore [acca]*
         SBC     LOWTR                ;Determine length.
         LDY     #2
         STA     (LOWTR),Y            ;Low.
@@ -4838,22 +4838,22 @@ DECCUR:
         BNE     DIMRTS               ;Bye.
         INY
 
-; AT THIS POINT [LOWTR,Y] POINTS BEYOND THE SIZE TO THE NUMBER OF
+; At this point [lowtr,y] points beyond the size to the number of
 ; Dimensions. strategy:
-;	NUMDIM=NUMBER OF DIMENSIONS.
-;	CURTOL=0.
+;	Numdim=number of dimensions.
+;	Curtol=0.
 ; Inlpnm:get a new indice.
 ;	Make sure indice is not too big.
 ;	Multiply curtol by curmax.
 ;	Add indice to curtol.
-;	NUMDIM=NUMDIM-1.
+;	Numdim=numdim-1.
 ;	Bne	inlpnm.
-;	USE [CURTOL]*4 AS OFFSET.
+;	Use [curtol]*4 as offset.
 
 GETDEF:
         LDA     (LOWTR),Y
         STA     COUNT                ;Save a counter.
-        LDA     #0                   ;ZERO [CURTOL]*
+        LDA     #0                   ;Zero [curtol]*
         STA     CURTOL
 INLPNM:
         STA     CURTOL + 1
@@ -4865,7 +4865,7 @@ INLPNM:
         STA     INDICE + 1
         CMP     (LOWTR),Y            ;Compare with max indice.
         BCC     INLPN2
-        BNE     BSERR7               ;IF GREATER, "BAD SUBSCRIPT" ERROR.
+        BNE     BSERR7               ;If greater, "bad subscript" error.
         INY
         TXA
         CMP     (LOWTR),Y
@@ -4877,13 +4877,13 @@ OMERR1:
 INLPN2:
         INY
 INLPN1:
-        LDA     CURTOL + 1           ;DON'T MULTIPLY IF CURTOL=0.
+        LDA     CURTOL + 1           ;Don't multiply if curtol=0.
         ORA     CURTOL
         CLC                          ;Prepare to get indice back.
         BEQ     ADDIND               ;Get high part of indice back.
-        JSR     UMULT                ;MULTIPLY [CURTOL] BY [LOWTR,Y,Y+1]*
+        JSR     UMULT                ;Multiply [curtol] by [lowtr,y,y+1]*
         TXA
-        ADC     INDICE               ;ADD IN [INDICE]*
+        ADC     INDICE               ;Add in [indice]*
         TAX
         TYA
         LDY     INDEX1
@@ -4897,8 +4897,8 @@ ADDIND:
         LDX     #4
         .endif
         .if     ADDPRC != 0
-        LDX     #5                   ;THIS CODE ONLY WORKS FOR INTPRC=1
-        LDA     VARNAM               ;IF ADDPRC=1.
+        LDX     #5                   ;This code only works for intprc=1
+        LDA     VARNAM               ;If addprc=1.
         BPL     NOTFL1
         DEX
         .endif
@@ -4912,7 +4912,7 @@ NOTFL1:
 STOML1:
         STX     ADDEND
         LDA     #0
-        JSR     UMULTD               ;ON RTS, A&Y=HI * X=LO.
+        JSR     UMULTD               ;On rts, a&y=hi * x=lo.
         TXA
         ADC     ARYPNT
         STA     VARPNT
@@ -4926,13 +4926,13 @@ DIMRTS:
         .subttl INTEGER ARITHMETIC ROUTINES.
                                      ;Two byte unsigned integer multiply.
                                      ;This is for multiply dimensioned arrays.
-                                     ; [X,Y]=[X,A]=[CURTOL]*[LOWTR,Y,Y+1]*
+                                     ; [X,y]=[x,a]=[curtol]*[lowtr,y,y+1]*
 UMULT:
         STY     INDEX
         LDA     (LOWTR),Y
         STA     ADDEND               ;Low, then high.
         DEY
-        LDA     (LOWTR),Y            ;PUT [LOWTR,Y,Y+1] IN FASTER MEMORY.
+        LDA     (LOWTR),Y            ;Put [lowtr,y,y+1] in faster memory.
 UMULTD:
         STA     ADDEND + 1
         LDA     #16
@@ -4973,7 +4973,7 @@ NOFREF:
         JSR     GARBA2
         SEC
         LDA     FRETOP               ;We want
-        SBC     STREND               ;[FRETOP]-[STREND]*
+        SBC     STREND               ;[Fretop]-[strend]*
         TAY
         LDA     FRETOP + 1
         SBC     STREND + 1
@@ -4982,7 +4982,7 @@ GIVAYF:
         LDX     #0
         STX     VALTYP
         STWD    FACHO
-        LDX     #144                 ;SET EXPONENT TO 2^16.
+        LDX     #144                 ;Set exponent to 2^16.
         JMP     FLOATS               ;Turn it to a floating pnt #*
 
 POS:
@@ -4995,23 +4995,23 @@ SNGFLT:
 
 ; Note only single arguments are allowed to functions
 ; And functions must be of the single line form:
-;	DEF FNA(X)=X^2+X-2
+;	Def fna(x)=x^2+x-2
 ; No strings can be involved with these functions.
 
 ; Idea: create a simple variable entry
-; WHOSE FIRST CHARACTER HAS THE 200 BIT SET.
+; Whose first character has the 200 bit set.
 ; The value will be:
 
 ;	A text pntr to the formula.
 ;	A pntr to the argument variable.
 
-; FUNCTION NAMES CAN BE LIKE "FNA4"*
+; Function names can be like "fna4"*
 
 ; Subroutine to see if we are in direct mode.
 ; And complain if so.
 
 ERRDIR:
-        LDX     CURLIN + 1           ;DIR MODE HAS [CURLIN]=0,255
+        LDX     CURLIN + 1           ;Dir mode has [curlin]=0,255
         INX                          ;So now, is result zero?
         BNE     DIMRTS               ;Yes.
         LDX     #ERRID               ;Input direct error code.
@@ -5024,13 +5024,13 @@ ERRGO1:
 DEF:
         JSR     GETFNM               ;Get a pntr to the function.
         JSR     ERRDIR
-        JSR     CHKOPN               ;MUST HAVE "("*
+        JSR     CHKOPN               ;Must have "("*
         LDA     #128
         STA     SUBFLG               ;Prohibit subscripted variables.
         JSR     PTRGET               ;Get pntr to argument.
         JSR     CHKNUM               ;Is it a number?
-        JSR     CHKCLS               ;MUST HAVE ")"
-        SYNCHK  EQULTK               ;MUST HAVE "="*
+        JSR     CHKCLS               ;Must have ")"
+        SYNCHK  EQULTK               ;Must have "="*
         .if     ADDPRC != 0
         PHA
         .endif
@@ -5067,7 +5067,7 @@ FNDOER:
         .if     ADDPRC != 0
         INY
         .endif
-                                     ;SINCE DEF USES ONLY 4.
+                                     ;Since def uses only 4.
 DEFSTF:
         LDA     (VARPNT),Y
         PHA                          ;Push it all on stack.
@@ -5110,7 +5110,7 @@ DEFRTS:
         .page
         .subttl STRING FUNCTIONS.
 
-; THE STR$ FUNCTION TAKES A NUMBER AND GIVES A STRING
+; The str$ function takes a number and gives a string
 ; With the characters the output of the number
 ; Would have given.
 
@@ -5124,8 +5124,8 @@ TIMSTR:
         LDWDI   LOFBUF
         BEQA    STRLIT               ;Scan it and turn it into a string.
 
-; "STRINI" GET STRING SPACE FOR THE CREATION OF A STRING AND
-; CREATES A DESCRIPTOR FOR IT IN "DSCTMP"*
+; "Strini" get string space for the creation of a string and
+; Creates a descriptor for it in "dsctmp"*
 
 STRINI:
         LDXY    FACMO                ;Get facmo to store in dscpnt.
@@ -5136,16 +5136,16 @@ STRSPA:
         STA     DSCTMP               ;Save length.
         RTS                          ;All done.
 
-; "STRLT2" TAKES THE STRING LITERAL WHOSE FIRST CHARACTER
-; IS POINTED TO BY [Y,A] AND BUILDS A DESCRIPTOR FOR IT.
-; THE DESCRIPTOR IS INITIALLY BUILT IN "DSCTMP", BUT "PUTNEW"
+; "Strlt2" takes the string literal whose first character
+; Is pointed to by [y,a] and builds a descriptor for it.
+; The descriptor is initially built in "dsctmp", but "putnew"
 ; Transfers it into a temporary and leaves a pointer
 ; At the temporary in facmo&lo. the characters other than
-; ZERO THAT TERMINATE THE STRING SHOULD BE SET UP IN "CHARAC"
-; AND "ENDCHR"* IF THE TERMINATOR IS A QUOTE, THE QUOTE IS SKIPPED
+; Zero that terminate the string should be set up in "charac"
+; And "endchr"* if the terminator is a quote, the quote is skipped
 ; Over. leading quotes should be skipped before jsr. on return
 ; The character after the string literal is pointed to
-; BY [STRNG2]*
+; By [strng2]*
 
 STRLIT:
         LDX     #34                  ;Assume string ends on quote.
@@ -5171,15 +5171,15 @@ STRFI1:
 STRFI2:
         STY     DSCTMP               ;Retain count.
         TYA
-        ADC     STRNG1               ;WISHING TO SET [TXTPTR]*
+        ADC     STRNG1               ;Wishing to set [txtptr]*
         STA     STRNG2
         LDX     STRNG1 + 1
         BCC     STRST2
         INX
 STRST2:
         STX     STRNG2 + 1
-        LDA     STRNG1 + 1           ;IF PAGE 0, COPY SINCE IT IS EITHER
-                                     ;A STRING CONSTANT IN BUF OR A STR$
+        LDA     STRNG1 + 1           ;If page 0, copy since it is either
+                                     ;A string constant in buf or a str$
                                      ;Result in lofbuf
         .if     BUFPAG != 0
         BEQ     STRCP
@@ -5215,7 +5215,7 @@ PUTNW1:
         STXY    FACMO
         STY     FACOV
         DEY
-        STY     VALTYP               ;TYPE IS "STRING"*
+        STY     VALTYP               ;Type is "string"*
         STX     LASTPT               ;Set pointer to last-used temp.
         INX
         INX
@@ -5226,10 +5226,10 @@ PUTNW1:
 ; Getspa - get space for character string.
 ; May force garbage collection.
 
-; # OF CHARACTERS (BYTES) IN ACCA.
-; RETURNS WITH POINTER IN [Y,X]* OTHERWISE (IF CAN'T GET
-; SPACE) BLOWS OFF TO "OUT OF STRING SPACE" TYPE ERROR.
-; ALSO PRESERVES [ACCA] AND SETS [FRESPC]=[Y,X]=PNTR AT SPACE.
+; # Of characters (bytes) in acca.
+; Returns with pointer in [y,x]* otherwise (if can't get
+; Space) blows off to "out of string space" type error.
+; Also preserves [acca] and sets [frespc]=[y,x]=pntr at space.
 
 GETSPA:
         LSR     GARBFL               ;Signal no garbage collection yet.
@@ -5248,13 +5248,13 @@ TRYAG3:
         CMP     STREND               ;Compare low orders.
         BCC     GARBAG               ;Clean up.
 STRFRE:
-        STWD    FRETOP               ;SAVE NEW [FRETOP]*
+        STWD    FRETOP               ;Save new [fretop]*
         STWD    FRESPC               ;Put it there old man.
         TAX                          ;Preserve a in x.
         PLA                          ;Get count back in acca.
         RTS                          ;All done.
 GARBAG:
-        LDX     #ERROM               ;"OUT OF STRING SPACE"
+        LDX     #ERROM               ;"Out of string space"
         LDA     GARBFL
         BMI     ERRGO2
         JSR     GARBA2
@@ -5265,7 +5265,7 @@ GARBAG:
 GARBA2:
                                      ;Start from top down.
         .if     (REALIO | DISKO) == 0
-        LDA     #7                   ;TYPE "BELL"*
+        LDA     #7                   ;Type "bell"*
         JSR     OUTDO
         .endif
         LDX     MEMSIZ
@@ -5275,7 +5275,7 @@ FNDVAR:
         STA     FRETOP + 1
         LDY     #0
         STY     GRBPNT + 1
-        STY     GRBPNT               ;BOTH BYTES SET TO ZERO (FIX BUG)
+        STY     GRBPNT               ;Both bytes set to zero (fix bug)
         LDWX    STREND
         STWX    GRBTOP
         LDWXI   TEMPST
@@ -5362,15 +5362,15 @@ DVARS:
         BPL     DVARTS
         INY
 DVAR:
-        LDA     (INDEX1),Y           ;IS LENGTH=0?
+        LDA     (INDEX1),Y           ;Is length=0?
         BEQ     DVARTS               ;Yes, return.
         INY
-        LDA     (INDEX1),Y           ;GET LOW(ADR)*
+        LDA     (INDEX1),Y           ;Get low(adr)*
         TAX
         INY
         LDA     (INDEX1),Y
         CMP     FRETOP + 1           ;Compare highs.
-        BCC     DVAR2                ;IF THIS STRING'S PNTR .GE. [FRETOP]
+        BCC     DVAR2                ;If this string's pntr .ge. [fretop]
         BNE     DVARTS               ;No need to mess with it further.
         CPX     FRETOP               ;Compare lows.
         BCS     DVARTS
@@ -5380,7 +5380,7 @@ DVAR2:
                                      ;Forget it.
         BNE     DVAR3
         CPX     GRBTOP               ;Compare low orders.
-        BCC     DVARTS               ;[X,A] .LE. [GRBTOP]*
+        BCC     DVARTS               ;[X,a] .le. [grbtop]*
 DVAR3:
         STX     GRBTOP
         STA     GRBTOP + 1
@@ -5412,7 +5412,7 @@ GRBPAS:
         TAY
         STA     SIZE
         LDA     (GRBPNT),Y
-                                     ;NOTE: GRBTOP=LOWTR SO NO NEED TO SET LOWTR.
+                                     ;Note: grbtop=lowtr so no need to set lowtr.
         ADC     LOWTR
         STA     HIGHTR
         LDA     LOWTR + 1
@@ -5431,11 +5431,11 @@ GRBPAS:
         INY
         STA     (GRBPNT),Y           ;Change addr of string in var.
         JMP     FNDVAR               ;Go to fndvar with something for
-                                     ;[FRETOP]*
+                                     ;[Fretop]*
 
 ; The following routine concatenates two strings.
 ; The fac contains the first one at this point.
-; [TXTPTR] POINTS TO THE + SIGN.
+; [Txtptr] points to the + sign.
 
 CAT:
         LDA     FACLO                ;Psh high order onto stack.
@@ -5453,8 +5453,8 @@ CAT:
         LDA     (STRNG1),Y           ;Get length of old string.
         CLC
         ADC     (FACMO),Y
-        BCC     SIZEOK               ;RESULT IS LESS THAN 256.
-        LDX     #ERRLS               ;ERROR "LONG STRING"*
+        BCC     SIZEOK               ;Result is less than 256.
+        LDX     #ERRLS               ;Error "long string"*
         JMP     ERROR
 SIZEOK:
         JSR     STRINI               ;Initialize string.
@@ -5465,7 +5465,7 @@ SIZEOK:
         LDWD    STRNG1
         JSR     FRETMP
         JSR     PUTNEW
-        JMP     TSTOP                ;"CAT" REENTERS FORM EVAL AT TSTOP.
+        JMP     TSTOP                ;"Cat" reenters form eval at tstop.
 
 MOVINS:
         LDY     #0                   ;Get addr of string.
@@ -5501,15 +5501,15 @@ MVDONE:
 MVSTRT:
         RTS
 
-; "FRETMP" IS PASSED A STRING DESCRIPTOR PNTR IN [Y,A]*
+; "Fretmp" is passed a string descriptor pntr in [y,a]*
 ; A check is made to see if the string descriptor points to the last
 ; Temporary descriptor allocated by putnew.
-; IF SO, THE TEMPORARY IS FREED UP BY THE UPDATING OF [TEMPPT]*
+; If so, the temporary is freed up by the updating of [temppt]*
 ; If a temp is freed up, a further check sees if the string data that
 ; That string temp pnt'd to is the lowest part of string space in use.
-; IF SO, [FRETOP] IS UPDATED TO REFLECT THE FACT THE FACT THAT THE SPACE
+; If so, [fretop] is updated to reflect the fact the fact that the space
 ; Is no longer in use.
-; THE ADDR OF THE ACTUAL STRING IS RETURNED IN [Y,X] AND
+; The addr of the actual string is returned in [y,x] and
 ; Its length in acca.
 
 FRESTR:
@@ -5559,9 +5559,9 @@ FRETMS:
 FRERTS:
         RTS                          ;All done.
 
-; CHR$(#) CREATES A STRING WHICH CONTAINS AS ITS ONLY
-; CHARACTER THE ASCII EQUIVALENT OF THE INTEGER ARGUMENT (#)
-; WHICH MUST BE .LT. 255.
+; Chr$(#) creates a string which contains as its only
+; Character the ascii equivalent of the integer argument (#)
+; Which must be .lt. 255.
 
 CHR:
         JSR     CONINT               ;Get integer in range.
@@ -5572,12 +5572,12 @@ CHR:
         PLA
         LDY     #0
         STA     (DSCTMP + 1),Y
-        PLA                          ;GET RID OF "CHKNUM" RETURN ADDR.
+        PLA                          ;Get rid of "chknum" return addr.
         PLA
 RLZRET:
         JMP     PUTNEW               ;Setup fac to point to desc.
 
-; THE FOLLOWING IS THE LEFT$($,#) FUNCTION.
+; The following is the left$($,#) function.
 ; It takes the leftmost # characters of the string.
 ; If # .gt. the len of the string, it returns the whole string.
 
@@ -5613,28 +5613,28 @@ PULMOR:
         JMP     PUTNEW
 RIGHT:
         JSR     PREAM
-        CLC                          ;[LENGTH DES'D]-[LENGTH]-1.
+        CLC                          ;[Length des'd]-[length]-1.
         SBC     (DSCPNT),Y
         EOR     #255                 ;Negate.
         JMP     RLEFT
 
-; MID ($,#) RETURNS STRING WITH CHARS FROM # POSITION
-; ONWARD. IF # .GT. LEN ($) THEN RETURN NULL STRING.
-; MID ($,#,#) RETURNS STRING WITH CHARACTERS FROM
-; # POSITION FOR #2 CHARACTERS. IF #2 GOES PAST END OF STRING
+; Mid ($,#) returns string with chars from # position
+; Onward. if # .gt. len ($) then return null string.
+; Mid ($,#,#) returns string with characters from
+; # Position for #2 characters. if #2 goes past end of string
 ; Return as much as possible.
 
 MID:
         LDA     #255                 ;Default.
         STA     FACLO                ;Save for later compare.
         JSR     CHRGOT               ;Get current character.
-        CMP     #41                  ;IS IT A RIGHT PAREN )?
+        CMP     #41                  ;Is it a right paren )?
         BEQ     MID2                 ;No third param.
         JSR     CHKCOM               ;Must have comma.
-        JSR     GETBYT               ;GET THE LENGTH INTO "FACLO"*
+        JSR     GETBYT               ;Get the length into "faclo"*
 MID2:
         JSR     PREAM                ;Check it out.
-        BEQ     GOFUC                ;THERE IS NO POSTION 0
+        BEQ     GOFUC                ;There is no postion 0
         DEX                          ;Compute offset.
         TXA
         PHA                          ;Prserve awhile.
@@ -5642,18 +5642,18 @@ MID2:
         LDX     #0
         SBC     (DSCPNT),Y           ;Get length of what's left.
         BCS     RLEFT2               ;Give null string.
-        EOR     #255                 ;IN SUB C WAS 0 SO JUST COMPLEMENT.
+        EOR     #255                 ;In sub c was 0 so just complement.
         CMP     FACLO                ;Greater than what's desired?
         BCC     RLEFT3               ;No, copy that much.
         LDA     FACLO                ;Get length of what's desired.
         BCS     RLEFT3               ;Copy it.
 
-; USED BY RIGHT$, LEFT$, MID$ FOR PARAMETER CHECKING AND SETUP.
+; Used by right$, left$, mid$ for parameter checking and setup.
 
 PREAM:
         JSR     CHKCLS               ;Param list should end.
         PLA                          ;Get the return address into
-        TAY                          ;[JMPER+1,Y]
+        TAY                          ;[Jmper+1,y]
         PLA
         STA     JMPER + 1
         PLA                          ;Get rid of fingo's jsr ret addr.
@@ -5669,7 +5669,7 @@ PREAM:
         TXA
         RTS
 
-; THE FUNCTION LEN($) RETURNS THE LENGTH OF THE STRING
+; The function len($) returns the length of the string
 ; Passed as an argument.
 
 LEN:
@@ -5682,7 +5682,7 @@ LEN1:
         TAY                          ;Set codes on length.
         RTS                          ;Done.
 
-; THE FOLLOWING IS THE ASC($) FUNCTION. IT RETURNS
+; The following is the asc($) function. it returns
 ; An integer which is the decimal ascii equivalent.
 
 ASC:
@@ -5702,19 +5702,19 @@ GETBYT:
 CONINT:
         JSR     POSINT               ;Convert the fac to a single byte int.
         LDX     FACMO
-        BNE     GOFUC                ;RESULT MUST BE .LE. 255.
+        BNE     GOFUC                ;Result must be .le. 255.
         LDX     FACLO
 CHRGO2:
         JMP     CHRGOT               ;Set condition codes on terminator.
 
-; THE "VAL" FUNCTION TAKES A STRING AND TURNS IT INTO
+; The "val" function takes a string and turns it into
 ; A number by interpreting the ascii digits etcq
 ; Except for the problem that a terminator must be supplied
 ; By replacing the character beyond the string, val is merely
-; A CALL TO FLOATING POINT INPUT ("FIN")*
+; A call to floating point input ("fin")*
 
 VAL:
-        JSR     LEN1                 ;DO SETUP. SET RESULT=NUMERIC.
+        JSR     LEN1                 ;Do setup. set result=numeric.
         JEQ     ZEROFC               ;Zero the fac on a null string
         LDXY    TXTPTR
         STXY    STRNG2               ;Save for later.
@@ -5790,9 +5790,9 @@ POKE:
         STA     (POKER),Y            ;Store value away.
         RTS                          ;Scanned  everything.
 
-; THE WAIT LOCATION,MASK1,MASK2 STATEMENT WAITS UNTIL THE CONTENTS
-; OF LOCATION IS NONZERO WHEN XORED WITH MASK2
-; AND THEN ANDED WITH MASK1. IF MASK2 IS NOT PRESENT, IT
+; The wait location,mask1,mask2 statement waits until the contents
+; Of location is nonzero when xored with mask2
+; And then anded with mask1. if mask2 is not present, it
 ; Is assumed to be zero.
 
 FNWAIT:
@@ -5801,7 +5801,7 @@ FNWAIT:
         LDX     #0
         JSR     CHRGOT
         BEQ     ZSTORD
-        JSR     COMBYT               ;GET MASK2.
+        JSR     COMBYT               ;Get mask2.
 STORDO:
         STX     EORMSK
         LDY     #0
@@ -5814,31 +5814,31 @@ ZERRTS:
         RTS                          ;Got a nonzero.
         .subttl FLOATING POINT MATH PACKAGE CONFIGURATION.
 
-;RADIX	8			;!!!! ALERT !!!!
+;Radix	8			;!!!! alert !!!!
                                      ;Throughout the math package.
 
 ; The floating point format is as follows:
 
 ; The sign is the first bit of the mantissa.
-; THE MANTISSA IS 24 BITS LONG.
+; The mantissa is 24 bits long.
 ; The binary point is to the left of the msb.
-; NUMBER = MANTISSA * 2 ^ EXPONENT.
+; Number = mantissa * 2 ^ exponent.
 ; The mantissa is positive with a one assumed to be where the sign bit is.
 ; The sign of the exponent is the first bit of the exponent.
-; THE EXPONENT IS STORED IN EXCESS 200, I.E. WITH A BIAS OF +200.
-; SO, THE EXPONENT IS A SIGNED 8-BIT NUMBER WITH 200 ADDED TO IT.
+; The exponent is stored in excess 200, i.e. with a bias of +200.
+; So, the exponent is a signed 8-bit number with 200 added to it.
 ; An exponent of zero means the number is zero.
 ; The other bytes may not be assumed to be zero.
 ; To keep the same number in the fac while shifting,
-; 	TO SHIFT RIGHT, EXP:=EXP+1
-; 	TO SHIFT LEFT,	EXP:=EXP-1
+; 	To shift right, exp:=exp+1
+; 	To shift left,	exp:=exp-1
 
 ; In memory the number looks like this:
-; 	[THE EXPONENT AS A SIGNED NUMBER +200]
-; 	[THE SIGN BIT IN 7, BITS 2-8 OF MANTISSA ARE IN BITS 6-0].
-; 		(REMEMBER BIT 1 OF MANTISSA IS ALWAYS A ONE.)
-; 	[BITS 9-16 OF THE MANTISSA]
-; 	[BITS 17-24] OF THE MANTISSA]
+; 	[The exponent as a signed number +200]
+; 	[The sign bit in 7, bits 2-8 of mantissa are in bits 6-0].
+; 		(Remember bit 1 of mantissa is always a one.)
+; 	[Bits 9-16 of the mantissa]
+; 	[Bits 17-24] of the mantissa]
 
 ; Arithmetic routine calling conventions:
 
@@ -5846,29 +5846,29 @@ ZERRTS:
 ; 	The argument is in the fac.
 ; 	The result is left in the fac.
 ; For two argument operations:
-; 	THE FIRST ARGUMENT IS IN ARG (ARGEXP,HO,MO,LO AND ARGSGN).
+; 	The first argument is in arg (argexp,ho,mo,lo and argsgn).
 ; 	The second argument is in the fac.
 ; 	The result is left in the fac.
 
-; THE "T" ENTRY POINTS TO THE TWO-ARGUMENT OPERATIONS HAVE BOTH ARGUMENTS
+; The "t" entry points to the two-argument operations have both arguments
 ; Setup in the respective registers. before calling arg may have been
 ; Popped off the stack and into arg, for example.
-; THE OTHER ENTRY POINT ASSUMES [Y,A] POINTS TO THE ARGUMENT
-; SOMEWHERE IN MEMORY. IT IS UNPACKED INTO ARG BY "CONUPK".
+; The other entry point assumes [y,a] points to the argument
+; Somewhere in memory. it is unpacked into arg by "conupk".
 
 ; On the stack, the sgn is pushed on first, the lo,mo,ho and finally exp.
 ; Note all things are kept unpacked in arg, fac and on the stack.
 
 ; It is only when something is stored away that it is packed to four
 ; Bytes. the unpacked format has a sgn byte reflecting the sign of the
-; NUMBER (POSITIVE=0, NEGATIVE=-1) A HO,MO AND LO WITH THE HIGH BIT
+; Number (positive=0, negative=-1) a ho,mo and lo with the high bit
 ; Of the ho turned on. the exp is the same as stored format.
 ; This is done for speed of operation.
 
         .page
         .subttl FLOATING POINT ADDITION AND SUBTRACTION.
 FADDH:
-        LDWDI   FHALF                ;ENTRY TO ADD 1/2.
+        LDWDI   FHALF                ;Entry to add 1/2.
         JMP     FADD                 ;Unpack and go add it.
 FSUB:
         JSR     CONUPK               ;Unpack argument into arg.
@@ -5879,7 +5879,7 @@ FSUBT:
         EOR     ARGSGN               ;Complement arisgn.
         STA     ARISGN
         LDA     FACEXP               ;Set codes on facexp.
-        JMP     FADDT                ;[Y]=ARGEXP..
+        JMP     FADDT                ;[Y]=argexp..
                                      ; Xlist
 ; .Xcref
         .if     REALIO != 3
@@ -5930,11 +5930,11 @@ FADD5:
 FADD:
         JSR     CONUPK
 FADDT:
-        JEQ     MOVFA                ;IF FAC=0, RESULT IS IN ARG.
+        JEQ     MOVFA                ;If fac=0, result is in arg.
         LDX     FACOV
         STX     OLDOV
         LDX     #ARGEXP              ;Default is shift argument.
-        LDA     ARGEXP               ;IF ARG=0, FAC IS RESULT.
+        LDA     ARGEXP               ;If arg=0, fac is result.
 FADDC:
         TAY                          ;Also copy acca into accy.
         BEQ     ZERRTS               ;Return.
@@ -5946,7 +5946,7 @@ FADDC:
         LDY     ARGSGN               ;Since arg is bigger, it's
         STY     FACSGN               ;Sign is sign of result.
         EOR     #0o377               ;Shift a negative number of places.
-        ADC     #0                   ;COMPLETE NEGATION. W/ C=1.
+        ADC     #0                   ;Complete negation. w/ c=1.
         LDY     #0                   ;Zero oldov.
         STY     OLDOV
         LDX     #FAC                 ;Shift the fac instead.
@@ -5958,11 +5958,11 @@ FADD1:
         CMP     #0o256 - 7           ;For speed and necessity.  gets
                                      ;Most likely case to shiftr fastest
                                      ;And allows shifting of neg nums
-                                     ;BY "QINT"*
+                                     ;By "qint"*
         BMI     FADD5                ;Shift big.
         TAY
         LDA     FACOV                ;Set facov.
-        LSR     1,X                  ;GETS 0 IN MOST SIG BIT.
+        LSR     1,X                  ;Gets 0 in most sig bit.
         JSR     ROLSHF               ;Do the rolling.
 FADD4:
         BIT     ARISGN               ;Get resulting sign.
@@ -5995,7 +5995,7 @@ SUBIT:
 FADFLT:
         BCS     NORMAL               ;Here if signs differ. if carry
                                      ;Fac is set ok.
-        JSR     NEGFAC               ;NEGATE [FAC]*
+        JSR     NEGFAC               ;Negate [fac]*
 NORMAL:
         LDY     #0
         TYA
@@ -6003,7 +6003,7 @@ NORMAL:
 NORM3:
         LDX     FACHO
         BNE     NORM1
-        LDX     FACHO + 1            ;SHIFT 8 BITS AT A TIME FOR SPEED.
+        LDX     FACHO + 1            ;Shift 8 bits at a time for speed.
         STX     FACHO
         .if     ADDPRC != 0
         LDX     FACMOH + 1
@@ -6053,7 +6053,7 @@ NORM2:
         .endif
         ROL     FACHO
 NORM1:
-        BPL     NORM2                ;IF MSB=0 SHIFT AGAIN.
+        BPL     NORM2                ;If msb=0 shift again.
         SEC
         SBC     FACEXP
         BCS     ZEROFC
@@ -6104,7 +6104,7 @@ OVERR:
         LDX     #ERROV
         JMP     ERROR                ;Tell user.
 
-; "SHIFTR" SHIFTS [X+1:X+3] [-ACCA]  BITS RIGHT.
+; "Shiftr" shifts [x+1:x+3] [-acca]  bits right.
 ; Shifts bytes to start with if possible.
 
 MULSHF:
@@ -6126,7 +6126,7 @@ SHIFTR:
         ADC     #0o10
         BMI     SHFTR2
         BEQ     SHFTR2
-        SBC     #0o10                ;C CAN BE EITHER 1,0 AND IT WORKS.
+        SBC     #0o10                ;C can be either 1,0 and it works.
         TAY
         LDA     FACOV
         BCS     SHFTRT               ;Equiv to beq here.
@@ -6188,7 +6188,7 @@ SHFT6A:
         .if     RORSW != 0
         ROR     A
         .endif
-                                     ;ROTATE ARGUMENT 1 BIT RIGHT.
+                                     ;Rotate argument 1 bit right.
         .if     RORSW == 0
         PLA
         PHP
@@ -6199,7 +6199,7 @@ SHFT6A:
         .endif
 SHFTR7:
         INY
-        BNE     SHFTR3               ;$$$ ( MOST EXPENSIVE ! )
+        BNE     SHFTR3               ;$$$ ( Most expensive ! )
 SHFTRT:
         CLC                          ;Clear output of facov.
         RTS
@@ -6207,8 +6207,8 @@ SHFTRT:
         .subttl NATURAL LOG FUNCTION.
 
 ; Calculation is by:
-; LN(F*2^N)=(N+LOG2(F))*LN(2)
-; AN APPROXIMATION POLYNOMIAL IS USED TO CALCULATE LOG2(F)*
+; Ln(f*2^n)=(n+log2(f))*ln(2)
+; An approximation polynomial is used to calculate log2(f)*
 ;  Constants used by log:
 FONE:
         .byte   0o201                ; 1.0
@@ -6220,7 +6220,7 @@ FONE:
         .endif
         .if     ADDPRC == 0
 LOGCN2:
-        .byte   2                    ; DEGREE-1
+        .byte   2                    ; Degree-1
         .byte   0o200                ; 0.59897437
         .byte   0o031
         .byte   0o126
@@ -6237,7 +6237,7 @@ LOGCN2:
 
         .if     ADDPRC != 0
 LOGCN2:
-        .byte   3                    ;DEGREE-1
+        .byte   3                    ;Degree-1
         .byte   0o177                ;.43425594188
         .byte   0o136
         .byte   0o126
@@ -6260,7 +6260,7 @@ LOGCN2:
         .byte   0o040
         .endif
 SQRHLF:
-        .byte   0o200                ; SQR(0.5)
+        .byte   0o200                ; Sqr(0.5)
         .byte   0o065
         .byte   4
         .byte   0o363
@@ -6268,7 +6268,7 @@ SQRHLF:
         .byte   0o064
         .endif
 SQRTWO:
-        .byte   0o201                ; SQR(2.0)
+        .byte   0o201                ; Sqr(2.0)
         .byte   0o065
         .byte   4
         .byte   0o363
@@ -6284,7 +6284,7 @@ NEGHLF:
         .byte   0
         .endif
 LOG2:
-        .byte   0o200                ; LN(2)
+        .byte   0o200                ; Ln(2)
         .byte   0o061
         .byte   0o162
         .if     ADDPRC == 0
@@ -6303,16 +6303,16 @@ LOGERR:
         JMP     FCERR                ;Can't tolerate neg or zero.
 LOG1:
         LDA     FACEXP               ;Get exponent into acca.
-        SBC     #0o177               ;REMOVE BIAS. (CARRY IS OFF)
+        SBC     #0o177               ;Remove bias. (carry is off)
         PHA                          ;Save awhile.
         LDA     #0o200
-        STA     FACEXP               ;RESULT IS FAC IN RANGE [0.5,1]*
-        LDWDI   SQRHLF               ;GET POINTER TO SQR(0.5)*
+        STA     FACEXP               ;Result is fac in range [0.5,1]*
+        LDWDI   SQRHLF               ;Get pointer to sqr(0.5)*
 
-; CALCULATE (F-SQR(.5))/(F+SQR(.5))
+; Calculate (f-sqr(.5))/(f+sqr(.5))
 
         JSR     FADD                 ;Add to fac.
-        LDWDI   SQRTWO               ;GET SQR(2.)*
+        LDWDI   SQRTWO               ;Get sqr(2.)*
         JSR     FDIV
         LDWDI   FONE
         JSR     FSUB
@@ -6323,15 +6323,15 @@ LOG1:
         PLA                          ;Get exponent back.
         JSR     FINLOG               ;Add it in.
 MULLN2:
-        LDWDI   LOG2                 ;MULTIPLY RESULT BY LOG(2.0)*
+        LDWDI   LOG2                 ;Multiply result by log(2.0)*
 ;	Jmp	fmult		;multiply together.
         .page
         .subttl FLOATING MULTIPLICATION AND DIVISION.
-                                     ;MULTIPLICATION		FAC:=ARG*FAC.
+                                     ;Multiplication		fac:=arg*fac.
 FMULT:
         JSR     CONUPK               ;Unpack the constant into arg for use.
 FMULTT:
-        JEQ     MULTRT               ;IF FAC=0, RETURN. FAC IS SET.
+        JEQ     MULTRT               ;If fac=0, return. fac is set.
         JSR     MULDIV               ;Fix up the exponents.
         LDA     #0                   ;To clear result.
         STA     RESHO
@@ -6355,13 +6355,13 @@ FMULTT:
         JMP     MOVFR                ;Move result into fac
                                      ;Normalize result, and return.
 MLTPLY:
-        JEQ     MULSHF               ;SHIFT RESULT RIGHT 1 BYTE.
+        JEQ     MULSHF               ;Shift result right 1 byte.
 MLTPL1:
         LSR     A
         ORA     #0o200
 MLTPL2:
         TAY
-        BCC     MLTPL3               ;IT MULT BIT=0, JUST SHIFT.
+        BCC     MLTPL3               ;It mult bit=0, just shift.
         CLC
         LDA     RESLO
         ADC     ARGLO
@@ -6386,7 +6386,7 @@ MLTPL3:
         ROR     RESLO
         ROR     FACOV                ;Save for rounding.
         TYA
-        LSR     A                    ;CLEAR MSB SO WE GET A CLOSER TO 0.
+        LSR     A                    ;Clear msb so we get a closer to 0.
         BNE     MLTPL2               ;Slow as a turtle !
 MULTRT:
         RTS
@@ -6421,12 +6421,12 @@ CONUPK:
 
                                      ;Check special cases and add exponents for fmult, fdiv.
 MULDIV:
-        LDA     ARGEXP               ;EXP OF ARG=0?
+        LDA     ARGEXP               ;Exp of arg=0?
 MLDEXP:
         BEQ     ZEREMV               ;So we get zero exponent.
         CLC
         ADC     FACEXP               ;Result is in acca.
-        BCC     TRYOFF               ;FIND [C] XOR [N]*
+        BCC     TRYOFF               ;Find [c] xor [n]*
         BMI     GOOVER               ;Overflow if bits match.
         CLC
         SKIP2
@@ -6449,13 +6449,13 @@ ZEREMV:
 GOOVER:
         JMP     OVERR                ;Overflow.
 
-                                     ;MULTIPLY FAC BY 10.
+                                     ;Multiply fac by 10.
 MUL10:
         JSR     MOVAF                ;Copy fac into arg.
         TAX
-        BEQ     MUL10R               ;IF [FAC]=0, GOT ANSWER.
+        BEQ     MUL10R               ;If [fac]=0, got answer.
         CLC
-        ADC     #2                   ;AUGMENT EXP BY 2.
+        ADC     #2                   ;Augment exp by 2.
         BCS     GOOVER               ;Overflow.
 FINML6:
         LDX     #0
@@ -6466,7 +6466,7 @@ FINML6:
 MUL10R:
         RTS
 
-                                     ; DIVIDE FAC BY 10.
+                                     ; Divide fac by 10.
 TENZC:
         .byte   0o204
         .byte   0o040
@@ -6477,7 +6477,7 @@ TENZC:
         .endif
 DIV10:
         JSR     MOVAF                ;Move fac to arg.
-        LDWDI   TENZC                ;POINT TO CONSTANT OF 10.0
+        LDWDI   TENZC                ;Point to constant of 10.0
         LDX     #0                   ;Signs are both positive.
 FDIVF:
         STX     ARISGN
@@ -6487,7 +6487,7 @@ FDIV:
         JSR     CONUPK               ;Unpack constant.
 FDIVT:
         BEQ     DV0ERR               ;Can't divide by zero !
-                                     ;(NOT ENOUGH ROOM TO STORE RESULT.)
+                                     ;(Not enough room to store result.)
         JSR     ROUND                ;Take facov into acct in fac.
         LDA     #0                   ;Negate facexp.
         SEC
@@ -6502,7 +6502,7 @@ DIVIDE:
                                      ;This is the best code in the whole pile.
         LDY     ARGHO                ;See what relation holds.
         CPY     FACHO
-        BNE     SAVQUO               ;[C]=0,1. N(C=0)=0.
+        BNE     SAVQUO               ;[C]=0,1. n(c=0)=0.
         .if     ADDPRC != 0
         LDY     ARGMOH
         CPY     FACMOH
@@ -6520,7 +6520,7 @@ SAVQUO:
         INX
         STA     RESLO,X
         BEQ     LD100
-        BPL     DIVNRM               ;NOTE THIS REQ 1 MO RAM THEN NECESS.
+        BPL     DIVNRM               ;Note this req 1 mo ram then necess.
         LDA     #1
 QSHFT:
         PLP                          ;Return condition codes.
@@ -6561,7 +6561,7 @@ DIVNRM:
         .repeat 6
         ASL     A
         .endrepeat
-                                     ;GET LAST TWO BITS INTO MSB AND B6.
+                                     ;Get last two bits into msb and b6.
         STA     FACOV
         PLP                          ;To get garbage off stack.
         JMP     MOVFR                ;Move result into fac, then
@@ -6585,7 +6585,7 @@ MOVFR:
         STA     FACLO
         JMP     NORMAL               ;All done.
 
-                                     ;MOVE MEMORY INTO FAC (UNPACKED)*
+                                     ;Move memory into fac (unpacked)*
 MOVFM:
         STWD    INDEX1
         LDY     #3 + ADDPRC
@@ -6680,10 +6680,10 @@ ROUND:
         ASL     FACOV                ;Round?
         BCC     MOVRTS               ;No. msb off.
 INCRND:
-        JSR     INCFAC               ;YES, ADD ONE TO LSB(FAC)*
+        JSR     INCFAC               ;Yes, add one to lsb(fac)*
         BNE     MOVRTS               ;No carry means done.
         JMP     RNDSHF               ;Squeez msb in and rts.
-                                     ;NOTE [C]=1 SINCE INCFAC DOESNT TOUCH C.
+                                     ;Note [c]=1 since incfac doesnt touch c.
         .page
         .subttl SIGN, SGN, FLOAT, NEG, ABS.
 
@@ -6697,7 +6697,7 @@ FCOMPS:
         ROL     A
         LDA     #0o377               ;Assume negative.
         BCS     SIGNRT
-        LDA     #1                   ;GET +1.
+        LDA     #1                   ;Get +1.
 SIGNRT:
         RTS
 
@@ -6707,7 +6707,7 @@ SGN:
 
                                      ;Float the signed integer in acca.
 FLOAT:
-        STA     FACHO                ;PUT [ACCA] IN HIGH ORDER.
+        STA     FACHO                ;Put [acca] in high order.
         LDA     #0
         STA     FACHO + 1
         LDX     #0o210               ;Get the exponent.
@@ -6718,7 +6718,7 @@ FLOATS:
         EOR     #0o377
         ROL     A                    ;Get comp of sign in carry.
 FLOATC:
-        LDA     #0                   ;ZERO [ACCA] BUT NOT CARRY.
+        LDA     #0                   ;Zero [acca] but not carry.
         STA     FACLO
         .if     ADDPRC != 0
         STA     FACMO
@@ -6736,9 +6736,9 @@ ABS:
 
         .page
         .subttl COMPARE TWO NUMBERS.
-                                     ;A=1 IF ARG .LT. FAC.
-                                     ;A=0 IF ARG=FAC.
-                                     ;A=-1 IF ARG .GT. FAC.
+                                     ;A=1 if arg .lt. fac.
+                                     ;A=0 if arg=fac.
+                                     ;A=-1 if arg .gt. fac.
 FCOMP:
         STA     INDEX2
 FCOMPN:
@@ -6785,8 +6785,8 @@ FCOMPD:
         .page
         .subttl GREATEST INTEGER FUNCTION.
                                      ;Quick greatest integer function.
-                                     ;LEAVES INT(FAC) IN FACHO&MO&LO SIGNED.
-                                     ;ASSUMES FAC .LT. 2^23 = 8388608
+                                     ;Leaves int(fac) in facho&mo&lo signed.
+                                     ;Assumes fac .lt. 2^23 = 8388608
 QINT:
         LDA     FACEXP
         BEQ     CLRFAC               ;If zero, got it.
@@ -6796,14 +6796,14 @@ QINT:
         BPL     QISHFT
         TAX
         LDA     #0o377
-        STA     BITS                 ;PUT 377 IN WHEN SHFTR SHIFTS BYTES.
+        STA     BITS                 ;Put 377 in when shftr shifts bytes.
         JSR     NEGFCH               ;Truly negate quantity in fac.
         TXA
 QISHFT:
         LDX     #FAC
         CMP     #0o256 - 7
-        BPL     QINT1                ;IF NUMBER OF PLACES .GE. 7
-                                     ;SHIFT 1 PLACE AT A TIME.
+        BPL     QINT1                ;If number of places .ge. 7
+                                     ;Shift 1 place at a time.
         JSR     SHIFTR               ;Start shifting bytes, then bits.
         STY     BITS                 ;Zero bits since adder wants zero.
 QINTRT:
@@ -6816,7 +6816,7 @@ QINT1:
         ORA     FACHO
         STA     FACHO
         JSR     ROLSHF               ;Shift the rest.
-        STY     BITS                 ;ZERO [BITS]*
+        STY     BITS                 ;Zero [bits]*
         RTS
 
                                      ;Greatest integer function.
@@ -6848,17 +6848,17 @@ INTRTS:
         .page
         .subttl FLOATING POINT INPUT ROUTINE.
                                      ;Number input is left in fac.
-                                     ;AT ENTRY [TXTPTR] POINTS TO THE FIRST CHARACTER IN A TEXT BUFFER.
+                                     ;At entry [txtptr] points to the first character in a text buffer.
                                      ;The first character is also in acca. fin packs the digits
                                      ;Into the fac as an integer and keeps track of where the
-                                     ;DECIMAL POINT IS. [DPTFLG] TELL WHETHER A DP HAS BEEN
-                                     ;SEEN. [DECCNT] IS THE NUMBER OF DIGITS AFTER THE DP.
-                                     ;AT THE END [DECCNT] AND THE EXPONENT ARE USED TO
+                                     ;Decimal point is. [dptflg] tell whether a dp has been
+                                     ;Seen. [deccnt] is the number of digits after the dp.
+                                     ;At the end [deccnt] and the exponent are used to
                                      ;Determine how many times to multiply or divide by ten
                                      ;To get the correct number.
 FIN:
         LDY     #0                   ;Zero facsgn&sgnflg.
-        LDX     #0o11 + ADDPRC       ;ZERO EXP AND HO (AND MOH)*
+        LDX     #0o11 + ADDPRC       ;Zero exp and ho (and moh)*
 FINZLP:
         STY     DECCNT,X             ;Zero mo and lo.
         DEX                          ;Zero tenexp and expsgn
@@ -6866,7 +6866,7 @@ FINZLP:
         BCC     FINDGQ               ;Flags still set from chrget.
         CMP     #"-"                 ;A negative sign?
         BNE     QPLUS                ;No, try plus sign.
-        STX     SGNFLG               ;IT'S NEGATIVE. (X=377)*
+        STX     SGNFLG               ;It's negative. (x=377)*
         BEQ     FINC                 ;Always branches.
 QPLUS:
         CMP     #"+"                 ;Plus sign?
@@ -6882,8 +6882,8 @@ FIN1:
         BNE     FINE                 ;No.
                                      ;Here to check for sign of exp.
         JSR     CHRGET               ;Yes. get another.
-        BCC     FNEDG1               ;IT IS A DIGIT. (EASIER THAN
-                                     ;BACKING UP POINTER.)
+        BCC     FNEDG1               ;It is a digit. (easier than
+                                     ;Backing up pointer.)
         CMP     #MINUTK              ;Minus?
         BEQ     FINEC1               ;Negate.
         CMP     #"-"                 ;Minus sign?
@@ -6959,18 +6959,18 @@ FINLOG:
         JMP     FADDT                ;Add together and return.
 
                                      ;Here pack in the next digit of the exponent.
-                                     ;MULTIPLY THE OLD EXP BY 10 AND ADD IN THE NEXT
+                                     ;Multiply the old exp by 10 and add in the next
                                      ;Digit. note: exp overflow is not checked for.
 FINEDG:
         LDA     TENEXP               ;Get exp so far.
-        CMP     #0o12                ;WILL RESULT BE .GE. 100?
+        CMP     #0o12                ;Will result be .ge. 100?
         BCC     MLEX10
-        LDA     #0o144               ;GET 100.
+        LDA     #0o144               ;Get 100.
         BIT     EXPSGN
         BMI     MLEXMI               ;If neg exp, no chk for overr.
         JMP     OVERR
 MLEX10:
-        ASL     A                    ;MULT BY 2 TWICE
+        ASL     A                    ;Mult by 2 twice
         ASL     A
         CLC                          ;Possible shift out of high.
         ADC     TENEXP               ;Like multiplying by five.
@@ -7031,7 +7031,7 @@ INPRT:
         LDX     CURLIN
 LINPRT:
         STWX    FACHO
-        LDX     #0o220               ;EXPONENT OF 16.
+        LDX     #0o220               ;Exponent of 16.
         SEC                          ;Number is positive.
         JSR     FLOATC
         JSR     FOUT
@@ -7050,29 +7050,29 @@ FOUT1:
         STA     FACSGN               ;Make fac pos for qint.
         STY     FBUFPT               ;Save for later.
         INY
-        LDA     #"0"                 ;GET ZERO TO TYPE IF FAC=0.
+        LDA     #"0"                 ;Get zero to type if fac=0.
         LDX     FACEXP
         JEQ     FOUT19
         LDA     #0
-        CPX     #0o200               ;IS NUMBER .LT. 1.0 ?
+        CPX     #0o200               ;Is number .lt. 1.0 ?
         BEQ     FOUT37               ;No.
         BCS     FOUT7
 FOUT37:
-        LDWDI   NZMIL                ;MULTIPLY BY 10^6.
+        LDWDI   NZMIL                ;Multiply by 10^6.
         JSR     FMULT
         LDA     #0o256 - 3 * ADDPRC - 6
 FOUT7:
         STA     DECCNT               ;Save count or zero it.
 FOUT4:
         LDWDI   NZ9999
-        JSR     FCOMP                ;IS NUMBER .GT. 999999.499 ?
-                                     ;OR 999999999.499?
+        JSR     FCOMP                ;Is number .gt. 999999.499 ?
+                                     ;Or 999999999.499?
         BEQ     BIGGES
         BPL     FOUT9                ;Yes. make it smaller.
 FOUT3:
         LDWDI   NZ0999
-        JSR     FCOMP                ;IS NUMBER .GT. 99999.9499 ?
-                                     ; OR 99999999.9499?
+        JSR     FCOMP                ;Is number .gt. 99999.9499 ?
+                                     ; Or 99999999.9499?
         BEQ     FOUT38
         BPL     FOUT5                ;Yes. done multiplying.
 FOUT38:
@@ -7094,9 +7094,9 @@ BIGGES:
         LDA     DECCNT
         CLC
         ADC     #3 * ADDPRC + 7      ;Should number be printed in e notation?
-                                     ;IE, IS NUMBER .LT. .01 ?
+                                     ;Ie, is number .lt. .01 ?
         BMI     FOUTPI               ;Yes.
-        CMP     #3 * ADDPRC + 0o10   ;IS IT .GT. 999999 (999999999)?
+        CMP     #3 * ADDPRC + 0o10   ;Is it .gt. 999999 (999999999)?
         BCS     FOUT6                ;Yes. use e notation.
         ADC     #0o377               ;Number of places before decimal point.
         TAX                          ;Put into accx.
@@ -7104,7 +7104,7 @@ BIGGES:
 FOUTPI:
         SEC
 FOUT6:
-        SBC     #2                   ;EFFECTIVELY ADD 5 TO ORIG EXP.
+        SBC     #2                   ;Effectively add 5 to orig exp.
         STA     TENEXP               ;That is the exponent to print.
         STX     DECCNT               ;Number of decimal places.
         TXA
@@ -7112,7 +7112,7 @@ FOUT6:
         BPL     FOUT8                ;Some places before dec pnt.
 FOUT39:
         LDY     FBUFPT               ;Get pointer to output.
-        LDA     #"*"                 ;PUT IN "*"
+        LDA     #"*"                 ;Put in "*"
         INY
         STA     FBUFFR - 1,Y
         TXA
@@ -7151,7 +7151,7 @@ FOUT41:
 FOUT40:
         TXA
         BCC     FOUTYP               ;Can use acca as is.
-        EOR     #0o377               ;FIND 11.-[A]*
+        EOR     #0o377               ;Find 11.-[a]*
         ADC     #0o12                ;C is still on to complete negation.
                                      ;And will always be on after.
 FOUTYP:
@@ -7208,13 +7208,13 @@ FOUT12:
 FOUT14:
         STA     FBUFFR - 1 + 2,Y     ;Store sign of exp
         LDA     #"E"
-        STA     FBUFFR - 1 + 1,Y     ;STORE THE "E" CHARACTER.
+        STA     FBUFFR - 1 + 1,Y     ;Store the "e" character.
         TXA
         LDX     #"0" - 1
         SEC
 FOUT15:
         INX                          ;Move closer to output value.
-        SBC     #0o12                ;SUBTRACT 10.
+        SBC     #0o12                ;Subtract 10.
         BCS     FOUT15               ;Not negative yet.
         ADC     #"0" + 0o12          ;Get second output character.
         STA     FBUFFR - 1 + 4,Y     ;Store high digit.
@@ -7222,7 +7222,7 @@ FOUT15:
         STA     FBUFFR - 1 + 3,Y     ;Store	low digit.
         LDA     #0                   ;Put in terminator.
         STA     FBUFFR - 1 + 5,Y
-        BEQA    FOUT20               ;RETURN. (ALWAYS BRANCHES)*
+        BEQA    FOUT20               ;Return. (always branches)*
 FOUT19:
         STA     FBUFFR - 1,Y         ;Store the character.
 FOUT17:
@@ -7306,7 +7306,7 @@ FOUTBL:
         .endif
 FDCEND:
         .if     TIME != 0
-        .byte   0o377                ; -2160000 FOR TIME CONVERTER.
+        .byte   0o377                ; -2160000 For time converter.
         .byte   0o337
         .byte   0o012
         .byte   0o200
@@ -7335,8 +7335,8 @@ TIMEND:
 
         .page
         .subttl EXPONENTIATION AND SQUARE ROOT FUNCTION.
-                                     ;SQUARE ROOT FUNCTION --- SQR(A)
-                                     ;USE SQR(X)=X^.5
+                                     ;Square root function --- sqr(a)
+                                     ;Use sqr(x)=x^.5
 SQR:
         JSR     MOVAF                ;Move fac into arg.
         LDWDI   FHALF
@@ -7345,30 +7345,30 @@ SQR:
 ;	Jmp	fpwrt		;fall into fpwrt.
 
                                      ;Exponentiation ---  x^y.
-                                     ;N.B.  0^0=1
-                                     ;FIRST CHECK IF Y=0. IF SO, THE RESULT IS 1.
-                                     ;NEXT CHECK IF X=0. IF SO THE RESULT IS 0.
-                                     ;THEN CHECK IF X.GT.0. IF NOT CHECK THAT Y IS AN INTEGER.
+                                     ;N.b.  0^0=1
+                                     ;First check if y=0. if so, the result is 1.
+                                     ;Next check if x=0. if so the result is 0.
+                                     ;Then check if x.gt.0. if not check that y is an integer.
                                      ;If so, negate x, so that log doesn't give fcerr.
                                      ;If x is negative and y is odd, negate the result
                                      ;Returned by exp.
-                                     ;TO COMPUTE THE RESULT USE X^Y=EXP((Y*LOG(X))*
+                                     ;To compute the result use x^y=exp((y*log(x))*
 FPWRT:
-        BEQ     EXP                  ;IF FAC=0, JUST EXPONENTIATE THAT.
-        LDA     ARGEXP               ;IS X=0?
+        BEQ     EXP                  ;If fac=0, just exponentiate that.
+        LDA     ARGEXP               ;Is x=0?
         BNE     FPWRT1
         JMP     ZEROF1               ;Zero fac.
 FPWRT1:
         LDXYI   TEMPF3               ;Save for later in a temp.
         JSR     MOVMF
-                                     ;Y=0 ALREADY. GOOD IN CASE NO ONE CALLS INT.
+                                     ;Y=0 already. good in case no one calls int.
         LDA     ARGSGN
-        BPL     FPWR1                ;NO PROBLEMS IF X.GT.0.
+        BPL     FPWR1                ;No problems if x.gt.0.
         JSR     INT                  ;Integerize the fac.
         LDWDI   TEMPF3               ;Get addr of comperand.
         JSR     FCOMP                ;Equal?
         BNE     FPWR1                ;Leave x neg. log will blow him out.
-                                     ;A=-1 AND Y IS IRRELEVANT.
+                                     ;A=-1 and y is irrelevant.
         TYA                          ;Negate x. make positive.
         LDY     INTEGR               ;Get evenness.
 FPWR1:
@@ -7376,12 +7376,12 @@ FPWR1:
         TYA
         PHA                          ;Save evenness for later.
         JSR     LOG                  ;Find log.
-        LDWDI   TEMPF3               ;MULTIPLY FAC TIMES LOG(X)*
+        LDWDI   TEMPF3               ;Multiply fac times log(x)*
         JSR     FMULT
         JSR     EXP                  ;Exponentiate the fac.
         PLA
         LSR     A                    ;Is it even?
-        BCC     NEGRTS               ;YES. OR X.GT.0.
+        BCC     NEGRTS               ;Yes. or x.gt.0.
                                      ;Negate the number in fac.
 NEGOP:
         LDA     FACEXP
@@ -7393,18 +7393,18 @@ NEGRTS:
         .page
         .subttl EXPONENTIATION FUNCTION.
                                      ;First save the original argument and multiply the fac by
-                                     ;LOG2(E)* THE RESULT IS USED TO DETERMINE IF OVERFLOW
-                                     ;WILL OCCUR SINCE EXP(X)=2^(X*LOG2(E)) WHERE
-                                     ;LOG2(E)=LOG(E) BASE 2. THEN SAVE THE INTEGER PART OF
+                                     ;Log2(e)* the result is used to determine if overflow
+                                     ;Will occur since exp(x)=2^(x*log2(e)) where
+                                     ;Log2(e)=log(e) base 2. then save the integer part of
                                      ;This to scale the answer at the end. since
-                                     ;2^Y=2^INT(Y)*2^(Y-INT(Y)) AND 2^INT(Y) IS EASY TO COMPUTE.
-                                     ;NOW COMPUTE 2^(X*LOG2(E)-INT(X*LOG2(E)) BY
-                                     ;P(LN(2)*(INT(X*LOG2(E))+1)-X) WHERE P IS AN APPROXIMATION
-                                     ;POLYNOMIAL. THE RESULT IS THEN SCALED BY THE POWER OF 2
+                                     ;2^Y=2^int(y)*2^(y-int(y)) and 2^int(y) is easy to compute.
+                                     ;Now compute 2^(x*log2(e)-int(x*log2(e)) by
+                                     ;P(ln(2)*(int(x*log2(e))+1)-x) where p is an approximation
+                                     ;Polynomial. the result is then scaled by the power of 2
                                      ;Previously saved.
 
 LOGEB2:
-        .byte   0o201                ;LOG(E) BASE 2.
+        .byte   0o201                ;Log(e) base 2.
         .byte   0o070
         .byte   0o252
         .byte   0o073
@@ -7447,7 +7447,7 @@ EXPCON:
 
         .if     ADDPRC != 0
 EXPCON:
-        .byte   7                    ;DEGREE-1
+        .byte   7                    ;Degree-1
         .byte   0o161                ; .000021498763697
         .byte   0o064
         .byte   0o130
@@ -7491,7 +7491,7 @@ EXPCON:
         .endif
 
 EXP:
-        LDWDI   LOGEB2               ;MULTIPLY BY LOG(E) BASE 2.
+        LDWDI   LOGEB2               ;Multiply by log(e) base 2.
         JSR     FMULT
         LDA     FACOV
         ADC     #0o120
@@ -7501,7 +7501,7 @@ STOLD:
         STA     OLDOV
         JSR     MOVEF                ;To save in arg without round.
         LDA     FACEXP
-        CMP     #0o210               ;IF ABS(FAC) .GE. 128, TOO BIG.
+        CMP     #0o210               ;If abs(fac) .ge. 128, too big.
         BCC     EXP1
 GOMLDV:
         JSR     MLDVEX               ;Overflow or overflow.
@@ -7512,7 +7512,7 @@ EXP1:
         ADC     #0o201
         BEQ     GOMLDV               ;Overflow or overflow !!
         SEC
-        SBC     #1                   ;SUBTRACT 1.
+        SBC     #1                   ;Subtract 1.
         PHA                          ;Save a while.
         LDX     #4 + ADDPRC          ;Prep to swap fac and arg.
 SWAPLP:
@@ -7528,31 +7528,31 @@ SWAPLP:
         JSR     NEGOP                ;Negate fac.
         LDWDI   EXPCON
         JSR     POLY
-        CLR     ARISGN               ;MULTIPLY BY POSITIVE 1.0.
+        CLR     ARISGN               ;Multiply by positive 1.0.
         PLA                          ;Get scale factor.
         JSR     MLDEXP               ;Modify facexp and check for overflow.
         RTS                          ;Has to do jsr due to pulas in muldiv.
 
         .page
         .subttl POLYNOMIAL EVALUATOR AND THE RANDOM NUMBER GENERATOR.
-                                     ;EVALUATE P(X^2)*X
-                                     ;POINTER TO DEGREE IS IN [Y,A]*
+                                     ;Evaluate p(x^2)*x
+                                     ;Pointer to degree is in [y,a]*
                                      ;The constants follow the degree.
-                                     ;FOR X=FAC, COMPUTE:
-                                     ; C0*X+C1*X^3+C2*X^5+C3*X^7+...+C(N)*X^(2*N+1)
+                                     ;For x=fac, compute:
+                                     ; C0*x+c1*x^3+c2*x^5+c3*x^7+...+c(n)*x^(2*n+1)
 POLYX:
         STWD    POLYPT               ;Retain polynomial pointer for later.
         JSR     MOV1F                ;Save fac in factmp.
         LDA     #TEMPF1
-        JSR     FMULT                ;COMPUTE X^2.
-        JSR     POLY1                ;COMPUTE P(X^2)*
+        JSR     FMULT                ;Compute x^2.
+        JSR     POLY1                ;Compute p(x^2)*
         LDWDI   TEMPF1
         JMP     FMULT                ;Multiply by fac again.
 
                                      ;Polynomial evaluator.
-                                     ;POINTER TO DEGREE IS IN [Y,A]*
+                                     ;Pointer to degree is in [y,a]*
                                      ;Compute:
-                                     ; C0+C1*X+C2*X^2+C3*X^3+C4*X^4+...+C(N-1)*X^(N-1)+C(N)*X^N.
+                                     ; C0+c1*x+c2*x^2+c3*x^3+c4*x^4+...+c(n-1)*x^(n-1)+c(n)*x^n.
 POLY:
         STWD    POLYPT
 POLY1:
@@ -7584,19 +7584,19 @@ RANDRT:
         RTS                          ;Yes.
 
                                      ;Psuedo-random number generator.
-                                     ;IF ARG=0, THE LAST RANDOM NUMBER GENERATED IS RETURNED.
-                                     ;IF ARG .LT. 0, A NEW SEQUENCE OF RANDOM NUMBERS IS
+                                     ;If arg=0, the last random number generated is returned.
+                                     ;If arg .lt. 0, a new sequence of random numbers is
                                      ;Started using the argument.
                                      ;   To form the next random number in the sequence
                                      ;Multiply the previous random number by a random constant
                                      ;And add in another random constant. the then ho
                                      ;And lo bytes are switched, the exponent is put where
                                      ;It will be shifted in by normal, and the exponent in the fac
-                                     ;IS SET TO 200 SO THE RESULT WILL BE LESS THAN 1. THIS
+                                     ;Is set to 200 so the result will be less than 1. this
                                      ;Is then normalized and saved for the next time.
                                      ;The ho and low bytes were switched so there will be a
                                      ;Random chance of getting a number less than or greater
-                                     ;THAN .5 *
+                                     ;Than .5 *
 
 RMULZC:
         .byte   0o230
@@ -7614,14 +7614,14 @@ RND:
         .if     REALIO != 3
         TAX
         .endif
-                                     ;GET INTO ACCX, SINCE "MOVFM" USES ACCX.
+                                     ;Get into accx, since "movfm" uses accx.
         BMI     RND1                 ;Start new sequence if negative.
         .if     REALIO == 3
         BNE     QSETNR
-                                     ;TIMERS ARE AT 9044(L0),45(HI),48(LO),49(HI) HEX.
+                                     ;Timers are at 9044(l0),45(hi),48(lo),49(hi) hex.
                                      ;First two are always free running.
                                      ;Second pair is not. lo is freer than hi then.
-                                     ;SO ORDER IN FAC IS 44,48,45,49.
+                                     ;So order in fac is 44,48,45,49.
         LDA     CQHTIM
         STA     FACHO
         LDA     CQHTIM + 4
@@ -7660,7 +7660,7 @@ STRNEX:
         LDA     FACEXP               ;Put exp where it will
         STA     FACOV                ;Be shifted in by normal.
         LDA     #0o200
-        STA     FACEXP               ;MAKE RESULT BETWEEN 0 AND 1.
+        STA     FACEXP               ;Make result between 0 and 1.
         JSR     NORMAL               ;Normalize.
         LDXYI   RNDX
 GMOVMF:
@@ -7670,21 +7670,21 @@ GMOVMF:
         .subttl SINE, COSINE AND TANGENT FUNCTIONS.
         .if     KIMROM == 0
                                      ;Cosine function.
-                                     ;USE COS(X)=SIN(X+PI/2)
+                                     ;Use cos(x)=sin(x+pi/2)
 COS:
-        LDWDI   PI2                  ;PNTR TO PI/2.
+        LDWDI   PI2                  ;Pntr to pi/2.
         JSR     FADD                 ;Add it in.
                                      ;Fall into sin.
 
                                      ;Sine function.
                                      ;Use identities to get fac in quadrants i or iv.
-                                     ;THE FAC IS DIVIDED BY 2*PI AND THE INTEGER PART IS IGNORED
-                                     ;BECAUSE SIN(X+2*PI)=SIN(X)* THEN THE ARGUMENT CAN BE COMPARED
-                                     ;WITH PI/2 BY COMPARING THE RESULT OF THE DIVISION
-                                     ;WITH PI/2/(2*PI)=1/4.
+                                     ;The fac is divided by 2*pi and the integer part is ignored
+                                     ;Because sin(x+2*pi)=sin(x)* then the argument can be compared
+                                     ;With pi/2 by comparing the result of the division
+                                     ;With pi/2/(2*pi)=1/4.
                                      ;Identities are then used to get the result in quadrants
                                      ;I or iv. an approximation polynomial is then used to
-                                     ;COMPUTE SIN(X)*
+                                     ;Compute sin(x)*
 SIN:
         JSR     MOVAF
         LDWDI   TWOPI                ;Get pntr to divisor.
@@ -7694,19 +7694,19 @@ SIN:
         JSR     INT                  ;Integerize fac.
         CLR     ARISGN               ;Always have the same sign.
         JSR     FSUBT                ;Keep only the fractional part.
-        LDWDI   FR4                  ;GET PNTR TO 1/4.
-        JSR     FSUB                 ;COMPUTE 1/4-FAC.
+        LDWDI   FR4                  ;Get pntr to 1/4.
+        JSR     FSUB                 ;Compute 1/4-fac.
         LDA     FACSGN               ;Save sign for later.
         PHA
         BPL     SIN1                 ;First quadrant.
-        JSR     FADDH                ;ADD 1/2 TO FAC.
+        JSR     FADDH                ;Add 1/2 to fac.
         LDA     FACSGN               ;Sign is negative?
         BMI     SIN2
         COM     TANSGN               ;Quadrants ii and iii come here.
 SIN1:
         JSR     NEGOP                ;If positive, negate it.
 SIN2:
-        LDWDI   FR4                  ;POINTER TO 1/4.
+        LDWDI   FR4                  ;Pointer to 1/4.
         JSR     FADD                 ;Add it in.
         PLA                          ;Get original quadrant.
         BPL     SIN3
@@ -7736,7 +7736,7 @@ COSC:
         JMP     SIN1
 
 PI2:
-        .byte   0o201                ;PI/2
+        .byte   0o201                ;Pi/2
         .byte   0o111
         .byte   0o017
         .byte   0o333 - ADDPRC
@@ -7744,7 +7744,7 @@ PI2:
         .byte   0o242
         .endif
 TWOPI:
-        .byte   0o203                ;2*PI.
+        .byte   0o203                ;2*Pi.
         .byte   0o111
         .byte   0o017
         .byte   0o333 - ADDPRC
@@ -7761,7 +7761,7 @@ FR4:
         .endif
         .if     ADDPRC == 0
 SINCON:
-        .byte   4                    ;DEGREE-1.
+        .byte   4                    ;Degree-1.
         .byte   0o206                ;39.710899
         .byte   0o036
         .byte   0o327
@@ -7786,7 +7786,7 @@ SINCON:
 
         .if     ADDPRC != 0
 SINCON:
-        .byte   5                    ;DEGREE-1.
+        .byte   5                    ;Degree-1.
         .byte   0o204                ; -14.381383816
         .byte   0o346
         .byte   0o032
@@ -7830,30 +7830,30 @@ SINCON:
         .endif
         .page
         .subttl ARCTANGENT FUNCTION.
-                                     ;USE IDENTITIES TO GET ARG BETWEEN 0 AND 1 AND THEN USE AN
-                                     ;APPROXIMATION POLYNOMIAL TO COMPUTE ARCTAN(X)*
+                                     ;Use identities to get arg between 0 and 1 and then use an
+                                     ;Approximation polynomial to compute arctan(x)*
 ATN:
         LDA     FACSGN               ;What is sign?
-        PHA                          ;(MEANWHILE SAVE FOR LATER.)
+        PHA                          ;(Meanwhile save for later.)
         BPL     ATN1
         JSR     NEGOP                ;If negative, negate fac.
-                                     ;USE ARCTAN(X)=-ARCTAN(-X) *
+                                     ;Use arctan(x)=-arctan(-x) *
 ATN1:
         LDA     FACEXP
         PHA                          ;Save this too for later.
-        CMP     #0o201               ;SEE IF FAC .GE. 1.0 *
-        BCC     ATN2                 ;IT IS LESS THAN 1.
-        LDWDI   FONE                 ;GET PNTR TO 1.0 *
+        CMP     #0o201               ;See if fac .ge. 1.0 *
+        BCC     ATN2                 ;It is less than 1.
+        LDWDI   FONE                 ;Get pntr to 1.0 *
         JSR     FDIV                 ;Compute reciprocal.
-                                     ;USE ARCTAN(X)=PI/2-ARCTAN(1/X) *
+                                     ;Use arctan(x)=pi/2-arctan(1/x) *
 ATN2:
         LDWDI   ATNCON               ;Pntr to arctan constants.
         JSR     POLYX
         PLA
-        CMP     #0o201               ;WAS ORIGINAL ARGUMENT .LT. 1 ?
+        CMP     #0o201               ;Was original argument .lt. 1 ?
         BCC     ATN3                 ;Yes.
         LDWDI   PI2
-        JSR     FSUB                 ;SUBTRACT ARCTAGN FROM PI/2.
+        JSR     FSUB                 ;Subtract arctagn from pi/2.
 ATN3:
         PLA                          ;Was original argument positive?
         BPL     ATN4                 ;Yes.
@@ -7863,7 +7863,7 @@ ATN4:
 
         .if     ADDPRC == 0
 ATNCON:
-        .byte   0o10                 ;DEGREE-1.
+        .byte   0o10                 ;Degree-1.
         .byte   0o170                ;.0028498896
         .byte   0o072
         .byte   0o305
@@ -7904,7 +7904,7 @@ ATNCON:
 
         .if     ADDPRC != 0
 ATNCON:
-        .byte   0o13                 ;DEGREE-1.
+        .byte   0o13                 ;Degree-1.
         .byte   0o166                ; -.0006847939119
         .byte   0o263
         .byte   0o203
@@ -7969,8 +7969,8 @@ ATNCON:
         .endif
         .page
         .subttl SYSTEM INITIALIZATION CODE.
-;RADIX	10		;IN ALL NON-MATH-PACKAGE CODE.
-; THIS INITIALIZES THE BASIC INTERPRETER FOR THE M6502 AND SHOULD BE
+;Radix	10		;in all non-math-package code.
+; This initializes the basic interpreter for the m6502 and should be
 ; Located where it will be wiped out in ram if code is all in ram.
 
         .if     ROMSW == 0
@@ -7984,12 +7984,12 @@ INITAT:
         INC     CHRGET + 8
 CHZGOT:
         LDA     60000                ;A load with an ext addr.
-        CMP     #":"                 ;IS IT A ":"?
-        BCS     CHZRTS               ;IT IS .GE. ":"
+        CMP     #":"                 ;Is it a ":"?
+        BCS     CHZRTS               ;It is .ge. ":"
         CMP     #" "                 ;Skip spaces.
         BEQ     INITAT
         SEC
-        SBC     #"0"                 ;ALL CHARS .GT. "9" HAVE RET'D SO
+        SBC     #"0"                 ;All chars .gt. "9" have ret'd so
         SEC
         SBC     #256 - "0"           ;See if numeric.
                                      ;Turn carry on if numeric.
@@ -8074,7 +8074,7 @@ MOVCHG:
         .endif
                                      ;Be talkative.
         .if     BUFPAG != 0
-        INX                          ;MAKE [X]=1
+        INX                          ;Make [x]=1
         STX     BUF - 3              ;Set pre-buf bytes non-zero for chead
         STX     BUF - 4
         .endif
@@ -8092,7 +8092,7 @@ MOVCHG:
         STXY    TXTPTR               ;Read this !
         JSR     CHRGET               ;Get the first character.
         .if     KIMROM == 0
-        CMP     #"A"                 ;IS IT AN "A"?
+        CMP     #"A"                 ;Is it an "a"?
         BEQ     TYPAUT
         .endif
                                      ;Yes type author's name.
@@ -8147,7 +8147,7 @@ LOOPM1:
         .endif
         .if     REALIO == 2
         BNE     USEDEC
-        CMP     0                    ;SEE IF HITTING PAGE 0
+        CMP     0                    ;See if hitting page 0
         BNE     LOOPMM
         LDA     #76
         STA     0
@@ -8185,9 +8185,9 @@ TTYW:
         BEQ     ASKAGN
         JSR     LINGET               ;Get argument.
         LDA     LINNUM + 1
-        BNE     TTYW                 ;WIDTH MUST BE .LT. 256.
+        BNE     TTYW                 ;Width must be .lt. 256.
         LDA     LINNUM
-        CMP     #16                  ;WIDTH MUST BE GREATER THAN 16.
+        CMP     #16                  ;Width must be greater than 16.
         BCC     TTYW
         STA     LINWID               ;That is the line width.
 MORCPS:
@@ -8225,7 +8225,7 @@ OKCHAR:
         STXY    COSFIX               ;Get rid of the rest.
         STXY    TANFIX
         STXY    SINFIX
-        LDXYI   COS                  ;AND GET RID OF ALL BACK TO "COS"*
+        LDXYI   COS                  ;And get rid of all back to "cos"*
 HAVFNS:
         .endif
         .if     (REALIO | LONGI) == 0
@@ -8233,7 +8233,7 @@ HAVFNS:
         .endif
         .endif
         .endif
-                                     ;GET RID OF ALL UP TO "INITAT"*
+                                     ;Get rid of all up to "initat"*
         .if     ROMSW != 0
         LDXYI   RAMLOC
         STXY    TXTTAB
@@ -8247,7 +8247,7 @@ HAVFNS:
         INC     TXTTAB + 1
         .endif
 QROOM:
-        LDWD    TXTTAB               ;PREPARE TO USE "REASON"*
+        LDWD    TXTTAB               ;Prepare to use "reason"*
         JSR     REASON
         .if     REALIO == 3
         LDWDI   FREMES
@@ -8256,7 +8256,7 @@ QROOM:
         .if     REALIO != 3
         JSR     CRDO
         .endif
-        LDA     MEMSIZ               ;COMPUTE [MEMSIZ]-[VARTAB]*
+        LDA     MEMSIZ               ;Compute [memsiz]-[vartab]*
         SEC
         SBC     TXTTAB
         TAX
@@ -8347,6 +8347,6 @@ TSTACK:
         .if     1
                                      ; Purge	a,x,y
         .endif
-; IFNDEF	START,(START = 0)
-                                     ; END	$Z+START
+; Ifndef	start,(start = 0)
+                                     ; End	$z+start
 
