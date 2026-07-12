@@ -34,14 +34,14 @@
 AS_GOWARM             =     $00                        ; Gets "jmp restart"
 AS_GOSTROUT           =     $03                        ; Gets "jmp strout"
 AS_USR                =     $0A                        ; Gets "jmp <user addr>"
-                                                       ; (Initially $e199)
+                                                       ; (Initially $E199)
 AS_CHARAC             =     $0D                        ; Alternate string terminator
 AS_ENDCHR             =     $0E                        ; String terminator
 AS_TKN_CNTR           =     $0F                        ; Used in parse
 AS_EOL_PNTR           =     $0F                        ; Used in nxlin
 AS_NUMDIM             =     $0F                        ; Used in array routines
 AS_DIMFLG             =     $10
-AS_VALTYP             =     $11                        ; $:Valtyp=$ff; %:valtyp+1=$80
+AS_VALTYP             =     $11                        ; $:Valtyp=$FF; %:valtyp+1=$80
 AS_DATAFLG            =     $13                        ; Used in parse
 AS_GARFLG             =     $13                        ; Used in garbag
 AS_SUBFLG             =     $14
@@ -80,7 +80,7 @@ AS_FRETOP             =     $6F                        ; Start of string storage
 AS_FRESPC             =     $71                        ; Temp pntr, string routines
 AS_MEMSIZ             =     $73                        ; End of string space (himem)
 AS_CURLIN             =     $75                        ; Current line number
-                                                       ; ( = $Ffxx if in direct mode)
+                                                       ; ( = $FFxx if in direct mode)
 AS_OLDLIN             =     $77                        ; Addr. of last line executed
 AS_OLDTEXT            =     $79
 AS_DATLIN             =     $7B                        ; Line # of current data stt.
@@ -154,7 +154,7 @@ AS_TXTPSV             =     $F4
 AS_CURLSV             =     $F6
 AS_REMSTK             =     $F8                        ; Stack pntr before each stt.
 AS_HGR_ROTATION       =     $F9
-                                                       ; $Ff is also used by the string out routines
+                                                       ; $FF is also used by the string out routines
                                                        ; --------------------------------
 AS_STACK              =     $0100
 AS_INPUT_BUFFER       =     $0200
@@ -173,26 +173,26 @@ AS_SW_HIRES           =     $C057
                                                        ; --------------------------------
                                                        ; Monitor subroutines
                                                        ; --------------------------------
-;Mon_plot            = $f800
-;Mon_hline           = $f819
-;Mon_vline           = $f828
-;Mon_setcol          = $f864
-;Mon_scrn            = $f871
-;Mon_pread           = $fb1e
-;Mon_settxt          = $fb39
-;Mon_setgr           = $fb40
-;Mon_tabv            = $fb5b
-;Mon_home            = $fc58
-;Mon_wait            = $fca8
-;Mon_rd2bit          = $fcfa
-;Mon_rdkey           = $fd0c
-;Mon_getln           = $fd6a
-;Mon_cout            = $fded
-;Mon_inport          = $fe8b
-;Mon_outport         = $fe95
-;Mon_write           = $fecd
-;Mon_read            = $fefd
-;Mon_read2           = $ff02
+;MON_PLOT            = $F800
+;MON_HLINE           = $F819
+;MON_VLINE           = $F828
+;MON_SETCOL          = $F864
+;MON_SCRN            = $F871
+;MON_PREAD           = $FB1E
+;MON_SETTXT          = $FB39
+;MON_SETGR           = $FB40
+;MON_TABV            = $FB5B
+;MON_HOME            = $FC58
+;MON_WAIT            = $FCA8
+;MON_RD2BIT          = $FCFA
+;MON_RDKEY           = $FD0C
+;MON_GETLN           = $FD6A
+;MON_COUT            = $FDED
+;MON_INPORT          = $FE8B
+;MON_OUTPORT         = $FE95
+;MON_WRITE           = $FECD
+;MON_READ            = $FEFD
+;MON_READ2           = $FF02
                                                        ; --------------------------------
                                                        ; --------------------------------
                                                        ; Applesoft tokens
@@ -264,12 +264,12 @@ AS_TOKEN_ADDRESS_TABLE: .word AS_ENDX - 1                ; $80...128...End
                       .word AS_RECALL - 1              ; $A7...167...recall
                       .word AS_STORE - 1               ; $A8...168...store
                       .word AS_SPEED - 1               ; $A9...169...speed=
-                      .word AS_LET - 1                 ; $Aa...170...let
-                      .word AS_GOTO - 1                ; $Ab...171...goto
-                      .word AS_RUN - 1                 ; $Ac...172...run
-                      .word AS_IF - 1                  ; $Ad...173...if
-                      .word AS_RESTORE - 1             ; $Ae...174...restore
-                      .word AS_AMPERSAND_VECTOR - 1    ; $Af...175...&
+                      .word AS_LET - 1                 ; $AA...170...let
+                      .word AS_GOTO - 1                ; $AB...171...goto
+                      .word AS_RUN - 1                 ; $AC...172...run
+                      .word AS_IF - 1                  ; $AD...173...if
+                      .word AS_RESTORE - 1             ; $AE...174...restore
+                      .word AS_AMPERSAND_VECTOR - 1    ; $AF...175...&
                       .word AS_GOSUB - 1               ; $B0...176...gosub
                       .word AS_POP - 1                 ; $B1...177...return
                       .word AS_REM - 1                 ; $B2...178...rem
@@ -280,12 +280,12 @@ AS_TOKEN_ADDRESS_TABLE: .word AS_ENDX - 1                ; $80...128...End
                       .word AS_SAVE - 1                ; $B7...183...save
                       .word AS_DEF - 1                 ; $B8...184...def
                       .word AS_POKE - 1                ; $B9...185...poke
-                      .word AS_PRINT - 1               ; $Ba...186...print
-                      .word AS_CONT - 1                ; $Bb...187...cont
-                      .word AS_LIST - 1                ; $Bc...188...list
-                      .word AS_CLEAR - 1               ; $Bd...189...clear
-                      .word AS_GET - 1                 ; $Be...190...get
-                      .word AS_NEW - 1                 ; $Bf...191...new
+                      .word AS_PRINT - 1               ; $BA...186...print
+                      .word AS_CONT - 1                ; $BB...187...cont
+                      .word AS_LIST - 1                ; $BC...188...list
+                      .word AS_CLEAR - 1               ; $BD...189...clear
+                      .word AS_GET - 1                 ; $BE...190...get
+                      .word AS_NEW - 1                 ; $BF...191...new
                                                        ; --------------------------------
 AS_UNFNC:             .word AS_SGN                     ; $D2...210...sgn
                       .word AS_INT                     ; $D3...211...int
@@ -295,12 +295,12 @@ AS_UNFNC:             .word AS_SGN                     ; $D2...210...sgn
                       .word AS_ERROR                   ; $D7...215...scrn(
                       .word AS_PDL                     ; $D8...216...pdl
                       .word AS_POS                     ; $D9...217...pos
-                      .word AS_SQR                     ; $Da...218...sqr
-                      .word AS_RND                     ; $Db...219...rnd
-                      .word AS_LOG                     ; $Dc...220...log
-                      .word AS_EXP                     ; $Dd...221...exp
-                      .word AS_COS                     ; $De...222...cos
-                      .word AS_SIN                     ; $Df...223...sin
+                      .word AS_SQR                     ; $DA...218...sqr
+                      .word AS_RND                     ; $DB...219...rnd
+                      .word AS_LOG                     ; $DC...220...log
+                      .word AS_EXP                     ; $DD...221...exp
+                      .word AS_COS                     ; $DE...222...cos
+                      .word AS_SIN                     ; $DF...223...sin
                       .word AS_TAN                     ; $E0...224...tan
                       .word AS_ATN                     ; $E1...225...atn
                       .word AS_PEEK                    ; $E2...226...peek
@@ -311,7 +311,7 @@ AS_UNFNC:             .word AS_SGN                     ; $D2...210...sgn
                       .word AS_CHRSTR                  ; $E7...231...chr$
                       .word AS_LEFTSTR                 ; $E8...232...left$
                       .word AS_RIGHTSTR                ; $E9...233...right$
-                      .word AS_MIDSTR                  ; $Ea...234...mid$
+                      .word AS_MIDSTR                  ; $EA...234...mid$
                                                        ; --------------------------------
                                                        ; Math operator branch table
 
@@ -331,17 +331,17 @@ AS_MATHTBL:           .byte AS_P_ADD
                       .byte AS_P_ADD
                       .word AS_FSUBT - 1               ; $C9...201...-
                       .byte AS_P_MUL
-                      .word AS_FMULTT - 1              ; $Ca...202...*
+                      .word AS_FMULTT - 1              ; $CA...202...*
                       .byte AS_P_MUL
-                      .word AS_FDIVT - 1               ; $Cb...203.../
+                      .word AS_FDIVT - 1               ; $CB...203.../
                       .byte AS_P_PWR
-                      .word AS_FPWRT - 1               ; $Cc...204...^
+                      .word AS_FPWRT - 1               ; $CC...204...^
                       .byte AS_P_AND
-                      .word AS_ANDOP - 1               ; $Cd...205...and
+                      .word AS_ANDOP - 1               ; $CD...205...and
                       .byte AS_P_OR
-                      .word AS_OR - 1                  ; $Ce...206...or
+                      .word AS_OR - 1                  ; $CE...206...or
 AS_M_NEG:             .byte AS_P_NEQ
-                      .word AS_NEGOP - 1               ; $Cf...207...>
+                      .word AS_NEGOP - 1               ; $CF...207...>
 AS_MEQUU:             .byte AS_P_NEQ
                       .word AS_EQUOP - 1               ; $D0...208...=
 AS_M_REL:             .byte AS_P_REL
@@ -588,19 +588,19 @@ AS_TOKEN_NAME_TABLE:  .byte "E" & %01111111
                       .byte "L" & %01111111
                       .byte "E" & %01111111
                       .byte "T" | %10000000
-                                                       ; $Aa...170
+                                                       ; $AA...170
                       .byte "G" & %01111111
                       .byte "O" & %01111111
                       .byte "T" & %01111111
                       .byte "O" | %10000000
-                                                       ; $Ab...171
+                                                       ; $AB...171
                       .byte "R" & %01111111
                       .byte "U" & %01111111
                       .byte "N" | %10000000
-                                                       ; $Ac...172
+                                                       ; $AC...172
                       .byte "I" & %01111111
                       .byte "F" | %10000000
-                                                       ; $Ad...173
+                                                       ; $AD...173
                       .byte "R" & %01111111
                       .byte "E" & %01111111
                       .byte "S" & %01111111
@@ -608,9 +608,9 @@ AS_TOKEN_NAME_TABLE:  .byte "E" & %01111111
                       .byte "O" & %01111111
                       .byte "R" & %01111111
                       .byte "E" | %10000000
-                                                       ; $Ae...174
+                                                       ; $AE...174
                       .byte "&" | %10000000
-                                                       ; $Af...175
+                                                       ; $AF...175
                       .byte "G" & %01111111
                       .byte "O" & %01111111
                       .byte "S" & %01111111
@@ -665,31 +665,31 @@ AS_TOKEN_NAME_TABLE:  .byte "E" & %01111111
                       .byte "I" & %01111111
                       .byte "N" & %01111111
                       .byte "T" | %10000000
-                                                       ; $Ba...186
+                                                       ; $BA...186
                       .byte "C" & %01111111
                       .byte "O" & %01111111
                       .byte "N" & %01111111
                       .byte "T" | %10000000
-                                                       ; $Bb...187
+                                                       ; $BB...187
                       .byte "L" & %01111111
                       .byte "I" & %01111111
                       .byte "S" & %01111111
                       .byte "T" | %10000000
-                                                       ; $Bc...188
+                                                       ; $BC...188
                       .byte "C" & %01111111
                       .byte "L" & %01111111
                       .byte "E" & %01111111
                       .byte "A" & %01111111
                       .byte "R" | %10000000
-                                                       ; $Bd...189
+                                                       ; $BD...189
                       .byte "G" & %01111111
                       .byte "E" & %01111111
                       .byte "T" | %10000000
-                                                       ; $Be...190
+                                                       ; $BE...190
                       .byte "N" & %01111111
                       .byte "E" & %01111111
                       .byte "W" | %10000000
-                                                       ; $Bf...191
+                                                       ; $BF...191
                       .byte "T" & %01111111
                       .byte "A" & %01111111
                       .byte "B" & %01111111
@@ -728,20 +728,20 @@ AS_TOKEN_NAME_TABLE:  .byte "E" & %01111111
                       .byte "-" | %10000000
                                                        ; $C9...201
                       .byte "*" | %10000000
-                                                       ; $Ca...202
+                                                       ; $CA...202
                       .byte "/" | %10000000
-                                                       ; $Cb...203
+                                                       ; $CB...203
                       .byte $DE
-;                    Lhascii(`^')                     ; $cc...204
+;                    Lhascii(`^')                     ; $CC...204
                       .byte "A" & %01111111
                       .byte "N" & %01111111
                       .byte "D" | %10000000
-                                                       ; $Cd...205
+                                                       ; $CD...205
                       .byte "O" & %01111111
                       .byte "R" | %10000000
-                                                       ; $Ce...206
+                                                       ; $CE...206
                       .byte ">" | %10000000
-                                                       ; $Cf...207
+                                                       ; $CF...207
                       .byte "=" | %10000000
                                                        ; $D0...208
                       .byte "<" | %10000000
@@ -783,27 +783,27 @@ AS_TOKEN_NAME_TABLE:  .byte "E" & %01111111
                       .byte "S" & %01111111
                       .byte "Q" & %01111111
                       .byte "R" | %10000000
-                                                       ; $Da...218
+                                                       ; $DA...218
                       .byte "R" & %01111111
                       .byte "N" & %01111111
                       .byte "D" | %10000000
-                                                       ; $Db...219
+                                                       ; $DB...219
                       .byte "L" & %01111111
                       .byte "O" & %01111111
                       .byte "G" | %10000000
-                                                       ; $Dc...220
+                                                       ; $DC...220
                       .byte "E" & %01111111
                       .byte "X" & %01111111
                       .byte "P" | %10000000
-                                                       ; $Dd...221
+                                                       ; $DD...221
                       .byte "C" & %01111111
                       .byte "O" & %01111111
                       .byte "S" | %10000000
-                                                       ; $De...222
+                                                       ; $DE...222
                       .byte "S" & %01111111
                       .byte "I" & %01111111
                       .byte "N" | %10000000
-                                                       ; $Df...223
+                                                       ; $DF...223
                       .byte "T" & %01111111
                       .byte "A" & %01111111
                       .byte "N" | %10000000
@@ -856,7 +856,7 @@ AS_TOKEN_NAME_TABLE:  .byte "E" & %01111111
                       .byte "I" & %01111111
                       .byte "D" & %01111111
                       .byte "$" | %10000000
-                                                       ; $Ea...234
+                                                       ; $EA...234
 
                       .byte 0                          ; End of token name table
                                                        ; --------------------------------
@@ -1174,7 +1174,7 @@ AS_QT_BREAK:          .byte $0D
 
                                                        ; (Forpnt) = address of variable if "for" or "next"
                                                        ; = $Xxff if called from "return"
-                                                       ; <<< Bug: should be $ffxx >>>
+                                                       ; <<< Bug: should be $FFxx >>>
 
                                                        ; Returns .ne. if variable not found,
                                                        ; (X) = stack pntr after skipping all frames
@@ -1305,7 +1305,7 @@ AS_MEMERR:            LDX   #AS_ERR_MEMFULL
 
                                                        ; (X)=offset in error message table
                                                        ; (Errflg) > 128 if "on err" turned on
-                                                       ; (Curlin+1) = $ff if in direct mode
+                                                       ; (Curlin+1) = $FF if in direct mode
                                                        ; --------------------------------
 AS_ERROR:             BIT   AS_ERRFLG                  ; "On err" turned on?
                       BPL   AS_L_ERROR_1               ; No
@@ -1330,7 +1330,7 @@ AS_PRINT_ERROR_LINNUM:
                       JSR   AS_STROUT                  ; Print string at (y,a)
                       LDY   AS_CURLIN + 1              ; Running, or direct?
                       INY
-                      BEQ   AS_RESTART                 ; Was $ff, so direct mode
+                      BEQ   AS_RESTART                 ; Was $FF, so direct mode
                       JSR   AS_INPRT                   ; Running, so print line number
                                                        ; --------------------------------
                                                        ; Warm restart entry
@@ -1347,7 +1347,7 @@ AS_RESTART:
                       JSR   AS_CHRGET
                       TAX
                       BEQ   AS_RESTART                 ; Empty line
-                      LDX   #$FF                       ; $Ff in hi-byte of curlin means
+                      LDX   #$FF                       ; $FF in hi-byte of curlin means
                       STX   AS_CURLIN + 1              ; We are in direct mode
                       BCC   AS_NUMBERED_LINE           ; Chrget saw digit, numbered line
                       JSR   AS_PARSE_INPUT_LINE        ; No number, so parse it
@@ -1497,7 +1497,7 @@ AS_L_INLIN2_3:        LDA   #0                         ; (Y,x) points at buffer-
                       LDY   #>(AS_INPUT_BUFFER - 1)
                       RTS
                                                        ; --------------------------------
-AS_INCHR:             JSR   MON_RDKEY                  ; *** Ought to be "bit $c010" ***
+AS_INCHR:             JSR   MON_RDKEY                  ; *** Ought to be "bit $C010" ***
                       AND   #$7F
                       RTS
                                                        ; --------------------------------
@@ -1582,7 +1582,7 @@ AS_L_PARSE_9:         INX                              ; Advance input index
                       BEQ   AS_L_PARSE_10              ; Yes, clear dataflg
                       CMP   #AS_TOKENDWTA + 128 - $BA  ; "Data" token?
                       BNE   AS_L_PARSE_11              ; No, leave dataflg alone
-AS_L_PARSE_10:        STA   AS_DATAFLG                 ; Dataflg = 0 or $83-$3a = $49
+AS_L_PARSE_10:        STA   AS_DATAFLG                 ; Dataflg = 0 or $83-$3A = $49
 AS_L_PARSE_11:        SEC                              ; Is it a "rem" token?
                       SBC   #AS_TOKEN_REM + 128 - $BA
                       BNE   AS_L_PARSE_1               ; No, continue parsing line
@@ -1700,7 +1700,7 @@ AS_STKINI:            LDX   #AS_TEMPST
                       PLA                              ; Save return address
                       TAY
                       PLA
-                      LDX   #$F8                       ; Start stack at $f8,
+                      LDX   #$F8                       ; Start stack at $F8,
                       TXS                              ; Leaving room for parsing lines
                       PHA                              ; Restore return address
                       TYA
@@ -1742,7 +1742,7 @@ AS_L_LIST_2:          JSR   AS_CHRGET                  ; Get next char
                       BNE   AS_RTS_2                   ; Branch if syntax err
 AS_L_LIST_3:          PLA                              ; Pop return adress
                       PLA                              ; (Get back by "jmp newstt")
-                      LDA   AS_LINNUM                  ; If no second number, use $ffff
+                      LDA   AS_LINNUM                  ; If no second number, use $FFFF
                       ORA   AS_LINNUM + 1
                       BNE   AS_LIST_0                  ; There was a second number
                       LDA   #$FF                       ; Max end range
@@ -1898,8 +1898,8 @@ AS_NEWSTT:            TSX                              ; Remember the stack posi
                       JSR   AS_ISCNTC                  ; See if control-c has been typed
                       LDA   AS_TXTPTR                  ; No, keep executing
                       LDY   AS_TXTPTR + 1
-                      LDX   AS_CURLIN + 1              ; =$Ff if in direct mode
-                      INX                              ; $Ff turns into $00
+                      LDX   AS_CURLIN + 1              ; =$FF if in direct mode
+                      INX                              ; $FF turns into $00
                       BEQ   AS_L_NEWSTT_1              ; In direct mode
                       STA   AS_OLDTEXT                 ; In running mode
                       STY   AS_OLDTEXT + 1
@@ -1986,7 +1986,7 @@ AS_ISCNTC:            LDA   AS_KEYBOARD
                       CMP   #$83
                       BEQ   AS_L_ISCNTC_1
                       RTS
-AS_L_ISCNTC_1:        JSR   AS_INCHR                   ; <<< Should be "bit $c010" >>>
+AS_L_ISCNTC_1:        JSR   AS_INCHR                   ; <<< Should be "bit $C010" >>>
 AS_CONTROL_C_TYPED:
                       LDX   #$FF                       ; Control c attempted
                       BIT   AS_ERRFLG                  ; "On err" enabled?
@@ -2097,7 +2097,7 @@ AS_PROGIO:            LDA   AS_TXTTAB                  ; Set up to read/write pr
                                                        ; "Run" command
                                                        ; --------------------------------
 AS_RUN:               PHP                              ; Save status while subtracting
-                      DEC   AS_CURLIN + 1              ; If was $ff (meaning direct mode)
+                      DEC   AS_CURLIN + 1              ; If was $FF (meaning direct mode)
                                                        ; Make it "running mode"
                       PLP                              ; Get status again (from chrget)
                       BNE   AS_L_RUN_1                 ; Probably a line number
@@ -2111,7 +2111,7 @@ AS_L_RUN_1:           JSR   AS_CLEARC                  ; Clear variables
                                                        ; 2 -- Return address (newstt)
                                                        ; 2 -- Txtptr
                                                        ; 2 -- Line #
-                                                       ; 1 -- Gosub token ($b0)
+                                                       ; 1 -- Gosub token ($B0)
                                                        ; --------------------------------
 AS_GOSUB:             LDA   #3                         ; Be sure enough room on stack
                       JSR   AS_CHKMEM
@@ -2287,16 +2287,16 @@ AS_L_LINGET_1:        BCS   AS_RTS_7                   ; Not a digit
                       BCS   AS_ON_1                    ; Yes, > 63999, go indirectly to
                                                        ; "Syntax error".
                                                        ; <<<<<Dangerous code>>>>>
-                                                       ; Note that if (a) = $ab on the line above,
+                                                       ; Note that if (a) = $AB on the line above,
                                                        ; On_1 will compare = and cause a catastrophic
-                                                       ; Jump to $22d9 (for goto), or other locations
+                                                       ; Jump to $22D9 (for goto), or other locations
                                                        ; For other calls to linget.
 
-                                                       ; You can see this is you first put "brk" in $22d9,
+                                                       ; You can see this is you first put "brk" in $22D9,
                                                        ; Then type "go to 437761".
 
                                                        ; Any value from 437760 through 440319 will cause
-                                                       ; The problem.  ($ab00 - $abff)
+                                                       ; The problem.  ($AB00 - $ABFF)
                                                        ; <<<<<Dangerous code>>>>>
                       LDA   AS_LINNUM                  ; Multiply by ten
                       ASL
@@ -2491,7 +2491,7 @@ AS_L_STRPRT_1:        DEX
                                                        ; <<< Next three lines are useless >>>
                       CMP   #$0D                       ; Was it <return>?
                       BNE   AS_L_STRPRT_1              ; No
-                      JSR   AS_NEGATE                  ; Eor #$ff would do it, but why?
+                      JSR   AS_NEGATE                  ; Eor #$FF would do it, but why?
                                                        ; <<< Above three lines are useless >>>
                       JMP   AS_L_STRPRT_1
                                                        ; --------------------------------
@@ -2501,7 +2501,7 @@ AS_OUTQUES:           LDA   #"?" & %01111111           ; Print question mark
                                                        ; --------------------------------
                                                        ; Print char from (a)
 
-                                                       ; Note: poke 243,32 ($20 in $f3) will convert
+                                                       ; Note: poke 243,32 ($20 in $F3) will convert
                                                        ; Output to lower case.  this can be cancelled
                                                        ; By normal, inverse, or flash or poke 243,0.
                                                        ; --------------------------------
@@ -2509,7 +2509,7 @@ AS_OUTDO:             ORA   #$80                       ; Print (a)
                       CMP   #$A0                       ; Control chr?
                       BCC   AS_L_OUTDO_1               ; Skip if so
                       ORA   AS_FLASH_BIT               ; =$40 For flash, else $00
-AS_L_OUTDO_1:         JSR   MON_COUT                   ; "And"s with $3f (inverse), $7f (flash)
+AS_L_OUTDO_1:         JSR   MON_COUT                   ; "And"s with $3F (inverse), $7F (flash)
                       AND   #$7F
                       PHA
                       LDA   AS_SPEEDZ                  ; Complement of speed #
@@ -2840,7 +2840,7 @@ AS_CHKSTR:            SEC
                                                        ; If c=0, type must be numeric
                                                        ; If c=1, type must be string
                                                        ; --------------------------------
-AS_CHKVAL:            BIT   AS_VALTYP                  ; $00 If numeric, $ff if string
+AS_CHKVAL:            BIT   AS_VALTYP                  ; $00 If numeric, $FF if string
                       BMI   AS_L_CHKVAL_2              ; Type is string
                       BCS   AS_L_CHKVAL_3              ; Not string, but we need string
 AS_L_CHKVAL_1:        RTS                              ; Type is correct
@@ -2871,7 +2871,7 @@ AS_FRMEVL_1:
                                                        ; --------------------------------
 AS_FRMEVL_2:
                       JSR   AS_CHRGOT                  ; Check for relational operators
-AS_L_FRMEVL_2_1:      SEC                              ; > Is $cf, = is $d0, < is $d1
+AS_L_FRMEVL_2_1:      SEC                              ; > Is $CF, = is $D0, < is $D1
                       SBC   #AS_TOKEN_GREATER          ; > Is 0, = is 1, < is 2
                       BCC   AS_L_FRMEVL_2_2            ; Not relational operator
                       CMP   #3
@@ -2888,8 +2888,8 @@ AS_L_FRMEVL_2_1:      SEC                              ; > Is $cf, = is $d0, < i
                                                        ; --------------------------------
 AS_L_FRMEVL_2_2:      LDX   AS_CPRTYP                  ; Did we find a relational operator?
                       BNE   AS_FRM_RELATIONAL          ; Yes
-                      BCS   AS_NOTMATH                 ; No, and next token is > $d1
-                      ADC   #$CF - AS_TOKEN_PLUS       ; No, and next token < $cf
+                      BCS   AS_NOTMATH                 ; No, and next token is > $D1
+                      ADC   #$CF - AS_TOKEN_PLUS       ; No, and next token < $CF
                       BCC   AS_NOTMATH                 ; If next token < "+"
                       ADC   AS_VALTYP                  ; + And last result a string?
                       BNE   AS_L_FRMEVL_2_3            ; Branch if not
@@ -2918,7 +2918,7 @@ AS_SAVOP:             JSR   AS_FRM_RECURSE             ; Save rest, call frmevl 
                                                        ; Found one or more relational operators <,=,>
                                                        ; --------------------------------
 AS_FRM_RELATIONAL:
-                      LSR   AS_VALTYP                  ; (Valtyp) = 0 (numeric), = $ff (string)
+                      LSR   AS_VALTYP                  ; (Valtyp) = 0 (numeric), = $FF (string)
                       TXA                              ; Set cprtyp to 0000<=>c
                       ROL                              ; Where c=0 if #, c=1 if string
                       LDX   AS_TXTPTR                  ; Back up txtptr
@@ -3320,9 +3320,9 @@ AS_BADNAM:            JMP   AS_SYNERR                  ; No, syntax error
 AS_NAMOK:             LDX   #0
                       STX   AS_VALTYP
                       STX   AS_VALTYP + 1
-                      JMP   AS_PTRGET4                 ; To branch across $e000 vectors
+                      JMP   AS_PTRGET4                 ; To branch across $E000 vectors
                                                        ; --------------------------------
-                                                       ; Dos and monitor call basic at $e000 and $e003
+                                                       ; Dos and monitor call basic at $E000 and $E003
                                                        ; --------------------------------
 AS_BASIC:             JMP   AS_COLD_START
 AS_BASIC2:            JMP   AS_RESTART
@@ -3846,7 +3846,7 @@ AS_L_MULTIPLY_SUBS_1_2: DEC   AS_INDX                    ; 16-Bits yet?
                                                        ; Collects garbage and returns # bytes of memory left
                                                        ; --------------------------------
 AS_FRE:               LDA   AS_VALTYP                  ; Look at value of argument
-                      BEQ   AS_L_FRE_1                 ; =0 Means real, =$ff means string
+                      BEQ   AS_L_FRE_1                 ; =0 Means real, =$FF means string
                       JSR   AS_FREFAC                  ; String, so set it free is temp
 AS_L_FRE_1:           JSR   AS_GARBAG                  ; Collect all the garbage in sight
                       SEC                              ; Compute space between arrays and
@@ -3882,8 +3882,8 @@ AS_SNGFLT:            LDA   #0                         ; Msb = 0
                                                        ; Check for direct or running mode
                                                        ; Giving error if direct mode
                                                        ; --------------------------------
-AS_ERRDIR:            LDX   AS_CURLIN + 1              ; =$Ff if direct mode
-                      INX                              ; Makes $ff into zero
+AS_ERRDIR:            LDX   AS_CURLIN + 1              ; =$FF if direct mode
+                      INX                              ; Makes $FF into zero
                       BNE   AS_RTS_9                   ; Return if running mode
                       LDX   #AS_ERR_ILLDIR             ; Direct mode, give error
                       .byte $2C                        ; Trick to skip next 2 bytes
@@ -3921,7 +3921,7 @@ AS_DEF:               JSR   AS_FNC_                    ; Parse "fn", function na
 AS_FNC_:              LDA   #AS_TOKEN_FN               ; Must now see "fn" token
                       JSR   AS_SYNCHR                  ; Or else syntax error
                       ORA   #$80                       ; Set sign bit on 1st char of name,
-                      STA   AS_SUBFLG                  ; Making $c0 < subflg < $db
+                      STA   AS_SUBFLG                  ; Making $C0 < subflg < $DB
                       JSR   AS_PTRGET3                 ; Which tells ptrget who called
                       STA   AS_FNCNAM                  ; Found valid function name, so
                       STY   AS_FNCNAM + 1              ; Save address
@@ -4007,7 +4007,7 @@ AS_FNCDATA:
                                                        ; "Str$" function
                                                        ; --------------------------------
 AS_STR:               JSR   AS_CHKNUM                  ; Expression must be numeric
-                      LDY   #0                         ; Start string at stack-1 ($00ff)
+                      LDY   #0                         ; Start string at stack-1 ($00FF)
                                                        ; So strlit can diffrentiate str$ calls
                       JSR   AS_FOUT_1                  ; Convert fac to string
                       PLA                              ; Pop return off stack
@@ -4101,7 +4101,7 @@ AS_PUTEMP:            LDA   AS_FAC                     ; Copy temp descriptor in
                       LDY   #0
                       STX   AS_FAC + 3                 ; Address of temp descriptor
                       STY   AS_FAC + 4                 ; In y,x and fac+3,4
-                      DEY                              ; Y=$ff
+                      DEY                              ; Y=$FF
                       STY   AS_VALTYP                  ; Flag (fac ) as string
                       STX   AS_LASTPT                  ; Index of last pointer
                       INX                              ; Update for next temp entry
@@ -4622,11 +4622,11 @@ AS_L_VAL_2:           STX   AS_DEST + 1
                       PHA
                       LDA   #0                         ; And store $00 in its place
                       STA   (AS_DEST),Y
-                                                       ; <<< That causes a bug if himem = $bfff, >>>
-                                                       ; <<< Because storing $00 at $c000 is no  >>>
-                                                       ; <<< Use; $c000 will always be last char >>>
+                                                       ; <<< That causes a bug if himem = $BFFF, >>>
+                                                       ; <<< Because storing $00 at $C000 is no  >>>
+                                                       ; <<< Use; $C000 will always be last char >>>
                                                        ; <<< Typed, so fin won't terminate until >>>
-                                                       ; <<< It sees a zero at $c010!            >>>
+                                                       ; <<< It sees a zero at $C010!            >>>
                       JSR   AS_CHRGOT                  ; Prime the pump
                       JSR   AS_FIN                     ; Evaluate string
                       PLA                              ; Get byte that should follow string
@@ -4943,7 +4943,7 @@ AS_SHIFT_RIGHT_2:
                       STY   3,X
                       LDY   1,X
                       STY   2,X
-                      LDY   AS_SHIFT_SIGN_EXT          ; $00 If +, $ff if -
+                      LDY   AS_SHIFT_SIGN_EXT          ; $00 If +, $FF if -
                       STY   1,X
                                                        ; --------------------------------
                                                        ; Main entry to right shift subroutine
@@ -5562,7 +5562,7 @@ AS_RTS_17:            RTS
                                                        ; First char already scanned by chrget
                                                        ; (A) = first char, c=0 if digit.
                                                        ; --------------------------------
-AS_FIN:               LDY   #0                         ; Clear working area ($99...$a3)
+AS_FIN:               LDY   #0                         ; Clear working area ($99...$A3)
                       LDX   #10                        ; Tmpexp, expon, dpflg, expsgn, fac, serlen
 AS_L_FIN_1:           STY   AS_TMPEXP,X
                       DEX
@@ -5571,7 +5571,7 @@ AS_L_FIN_1:           STY   AS_TMPEXP,X
                       BCC   AS_FIN_2                   ; First char is a digit
                       CMP   #"-" & %01111111           ; Check for leading sign
                       BNE   AS_L_FIN_2                 ; Not minus
-                      STX   AS_SERLEN                  ; Minus, set serlen = $ff for flag
+                      STX   AS_SERLEN                  ; Minus, set serlen = $FF for flag
                       BEQ   AS_FIN_1                   ; ...Always
 AS_L_FIN_2:           CMP   #"+" & %01111111           ; Might be plus
                       BNE   AS_FIN_3                   ; Not plus either, check decimal point
@@ -5648,7 +5648,7 @@ AS_FIN_9:             PHA                              ; Save digit
                       INC   AS_TMPEXP                  ; Yes, count the fractional digit
 AS_L_FIN_9_1:         JSR   AS_MUL10                   ; Fac = fac * 10
                       PLA                              ; Current digit
-                      SEC                              ; <<<Shorter here to just "and #$0f">>>
+                      SEC                              ; <<<Shorter here to just "and #$0F">>>
                       SBC   #"0" & %01111111           ; <<<To convert ascii to binary form>>>
                       JSR   AS_ADDACC                  ; Add the digit
                       JMP   AS_FIN_1                   ; Go back for more
@@ -5734,7 +5734,7 @@ AS_FOUT_1:            LDA   #"-" & %01111111           ; In case value negative
                       BPL   AS_L_FOUT_1_1              ; Value is +
                       INY                              ; Value is -
                       STA   AS_STACK - 1,Y             ; Emit "-"
-AS_L_FOUT_1_1:        STA   AS_FAC_SIGN                ; Make fac.sign positive ($2d)
+AS_L_FOUT_1_1:        STA   AS_FAC_SIGN                ; Make fac.sign positive ($2D)
                       STY   AS_STRNG2                  ; Save string pntr
                       INY
                       LDA   #"0" & %01111111           ; In case (fac)=0
@@ -5844,7 +5844,7 @@ AS_L_FOUT_2_9:        ADC   #("0" & %01111111) - 1     ; Make digit into ascii
                       LDY   AS_STRNG2                  ; Get output pntr
                       INY                              ; Store the digit
                       TAX                              ; Save digit, hi-bit is direction
-                      AND   #$7F                       ; Make sure mon_color...$39 for string
+                      AND   #$7F                       ; Make sure MON_COLOR...$39 for string
                       STA   AS_STACK - 1,Y
                       DEC   AS_TMPEXP                  ; Count the digit
                       BNE   AS_L_FOUT_2_10             ; Not time for "." yet
@@ -5997,7 +5997,7 @@ AS_EXP:               LDA   #<AS_CON_LOG_E             ; Convert to power of two
                       LDY   #>AS_CON_LOG_E             ; E^x = 2^(log2(e)*x)
                       JSR   AS_FMULT
                       LDA   AS_FAC_EXTENSION           ; Non-standard rounding here
-                      ADC   #$50                       ; Round up if extension > $af
+                      ADC   #$50                       ; Round up if extension > $AF
                       BCC   AS_L_EXP_1                 ; No, don't round up
                       JSR   AS_INCREMENT_MANTISSA
 AS_L_EXP_1:           STA   AS_ARG_EXTENSION           ; Strange value
@@ -6296,7 +6296,7 @@ AS_POLY_ATN:          .byte 11                         ; Power of polynomial
                       .byte $81, $00, $00, $00, $00
                                                        ; --------------------------------
                                                        ; Generic copy of chrget subroutine, which
-                                                       ; Is copied into $00b1...$00c8 during initialization
+                                                       ; Is copied into $00B1...$00C8 during initialization
 
                                                        ; Cornelis bongers described several improvements
                                                        ; To chrget in micro magazine or call a.p.p.l.e.
@@ -6429,7 +6429,7 @@ AS_L_COLD_START_4:    LDA   AS_TXTTAB
                                                        ; Effectively performs a "jsr" to the specified
                                                        ; Address, with the following register contents:
                                                        ; (A,y) = call address
-                                                       ; (X)   = $9d
+                                                       ; (X)   = $9D
 
                                                        ; The called routine can return with "rts",
                                                        ; And applesoft will continue with the next
@@ -6575,13 +6575,13 @@ AS_NOTRACE:
                                                        ; --------------------------------
                                                        ; "Normal" statement
                                                        ; --------------------------------
-AS_NORMAL:            LDA   #$FF                       ; Set invflg = $ff
+AS_NORMAL:            LDA   #$FF                       ; Set invflg = $FF
                       BNE   AS_N_I_                    ; And flash.bit = $00
                                                        ; --------------------------------
                                                        ; "Inverse" statement
                                                        ; --------------------------------
 AS_INVERSE:
-                      LDA   #$3F                       ; Set invflg = $3f
+                      LDA   #$3F                       ; Set invflg = $3F
 AS_N_I_:              LDX   #0                         ; And flash.bit = $00
 AS_N_I_F_:            STA   MON_INVFLG
                       STX   AS_FLASH_BIT
@@ -6589,7 +6589,7 @@ AS_N_I_F_:            STA   MON_INVFLG
                                                        ; --------------------------------
                                                        ; "Flash" statement
                                                        ; --------------------------------
-AS_FLASH:             LDA   #$7F                       ; Set invflg = $7f
+AS_FLASH:             LDA   #$7F                       ; Set invflg = $7F
                       LDX   #$40                       ; And flash.bit = $40
                       BNE   AS_N_I_F_                  ; ...Always
                                                        ; --------------------------------
@@ -6688,7 +6688,7 @@ AS_RESUME:            LDA   AS_ERRLIN                  ; Restore line # and txtp
                       LDA   AS_ERRPOS + 1
                       STA   AS_TXTPTR + 1
                                                        ; <<< Onerr correction in manual is easily >>>
-                                                       ; <<< By "call -3288", which is $f328 here >>>
+                                                       ; <<< By "call -3288", which is $F328 here >>>
                       LDX   AS_ERRSTK                  ; Retrieve stack pntr as it was
                       TXS                              ; Before statement scanned
                       JMP   AS_NEWSTT                  ; Do statement again
@@ -6754,11 +6754,11 @@ AS_GR:                LDA   AS_SW_LORES
                                                        ; --------------------------------
                                                        ; "Text" statement
                                                        ; --------------------------------
-AS_TEXT:              LDA   AS_SW_LOWSCR               ; Jmp $fb36 would have
+AS_TEXT:              LDA   AS_SW_LOWSCR               ; Jmp $FB36 would have
                       JMP   MON_SETTXT                 ; Done both of these
                                                        ; <<<       Better code would be:   >>>
                                                        ; <<<  Lda sw.mixset                >>>
-                                                       ; <<<  Jmp $fb33                    >>>
+                                                       ; <<<  Jmp $FB33                    >>>
                                                        ; --------------------------------
                                                        ; "Store" statement
                                                        ; --------------------------------
@@ -7051,7 +7051,7 @@ AS_CON_04             =     * - 1                      ; (( Constant ))
                                                        ; As necessary
                       ASL   MON_GBASL                  ; Look at "e" bit
                       BCC   AS_L_CON_04_2              ; Now zero; make it 1 and leave
-                      ADC   #$E0                       ; Carry = 1, so adds $e1
+                      ADC   #$E0                       ; Carry = 1, so adds $E1
                       CLC                              ; Is "cd" not zero?
                       BIT   AS_CON_04                  ; Tests bit 2 for carry out of "cd"
                       BEQ   AS_L_CON_04_3              ; No carry, finished
@@ -7238,7 +7238,7 @@ AS_DRAW0:             STX   AS_HGR_SHAPE               ; Save shape address
                                                        ; --------------------------------
                                                        ; Applesoft enters here
                                                        ; --------------------------------
-AS_DRAW1:             TAX                              ; Save rotation (0-$3f)
+AS_DRAW1:             TAX                              ; Save rotation (0-$3F)
                       LSR                              ; Divide rotation by 16 to get
                       LSR                              ; Quadrant (0=up, 1=rt, 2=dwn, 3=lft)
                       LSR
@@ -7301,7 +7301,7 @@ AS_XDRAW0:            STX   AS_HGR_SHAPE               ; Save shape address
                                                        ; --------------------------------
                                                        ; Applesoft enters here
                                                        ; --------------------------------
-AS_XDRAW1:            TAX                              ; Save rotation (0-$3f)
+AS_XDRAW1:            TAX                              ; Save rotation (0-$3F)
                       LSR                              ; Divide rotation by 16 to get
                       LSR                              ; Quadrant (0=up, 1=rt, 2=dwn, 3=lft)
                       LSR
@@ -7596,9 +7596,9 @@ MON_PLOT:             LSR                              ;Y-coord/2
                       PHP                              ;Save lsb in carry
                       JSR   MON_GBASCALC               ;Calc base adr in gbasl,h
                       PLP                              ;Restore lsb from carry
-                      LDA   #%00001111                 ;Mask $0f if even
+                      LDA   #%00001111                 ;Mask $0F if even
                       BCC   MON_RTMASK
-                      ADC   #%11100000                 ;Mask $f0 if odd
+                      ADC   #%11100000                 ;Mask $F0 if odd
 MON_RTMASK:           STA   MON_MASK
 MON_PLOT1:            LDA   (MON_GBASL),Y              ;Data
                       EOR   MON_COLOR                  ; Eor color
@@ -7994,7 +7994,7 @@ MON_RGDSP1:           LDA   #<$45                      ;  Contents with
 MON_RDSP1:            LDA   #" " | %10000000
                       JSR   MON_COUT
                       LDA   MON_RTBL - $FB,X
-                                                       ;Lda   mon_rtbl+$ff05,x
+                                                       ;Lda   MON_RTBL+$FF05,x
 
                       JSR   MON_COUT
                       LDA   #"=" | %10000000
@@ -8675,7 +8675,7 @@ MON_CRMON:            JSR   MON_BL1                    ;Handle a cr as blank
 MON_READ:             JSR   MON_RD2BIT                 ;Find tapein edge
                       LDA   #$16
 MON_READ2:            JSR   MON_HEADR                  ;Delay 3.5 seconds
-                      STA   MON_MASK                   ;Init chksum=$ff
+                      STA   MON_MASK                   ;Init chksum=$FF
                       JSR   MON_RD2BIT                 ;Find tapein edge
 MON_RD2:              LDY   #$24                       ;Look for sync bit
                       JSR   MON_RDBIT                  ;  (Short 0)
@@ -8748,7 +8748,7 @@ MON_DIG:              LDX   #$03
 MON_NXTBIT:           ASL
                       ROL   $3E
                       ROL   $3F
-                      DEX                              ;Leave x=$ff if dig
+                      DEX                              ;Leave x=$FF if dig
                       BPL   MON_NXTBIT
 MON_NXTBAS:           LDA   $31
                       BNE   MON_NXTBS2                 ;If mode is zero
@@ -8781,7 +8781,7 @@ MON_ZMODE:            LDY   #$00                       ;Clr mode, old mode
                       STY   $31                        ;  To a-reg
                       RTS                              ; Go to subr via rts
 
-;Define f(chr) <(chr^$b0+$89)
+;Define f(chr) <(chr^$B0+$89)
 
 MON_CHRTBL:           .byte <((MON_CTRL_C ^ $B0) + $89)
                       .byte <((MON_CTRL_Y ^ $B0) + $89)
