@@ -69,7 +69,7 @@ Page 2
 --------------------------------------------------------------------------------
 D000:                     0030 MON_COLOR             =     $30
 D000:                     0032 MON_INVFLG            =     $32
-D000:                     0033 MON_PROMPT            =     $33
+D000:                     0033 MS_Z_0033_CQPRMP            =     $33
 D000:                     003C MON_A1L               =     $3C                        ; Used by tape i/o routines
 D000:                     003D MON_A1H               =     $3D                        ; "
 D000:                     003E MON_A2L               =     $3E                        ; "
@@ -169,7 +169,7 @@ D000:                     00F9 AS_HGR_ROTATION       =     $F9
 D000:                                                                                 ; $FF is also used by the string out routines
 D000:                                                                                 ; --------------------------------
 D000:                     0100 AS_STACK              =     $0100
-D000:                     0200 MS_A_BUFOFS       =     $0200
+D000:                     0200 MS_BUF       =     $0200
 D000:                     03F5 AS_AMPERSAND_VECTOR   =     $03F5                      ; - 3F7   gets "jmp ...."
 D000:                                                                                 ; --------------------------------
 D000:                                                                                 ; I/o & soft switches
@@ -202,36 +202,36 @@ D000:                          ;MON_WAIT            = $FCA8
 D000:                          ;MON_RD2BIT          = $FCFA
 D000:                          ;MS_CQINCH           = $FD0C
 D000:                          ;MON_GETLN           = $FD6A
-D000:                          ;MON_COUT            = $FDED
+D000:                          ;MS_OUTCH            = $FDED
 D000:                          ;MON_INPORT          = $FE8B
 D000:                          ;MON_OUTPORT         = $FE95
-D000:                          ;MON_WRITE           = $FECD
-D000:                          ;MON_READ            = $FEFD
+D000:                          ;MS_CQCOUT           = $FECD
+D000:                          ;MS_CQCSIN            = $FEFD
 D000:                          ;MON_READ2           = $FF02
 D000:                                                                                 ; --------------------------------
 D000:                                                                                 ; --------------------------------
 D000:                                                                                 ; Applesoft tokens
 D000:                                                                                 ; --------------------------------
-D000:                     0081 MS_FORTK          =     $81
-D000:                     0083 MS_DATATK          =     $83
+D000:                     0081 MS_T_FORTK          =     $81
+D000:                     0083 MS_T_DATATK          =     $83
 D000:                     00A1 AS_TOKEN_POP          =     $A1
-D000:                     00AB MS_GOTOTK         =     $AB
-D000:                     00B0 MS_GOSUTK        =     $B0
-D000:                     00B2 MS_REMTK          =     $B2
-D000:                     00BA MS_PRINTK        =     $BA
-D000:                     00C0 MS_TABTK          =     $C0
-D000:                     00C1 MS_TOTK           =     $C1
-D000:                     00C2 MS_FNTK           =     $C2
-D000:                     00C3 MS_SPCTK          =     $C3
-D000:                     00C4 MS_THENTK         =     $C4
+D000:                     00AB MS_T_GOTOTK         =     $AB
+D000:                     00B0 MS_T_GOSUTK        =     $B0
+D000:                     00B2 MS_T_REMTK          =     $B2
+D000:                     00BA MS_T_PRINTK        =     $BA
+D000:                     00C0 MS_T_TABTK          =     $C0
+D000:                     00C1 MS_T_TOTK           =     $C1
+D000:                     00C2 MS_T_FNTK           =     $C2
+D000:                     00C3 MS_T_SPCTK          =     $C3
+D000:                     00C4 MS_T_THENTK         =     $C4
 D000:                     00C5 AS_TOKENDB            =     $C5
-D000:                     00C6 MS_NOTTK          =     $C6
-D000:                     00C7 MS_STEPTK         =     $C7
-D000:                     00C8 MS_PLUSTK         =     $C8
-D000:                     00C9 MS_MINUTK        =     $C9
-D000:                     00CF MS_GREATK      =     $CF
-D000:                     00D0 MS_EQULTK        =     $D0
-D000:                     00D2 MS_ONEFUN          =     $D2
+D000:                     00C6 MS_T_NOTTK          =     $C6
+D000:                     00C7 MS_T_STEPTK         =     $C7
+D000:                     00C8 MS_T_PLUSTK         =     $C8
+D000:                     00C9 MS_T_MINUTK        =     $C9
+D000:                     00CF MS_T_GREATK      =     $CF
+D000:                     00D0 MS_T_EQULTK        =     $D0
+D000:                     00D2 MS_T_ONEFUN          =     $D2
 D000:                     00D7 AS_TOKEN_SCRN         =     $D7
 D000:                     00E8 AS_TOKEN_LEFTSTR      =     $E8
 D000:                                                                                 ; --------------------------------
@@ -912,7 +912,7 @@ D260:                                                                           
 D260:                                                                                 ; Error messages
 D260:                                                                                 ; --------------------------------
 D260:                          MS_ERRTAB:
-D260:                     0000 MS_ERRNF          =     * - MS_ERRTAB
+D260:                     0000 MS_E_ERRNF          =     * - MS_ERRTAB
 D260: 4e                                             .byte "N" & %01111111
 D261: 45                                             .byte "E" & %01111111
 D262: 58                                             .byte "X" & %01111111
@@ -930,7 +930,7 @@ D26D: 46                                             .byte "F" & %01111111
 D26E: 4f                                             .byte "O" & %01111111
 D26F: d2                                             .byte "R" | %10000000
 D270:                          
-D270:                     0010 MS_ERRSN         =     * - MS_ERRTAB
+D270:                     0010 MS_E_ERRSN         =     * - MS_ERRTAB
 D270: 53                                             .byte "S" & %01111111
 D271: 59                                             .byte "Y" & %01111111
 D272: 4e                                             .byte "N" & %01111111
@@ -938,7 +938,7 @@ D273: 54                                             .byte "T" & %01111111
 D274: 41                                             .byte "A" & %01111111
 D275: d8                                             .byte "X" | %10000000
 D276:                          
-D276:                     0016 MS_ERRRG        =     * - MS_ERRTAB
+D276:                     0016 MS_E_ERRRG        =     * - MS_ERRTAB
 D276: 52                                             .byte "R" & %01111111
 D277: 45                                             .byte "E" & %01111111
 D278: 54                                             .byte "T" & %01111111
@@ -963,7 +963,7 @@ D287: 53                                             .byte "S" & %01111111
 D288: 55                                             .byte "U" & %01111111
 D289: c2                                             .byte "B" | %10000000
 D28A:                          
-D28A:                     002A MS_ERROD         =     * - MS_ERRTAB
+D28A:                     002A MS_E_ERROD         =     * - MS_ERRTAB
 D28A: 4f                                             .byte "O" & %01111111
 D28B: 55                                             .byte "U" & %01111111
 D28C: 54                                             .byte "T" & %01111111
@@ -976,7 +976,7 @@ D292: 41                                             .byte "A" & %01111111
 D293: 54                                             .byte "T" & %01111111
 D294: c1                                             .byte "A" | %10000000
 D295:                          
-D295:                     0035 MS_ERRFC         =     * - MS_ERRTAB
+D295:                     0035 MS_E_ERRFC         =     * - MS_ERRTAB
 D295: 49                                             .byte "I" & %01111111
 D296: 4c                                             .byte "L" & %01111111
 D297: 4c                                             .byte "L" & %01111111
@@ -994,7 +994,7 @@ D2A2: 49                                             .byte "I" & %01111111
 D2A3: 54                                             .byte "T" & %01111111
 D2A4: d9                                             .byte "Y" | %10000000
 D2A5:                          
-D2A5:                     0045 MS_ERROV       =     * - MS_ERRTAB
+D2A5:                     0045 MS_E_ERROV       =     * - MS_ERRTAB
 D2A5: 4f                                             .byte "O" & %01111111
 D2A6: 56                                             .byte "V" & %01111111
 D2A7: 45                                             .byte "E" & %01111111
@@ -1004,7 +1004,7 @@ D2AA: 4c                                             .byte "L" & %01111111
 D2AB: 4f                                             .byte "O" & %01111111
 D2AC: d7                                             .byte "W" | %10000000
 D2AD:                          
-D2AD:                     004D MS_ERROM        =     * - MS_ERRTAB
+D2AD:                     004D MS_E_ERROM        =     * - MS_ERRTAB
 D2AD: 4f                                             .byte "O" & %01111111
 D2AE: 55                                             .byte "U" & %01111111
 D2AF: 54                                             .byte "T" & %01111111
@@ -1022,7 +1022,7 @@ D2B7: 4f                                             .byte "O" & %01111111
 D2B8: 52                                             .byte "R" & %01111111
 D2B9: d9                                             .byte "Y" | %10000000
 D2BA:                          
-D2BA:                     005A MS_ERRUS      =     * - MS_ERRTAB
+D2BA:                     005A MS_E_ERRUS      =     * - MS_ERRTAB
 D2BA: 55                                             .byte "U" & %01111111
 D2BB: 4e                                             .byte "N" & %01111111
 D2BC: 44                                             .byte "D" & %01111111
@@ -1042,7 +1042,7 @@ D2C8: 45                                             .byte "E" & %01111111
 D2C9: 4e                                             .byte "N" & %01111111
 D2CA: d4                                             .byte "T" | %10000000
 D2CB:                          
-D2CB:                     006B MS_ERRBS        =     * - MS_ERRTAB
+D2CB:                     006B MS_E_ERRBS        =     * - MS_ERRTAB
 D2CB: 42                                             .byte "B" & %01111111
 D2CC: 41                                             .byte "A" & %01111111
 D2CD: 44                                             .byte "D" & %01111111
@@ -1057,7 +1057,7 @@ D2D5: 49                                             .byte "I" & %01111111
 D2D6: 50                                             .byte "P" & %01111111
 D2D7: d4                                             .byte "T" | %10000000
 D2D8:                          
-D2D8:                     0078 MS_ERRDD         =     * - MS_ERRTAB
+D2D8:                     0078 MS_E_ERRDD         =     * - MS_ERRTAB
 D2D8: 52                                             .byte "R" & %01111111
 D2D9: 45                                             .byte "E" & %01111111
 D2DA: 44                                             .byte "D" & %01111111
@@ -1076,7 +1076,7 @@ D2E4: d9                                             .byte "Y" | %10000000
 Page 18
 --------------------------------------------------------------------------------
 D2E5:                          
-D2E5:                     0085 MS_ERRDV0        =     * - MS_ERRTAB
+D2E5:                     0085 MS_E_ERRDV0        =     * - MS_ERRTAB
 D2E5: 44                                             .byte "D" & %01111111
 D2E6: 49                                             .byte "I" & %01111111
 D2E7: 56                                             .byte "V" & %01111111
@@ -1094,7 +1094,7 @@ D2F2: 45                                             .byte "E" & %01111111
 D2F3: 52                                             .byte "R" & %01111111
 D2F4: cf                                             .byte "O" | %10000000
 D2F5:                          
-D2F5:                     0095 MS_ERRID         =     * - MS_ERRTAB
+D2F5:                     0095 MS_E_ERRID         =     * - MS_ERRTAB
 D2F5: 49                                             .byte "I" & %01111111
 D2F6: 4c                                             .byte "L" & %01111111
 D2F7: 4c                                             .byte "L" & %01111111
@@ -1110,7 +1110,7 @@ D300: 45                                             .byte "E" & %01111111
 D301: 43                                             .byte "C" & %01111111
 D302: d4                                             .byte "T" | %10000000
 D303:                          
-D303:                     00A3 MS_ERRTM        =     * - MS_ERRTAB
+D303:                     00A3 MS_E_ERRTM        =     * - MS_ERRTAB
 D303: 54                                             .byte "T" & %01111111
 D304: 59                                             .byte "Y" & %01111111
 D305: 50                                             .byte "P" & %01111111
@@ -1125,7 +1125,7 @@ D30D: 54                                             .byte "T" & %01111111
 D30E: 43                                             .byte "C" & %01111111
 D30F: c8                                             .byte "H" | %10000000
 D310:                          
-D310:                     00B0 MS_ERRLS        =     * - MS_ERRTAB
+D310:                     00B0 MS_E_ERRLS        =     * - MS_ERRTAB
 D310: 53                                             .byte "S" & %01111111
 D311: 54                                             .byte "T" & %01111111
 D312: 52                                             .byte "R" & %01111111
@@ -1145,7 +1145,7 @@ D31C: 4f                                             .byte "O" & %01111111
 D31D: 4e                                             .byte "N" & %01111111
 D31E: c7                                             .byte "G" | %10000000
 D31F:                          
-D31F:                     00BF MS_ERRST         =     * - MS_ERRTAB
+D31F:                     00BF MS_E_ERRST         =     * - MS_ERRTAB
 D31F: 46                                             .byte "F" & %01111111
 D320: 4f                                             .byte "O" & %01111111
 D321: 52                                             .byte "R" & %01111111
@@ -1166,7 +1166,7 @@ D32F: 4c                                             .byte "L" & %01111111
 D330: 45                                             .byte "E" & %01111111
 D331: d8                                             .byte "X" | %10000000
 D332:                          
-D332:                     00D2 MS_ERRCN       =     * - MS_ERRTAB
+D332:                     00D2 MS_E_ERRCN       =     * - MS_ERRTAB
 D332: 43                                             .byte "C" & %01111111
 D333: 41                                             .byte "A" & %01111111
 D334: 4e                                             .byte "N" & %01111111
@@ -1183,7 +1183,7 @@ D33D: 4e                                             .byte "N" & %01111111
 D33E: 55                                             .byte "U" & %01111111
 D33F: c5                                             .byte "E" | %10000000
 D340:                          
-D340:                     00E0 MS_ERRUF      =     * - MS_ERRTAB
+D340:                     00E0 MS_E_ERRUF      =     * - MS_ERRTAB
 D340: 55                                             .byte "U" & %01111111
 D341: 4e                                             .byte "N" & %01111111
 D342: 44                                             .byte "D" & %01111111
@@ -1252,7 +1252,7 @@ D367: e8                                             INX
 D368: e8                                             INX
 D369: e8                                             INX
 D36A: bd 01 01                 MS_FFLOOP:      LDA   AS_STACK + 1,X             ; "For" frame here?
-D36D: c9 81                                          CMP   #MS_FORTK
+D36D: c9 81                                          CMP   #MS_T_FORTK
 D36F: d0 92               D392                       BNE   AS_L_GTFORPNT_4            ; No
 D371: a5 86                                          LDA   MS_Z_0085_FORPNT + 1              ; Yes -- "next" with no variable?
 D373: d0 7f               D37F                       BNE   MS_CMPFOR            ; No, variable specified
@@ -1368,7 +1368,7 @@ D40B: c5 6f                                          CMP   MS_Z_006F_FRETOP     
 D40D: b0 10               D410                       BCS   AS_MEMERR                  ; No, mem full err
 D40F: 60                       AS_L_REASON_4:        RTS                              ; Yes, return
 D410:                                                                                 ; --------------------------------
-D410: a2 4d                    AS_MEMERR:            LDX   #MS_ERROM
+D410: a2 4d                    AS_MEMERR:            LDX   #MS_E_ERROM
 D412:                                                                                 ; --------------------------------
 D412:                                                                                 ; Handle an error
 D412:                          
@@ -1482,7 +1482,7 @@ D4B2: ca                                             DEX
 D4B3: d0 a7               D4A7                       BNE   AS_L_NUMBERED_LINE_2
 D4B5:                                                                                 ; --------------------------------
 D4B5:                          AS_PUT_NEW_LINE:
-D4B5: ad 00 02                                       LDA   MS_A_BUFOFS            ; Any characters after line #?
+D4B5: ad 00 02                                       LDA   MS_BUF            ; Any characters after line #?
 D4B8: f0 f2               D4F2                       BEQ   AS_FIX_LINKS               ; No, so nothing to insert.
 D4BA: a5 73                                          LDA   MS_Z_0073_MEMSIZ                  ; Yes, so make room and insert line
 D4BC: a4 74                                          LDY   MS_Z_0073_MEMSIZ + 1              ; Wipe string area clean
@@ -1500,15 +1500,15 @@ D4D1: 84 95                    AS_L_PUT_NEW_LINE_1:  STY   MS_Z_0094_HIGHDS + 1
 D4D3: 20 93 d3                                       JSR   AS_BLTU                    ; Make room for the line
 D4D6: a5 50                                          LDA   MS_Z_0050_LINNUM                  ; Put line number in line image
 D4D8: a4 51                                          LDY   MS_Z_0050_LINNUM + 1
-D4DA: 8d fe 01                                       STA   MS_A_BUFOFS - 2
-D4DD: 8c ff 01                                       STY   MS_A_BUFOFS - 1
+D4DA: 8d fe 01                                       STA   MS_BUF - 2
+D4DD: 8c ff 01                                       STY   MS_BUF - 1
 D4E0: a5 6d                                          LDA   MS_Z_006D_STREND
 D4E2: a4 6e                                          LDY   MS_Z_006D_STREND + 1
 D4E4: 85 69                                          STA   MS_Z_0069_VARTAB
 D4E6: 84 6a                                          STY   MS_Z_0069_VARTAB + 1
 D4E8: a4 0f                                          LDY   AS_EOL_PNTR
 D4EA:                                                                                 ; ---Copy line into program-------
-D4EA: b9 fb 01                 AS_L_PUT_NEW_LINE_2:  LDA   MS_A_BUFOFS - 5,Y
+D4EA: b9 fb 01                 AS_L_PUT_NEW_LINE_2:  LDA   MS_BUF - 5,Y
 D4ED: 88                                             DEY
 D4EE: 91 9b                                          STA   (MS_Z_009B_LOWTR),Y
 D4F0: d0 ea               D4EA                       BNE   AS_L_PUT_NEW_LINE_2
@@ -1556,23 +1556,23 @@ D52C:                                                                           
 D52C:                                                                                 ; Read a line, and strip off sign bits
 D52C:                                                                                 ; --------------------------------
 D52C: a2 80                    AS_INLIN:             LDX   #$80                       ; Null prompt
-D52E: 86 33                    AS_INLIN2:            STX   MON_PROMPT
+D52E: 86 33                    AS_INLIN2:            STX   MS_Z_0033_CQPRMP
 D530: 20 6a fd                                       JSR   MON_GETLN
 D533: e0 ef                                          CPX   #239                       ; Maximum line length
 D535: 90 39               D539                       BCC   AS_L_INLIN2_1
 D537: a2 ef                                          LDX   #239                       ; Truncate at 239 chars
 D539: a9 00                    AS_L_INLIN2_1:        LDA   #0                         ; Mark end of line with $00 byte
-D53B: 9d 00 02                                       STA   MS_A_BUFOFS,X
+D53B: 9d 00 02                                       STA   MS_BUF,X
 D53E: 8a                                             TXA
 D53F: f0 4c               D54C                       BEQ   AS_L_INLIN2_3              ; Null input line
-D541: bd ff 01                 AS_L_INLIN2_2:        LDA   MS_A_BUFOFS - 1,X      ; Drop sign bits
+D541: bd ff 01                 AS_L_INLIN2_2:        LDA   MS_BUF - 1,X      ; Drop sign bits
 D544: 29 7f                                          AND   #$7F
-D546: 9d ff 01                                       STA   MS_A_BUFOFS - 1,X
+D546: 9d ff 01                                       STA   MS_BUF - 1,X
 D549: ca                                             DEX
 D54A: d0 41               D541                       BNE   AS_L_INLIN2_2
 D54C: a9 00                    AS_L_INLIN2_3:        LDA   #0                         ; (Y,x) points at buffer-1
-D54E: a2 ff                                          LDX   #<(MS_A_BUFOFS - 1)
-D550: a0 01                                          LDY   #>(MS_A_BUFOFS - 1)
+D54E: a2 ff                                          LDX   #<(MS_BUF - 1)
+D550: a0 01                                          LDY   #>(MS_BUF - 1)
 D552: 60                                             RTS
 D553:                                                                                 ; --------------------------------
 D553: 20 0c fd                 AS_INCHR:             JSR   MS_CQINCH                  ; *** Ought to be "bit $C010" ***
@@ -1597,7 +1597,7 @@ D566: 20 65 d6                                       JSR   AS_SETPTRS           
 D569: 4c d2 d7                                       JMP   AS_NEWSTT                  ; Start running
 D56C:                                                                                 ; --------------------------------
 D56C: e8                       AS_PARSE:             INX                              ; Next input character
-D56D: bd 00 02                 AS_L_PARSE_1:         LDA   MS_A_BUFOFS,X
+D56D: bd 00 02                 AS_L_PARSE_1:         LDA   MS_BUF,X
 D570: 24 13                                          BIT   AS_DATAFLG                 ; In a "data" statement?
 D572: 70 78               D578                       BVS   AS_L_PARSE_2               ; Yes (dataflg = $49)
 D574: c9 20                                          CMP   #" " & %01111111           ; Ignore blanks
@@ -1608,7 +1608,7 @@ D57C: f0 f2               D5F2                       BEQ   AS_L_PARSE_13
 D57E: 70 cd               D5CD                       BVS   AS_L_PARSE_9               ; Branch if in "data" statement
 D580: c9 3f                                          CMP   #"?" & %01111111           ; Shorthand for "print"?
 D582: d0 88               D588                       BNE   AS_L_PARSE_3               ; No
-D584: a9 ba                                          LDA   #MS_PRINTK            ; Yes, replace with "print" token
+D584: a9 ba                                          LDA   #MS_T_PRINTK            ; Yes, replace with "print" token
 D586: d0 cd               D5CD                       BNE   AS_L_PARSE_9               ; ...Always
 D588: c9 30                    AS_L_PARSE_3:         CMP   #"0" & %01111111           ; Is it a digit, colon, or semi-colon?
 D58A: 90 90               D590                       BCC   AS_L_PARSE_4               ; No, punctuation !"#$%&'()*+,-./
@@ -1632,7 +1632,7 @@ D5A2: c8                       AS_L_PARSE_5:         INY                        
 D5A3: d0 a7               D5A7                       BNE   AS_L_PARSE_6               ; Y=y+1 is enough
 D5A5: e6 9e                                          INC   MS_Z_009D_FAC + 1                 ; Also need to bump the page
 D5A7: e8                       AS_L_PARSE_6:         INX                              ; Advance pointer to input line
-D5A8: bd 00 02                 AS_L_PARSE_7:         LDA   MS_A_BUFOFS,X          ; Next char from input line
+D5A8: bd 00 02                 AS_L_PARSE_7:         LDA   MS_BUF,X          ; Next char from input line
 D5AB: c9 20                                          CMP   #" " & %01111111           ; This char a blank?
 D5AD: f0 a7               D5A7                       BEQ   AS_L_PARSE_6               ; Yes, ignore all blanks
 D5AF: 38                                             SEC                              ; No, compare to char in table
@@ -1646,7 +1646,7 @@ D5B6: d0 f9               D5F9                       BNE   AS_L_PARSE_14        
 D5B8: 05 0f                                          ORA   MS_Z_000F_COUNT                ; Yes, end of token; get token #
 D5BA: c9 c5                                          CMP   #AS_TOKENDB                ; Did we match "at"?
 D5BC: d0 cb               D5CB                       BNE   AS_L_PARSE_8               ; No, so no ambiguity
-D5BE: bd 01 02                                       LDA   MS_A_BUFOFS + 1,X      ; "At" could be "atn" or "a to"
+D5BE: bd 01 02                                       LDA   MS_BUF + 1,X      ; "At" could be "atn" or "a to"
 D5C1: c9 4e                                          CMP   #"N" & %01111111           ; "Atn" has precedence over "at"
 D5C3: f0 f9               D5F9                       BEQ   AS_L_PARSE_14              ; It is "atn", find it the hard way
 D5C5: c9 4f                                          CMP   #"O" & %01111111           ; "To" has precedence over "at"
@@ -1658,29 +1658,29 @@ D5CB:                                                                           
 D5CB: a4 ad                    AS_L_PARSE_8:         LDY   MS_Z_00AD_STRNG2                  ; Get index to output line in y-reg
 D5CD: e8                       AS_L_PARSE_9:         INX                              ; Advance input index
 D5CE: c8                                             INY                              ; Advance output index
-D5CF: 99 fb 01                                       STA   MS_A_BUFOFS - 5,Y      ; Store char or token
-D5D2: b9 fb 01                                       LDA   MS_A_BUFOFS - 5,Y      ; Test for eol or eos
+D5CF: 99 fb 01                                       STA   MS_BUF - 5,Y      ; Store char or token
+D5D2: b9 fb 01                                       LDA   MS_BUF - 5,Y      ; Test for eol or eos
 D5D5: f0 10               D610                       BEQ   AS_L_PARSE_17              ; End of line
 D5D7: 38                                             SEC
 D5D8: e9 3a                                          SBC   #":" & %01111111           ; End of statement?
 D5DA: f0 e0               D5E0                       BEQ   AS_L_PARSE_10              ; Yes, clear dataflg
-D5DC: c9 49                                          CMP   #MS_DATATK + 128 - $BA  ; "Data" token?
+D5DC: c9 49                                          CMP   #MS_T_DATATK + 128 - $BA  ; "Data" token?
 D5DE: d0 e2               D5E2                       BNE   AS_L_PARSE_11              ; No, leave dataflg alone
 D5E0: 85 13                    AS_L_PARSE_10:        STA   AS_DATAFLG                 ; Dataflg = 0 or $83-$3A = $49
 D5E2: 38                       AS_L_PARSE_11:        SEC                              ; Is it a "rem" token?
-D5E3: e9 78                                          SBC   #MS_REMTK + 128 - $BA
+D5E3: e9 78                                          SBC   #MS_T_REMTK + 128 - $BA
 D5E5: d0 6d               D56D                       BNE   AS_L_PARSE_1               ; No, continue parsing line
 D5E7: 85 0e                                          STA   MS_Z_000E_ENDCHR                  ; Yes, clear literal flag
 D5E9:                                                                                 ; --------------------------------
 D5E9:                                                                                 ; Handle literal (between quotes) or remark,
 D5E9:                                                                                 ; By copying chars up to endchr.
 D5E9:                                                                                 ; --------------------------------
-D5E9: bd 00 02                 AS_L_PARSE_12:        LDA   MS_A_BUFOFS,X
+D5E9: bd 00 02                 AS_L_PARSE_12:        LDA   MS_BUF,X
 D5EC: f0 cd               D5CD                       BEQ   AS_L_PARSE_9               ; End of line
 D5EE: c5 0e                                          CMP   MS_Z_000E_ENDCHR
 D5F0: f0 cd               D5CD                       BEQ   AS_L_PARSE_9               ; Found endchr
 D5F2: c8                       AS_L_PARSE_13:        INY                              ; Next output char
-D5F3: 99 fb 01                                       STA   MS_A_BUFOFS - 5,Y
+D5F3: 99 fb 01                                       STA   MS_BUF - 5,Y
 D5F6: e8                                             INX                              ; Next input char
 D5F7: d0 e9               D5E9                       BNE   AS_L_PARSE_12              ; ...Always
 D5F9:                                                                                 ; --------------------------------
@@ -1696,12 +1696,12 @@ D604: 0a                       AS_L_PARSE_16:        ASL                        
 D605: 90 fd               D5FD                       BCC   AS_L_PARSE_15              ; No, more in this name
 D607: b1 9d                                          LDA   (MS_Z_009D_FAC),Y                 ; Yes, at next name.  end of table?
 D609: d0 a8               D5A8                       BNE   AS_L_PARSE_7               ; No, not end of table
-D60B: bd 00 02                                       LDA   MS_A_BUFOFS,X          ; Yes, so not a keyword
+D60B: bd 00 02                                       LDA   MS_BUF,X          ; Yes, so not a keyword
 D60E: 10 cb               D5CB                       BPL   AS_L_PARSE_8               ; ...Always, copy char as is
 D610:                                                                                 ; ---End of line------------------
-D610: 99 fd 01                 AS_L_PARSE_17:        STA   MS_A_BUFOFS - 3,Y      ; Store another 00 on end
+D610: 99 fd 01                 AS_L_PARSE_17:        STA   MS_BUF - 3,Y      ; Store another 00 on end
 D613: c6 b9                                          DEC   MS_Z_00B8_TXTPTR + 1              ; Set txtptr = input.buffer-1
-D615: a9 ff                                          LDA   #<(MS_A_BUFOFS - 1)
+D615: a9 ff                                          LDA   #<(MS_BUF - 1)
 
 Page 28
 --------------------------------------------------------------------------------
@@ -1815,7 +1815,7 @@ D6A5:                                                                           
 D6A5:                                                                                 ; --------------------------------
 D6A5: 90 b1               D6B1 MS_LIST:              BCC   AS_L_LIST_1                ; No  line # specified
 D6A7: f0 b1               D6B1                       BEQ   AS_L_LIST_1                ; ---Ditto---
-D6A9: c9 c9                                          CMP   #MS_MINUTK            ; If dash or comma, start at line 0
+D6A9: c9 c9                                          CMP   #MS_T_MINUTK            ; If dash or comma, start at line 0
 D6AB: f0 b1               D6B1                       BEQ   AS_L_LIST_1                ; Is is a dash
 D6AD: c9 2c                                          CMP   #"," & %01111111           ; Comma?
 D6AF: d0 96               D696                       BNE   AS_RTS_2                   ; No, error
@@ -1823,7 +1823,7 @@ D6B1: 20 0c da                 AS_L_LIST_1:          JSR   AS_LINGET            
 D6B4: 20 1a d6                                       JSR   AS_FNDLIN                  ; Point lowtr to 1st line
 D6B7: 20 b7 00                                       JSR   MS_Z_00B7_CHRGOT                  ; Range specified?
 D6BA: f0 cc               D6CC                       BEQ   AS_L_LIST_3                ; No
-D6BC: c9 c9                                          CMP   #MS_MINUTK
+D6BC: c9 c9                                          CMP   #MS_T_MINUTK
 D6BE: f0 c4               D6C4                       BEQ   AS_L_LIST_2
 D6C0: c9 2c                                          CMP   #"," & %01111111
 D6C2: d0 48               D648                       BNE   AS_RTS_1
@@ -1957,7 +1957,7 @@ D790: 48                                             PHA
 
 Page 32
 --------------------------------------------------------------------------------
-D791: a9 c1                                          LDA   #MS_TOTK
+D791: a9 c1                                          LDA   #MS_T_TOTK
 D793: 20 c0 de                                       JSR   AS_SYNCHR                  ; Require "to"
 D796: 20 6a dd                                       JSR   AS_CHKNUM                  ; <Var> = <exp> must be numeric
 D799: 20 67 dd                                       JSR   AS_FRMNUM                  ; Get final value, must be numeric
@@ -1977,7 +1977,7 @@ D7AF: a9 13                    AS_STEP:              LDA   #<AS_CON_ONE         
 D7B1: a0 e9                                          LDY   #>AS_CON_ONE
 D7B3: 20 f9 ea                                       JSR   AS_LOAD_FAC_FROM_YA
 D7B6: 20 b7 00                                       JSR   MS_Z_00B7_CHRGOT
-D7B9: c9 c7                                          CMP   #MS_STEPTK
+D7B9: c9 c7                                          CMP   #MS_T_STEPTK
 D7BB: d0 c3               D7C3                       BNE   AS_L_STEP_1                ; Use default value of 1.0
 D7BD: 20 b1 00                                       JSR   MS_Z_00B1_CHRGET                  ; Step specified, get it
 D7C0: 20 67 dd                                       JSR   AS_FRMNUM
@@ -1987,7 +1987,7 @@ D7C9: a5 86                                          LDA   MS_Z_0085_FORPNT + 1
 D7CB: 48                                             PHA
 D7CC: a5 85                                          LDA   MS_Z_0085_FORPNT
 D7CE: 48                                             PHA
-D7CF: a9 81                                          LDA   #MS_FORTK
+D7CF: a9 81                                          LDA   #MS_T_FORTK
 D7D1: 48                                             PHA
 D7D2:                                                                                 ; --------------------------------
 D7D2:                                                                                 ; Perform next statement
@@ -2129,7 +2129,7 @@ D896:                                                                           
 D896:                                                                                 ; "Cont" command
 D896:                                                                                 ; --------------------------------
 D896: d0 af               D8AF MS_CONT:              BNE   AS_RTS_4                   ; If not end of statement, do nothing
-D898: a2 d2                                          LDX   #MS_ERRCN
+D898: a2 d2                                          LDX   #MS_E_ERRCN
 D89A: a4 7a                                          LDY   MS_Z_0079_OLDTXT + 1             ; Meaningful re-entry?
 D89C: d0 a1               D8A1                       BNE   AS_L_CONT_1                ; Yes
 D89E: 4c 12 d4                                       JMP   MS_ERROR                   ; No
@@ -2156,15 +2156,15 @@ D8B7: a5 b0                                          LDA   AS_PRGEND + 1
 D8B9: e5 68                                          SBC   MS_Z_0067_TXTTAB + 1
 D8BB: 85 51                                          STA   MS_Z_0050_LINNUM + 1
 D8BD: 20 f0 d8                                       JSR   AS_VARTIO                  ; Set up to write 3 byte header
-D8C0: 20 cd fe                                       JSR   MON_WRITE                  ; Write 'em
+D8C0: 20 cd fe                                       JSR   MS_CQCOUT                  ; Write 'em
 D8C3: 20 01 d9                                       JSR   AS_PROGIO                  ; Set up to write the program
-D8C6: 4c cd fe                                       JMP   MON_WRITE                  ; Write it
+D8C6: 4c cd fe                                       JMP   MS_CQCOUT                  ; Write it
 D8C9:                                                                                 ; --------------------------------
 D8C9:                                                                                 ; "Load" command
 D8C9:                                                                                 ; Reads a program from cassette tape
 D8C9:                                                                                 ; --------------------------------
 D8C9: 20 f0 d8                 MS_LOAD:              JSR   AS_VARTIO                  ; Set up to read 3 byte header
-D8CC: 20 fd fe                                       JSR   MON_READ                   ; Read length, lock byte
+D8CC: 20 fd fe                                       JSR   MS_CQCSIN                   ; Read length, lock byte
 D8CF: 18                                             CLC
 D8D0: a5 67                                          LDA   MS_Z_0067_TXTTAB                  ; Compute end address
 D8D2: 65 50                                          ADC   MS_Z_0050_LINNUM
@@ -2175,7 +2175,7 @@ D8DA: 85 6a                                          STA   MS_Z_0069_VARTAB + 1
 D8DC: a5 52                                          LDA   MS_Z_0052_TEMPPT                  ; Lock byte
 D8DE: 85 d6                                          STA   AS_LOCK
 D8E0: 20 01 d9                                       JSR   AS_PROGIO                  ; Set up to read program
-D8E3: 20 fd fe                                       JSR   MON_READ                   ; Read it
+D8E3: 20 fd fe                                       JSR   MS_CQCSIN                   ; Read it
 D8E6: 24 d6                                          BIT   AS_LOCK                    ; If locked, start running now
 D8E8: 10 ed               D8ED                       BPL   AS_L_LOAD_1                ; Not locked
 D8EA: 4c 65 d6                                       JMP   AS_SETPTRS                 ; Locked, start running
@@ -2234,7 +2234,7 @@ D92C: a5 76                                          LDA   MS_Z_0075_CURLIN + 1
 D92E: 48                                             PHA
 D92F: a5 75                                          LDA   MS_Z_0075_CURLIN
 D931: 48                                             PHA
-D932: a9 b0                                          LDA   #MS_GOSUTK
+D932: a9 b0                                          LDA   #MS_T_GOSUTK
 D934: 48                                             PHA
 D935:                          AS_GO_TO_LINE:
 D935: 20 b7 00                                       JSR   MS_Z_00B7_CHRGOT
@@ -2279,11 +2279,11 @@ D96F: 85 85                                          STA   MS_Z_0085_FORPNT     
 D971:                                                                                 ; <<< See "all about applesoft", pages 100,101 >>>
 D971: 20 65 d3                                       JSR   MS_FNDFOR                ; To cancel for/next in sub
 D974: 9a                                             TXS
-D975: c9 b0                                          CMP   #MS_GOSUTK            ; Last gosub found?
+D975: c9 b0                                          CMP   #MS_T_GOSUTK            ; Last gosub found?
 D977: f0 84               D984                       BEQ   AS_RETURN
-D979: a2 16                                          LDX   #MS_ERRRG
+D979: a2 16                                          LDX   #MS_E_ERRRG
 D97B: 2c                                             .byte $2C                        ; Fake
-D97C: a2 5a                    AS_UNDERR:            LDX   #MS_ERRUS
+D97C: a2 5a                    AS_UNDERR:            LDX   #MS_E_ERRUS
 D97E: 4c 12 d4                                       JMP   MS_ERROR
 D981:                                                                                 ; --------------------------------
 D981: 4c c9 de                 AS_SYNERR_2:          JMP   AS_SYNERR
@@ -2350,9 +2350,9 @@ D9C9:                                                                           
 D9C9:                                                                                 ; --------------------------------
 D9C9: 20 7b dd                 MS_IF:                JSR   AS_FRMEVL
 D9CC: 20 b7 00                                       JSR   MS_Z_00B7_CHRGOT
-D9CF: c9 ab                                          CMP   #MS_GOTOTK
+D9CF: c9 ab                                          CMP   #MS_T_GOTOTK
 D9D1: f0 d8               D9D8                       BEQ   AS_L_IF_1
-D9D3: a9 c4                                          LDA   #MS_THENTK
+D9D3: a9 c4                                          LDA   #MS_T_THENTK
 D9D5: 20 c0 de                                       JSR   AS_SYNCHR
 D9D8: a5 9d                    AS_L_IF_1:            LDA   MS_Z_009D_FAC                     ; Condition true or false?
 D9DA: d0 e1               D9E1                       BNE   AS_IF_TRUE                 ; Branch if true
@@ -2375,9 +2375,9 @@ D9EC:                                                                           
 D9EC:                                                                                 ; --------------------------------
 D9EC: 20 f8 e6                 MS_ONGOTO:            JSR   AS_GETBYT                  ; Evaluate <exp>, as byte in fac+4
 D9EF: 48                                             PHA                              ; Save next char on stack
-D9F0: c9 b0                                          CMP   #MS_GOSUTK
+D9F0: c9 b0                                          CMP   #MS_T_GOSUTK
 D9F2: f0 f8               D9F8                       BEQ   AS_ON_2
-D9F4: c9 ab                    AS_ON_1:              CMP   #MS_GOTOTK
+D9F4: c9 ab                    AS_ON_1:              CMP   #MS_T_GOTOTK
 D9F6: d0 81               D981                       BNE   AS_SYNERR_2
 D9F8: c6 a1                    AS_ON_2:              DEC   MS_Z_009D_FAC + 4                 ; Counted to right one yet?
 D9FA: d0 00               DA00                       BNE   AS_L_ON_2_3                ; No, keep looking
@@ -2446,7 +2446,7 @@ DA46:                                                                           
 DA46: 20 e3 df                 MS_LET:               JSR   AS_PTRGET                  ; Get <var>
 DA49: 85 85                                          STA   MS_Z_0085_FORPNT
 DA4B: 84 86                                          STY   MS_Z_0085_FORPNT + 1
-DA4D: a9 d0                                          LDA   #MS_EQULTK
+DA4D: a9 d0                                          LDA   #MS_T_EQULTK
 DA4F: 20 c0 de                                       JSR   AS_SYNCHR
 DA52: a5 12                                          LDA   MS_Z_0011_VALTYP + 1              ; Save variable type
 DA54: 48                                             PHA
@@ -2541,9 +2541,9 @@ DAD5:                                                                           
 DAD5: f0 fb               DAFB MS_PRINT:             BEQ   AS_CRDO                    ; No more list, print <return>
 DAD7:                                                                                 ; --------------------------------
 DAD7: f0 02               DB02 AS_PRINT2:            BEQ   AS_RTS_8                   ; No more list, don't print <return>
-DAD9: c9 c0                                          CMP   #MS_TABTK
+DAD9: c9 c0                                          CMP   #MS_T_TABTK
 DADB: f0 16               DB16                       BEQ   AS_PR_TAB_OR_SPC           ; C=1 for tab(
-DADD: c9 c3                                          CMP   #MS_SPCTK
+DADD: c9 c3                                          CMP   #MS_T_SPCTK
 DADF: 18                                             CLC
 DAE0: f0 16               DB16                       BEQ   AS_PR_TAB_OR_SPC           ; C=0 for spc(
 DAE2: c9 2c                                          CMP   #"," & %01111111
@@ -2638,7 +2638,7 @@ DB5C: 09 80                    AS_OUTDO:             ORA   #$80                 
 DB5E: c9 a0                                          CMP   #$A0                       ; Control chr?
 DB60: 90 64               DB64                       BCC   AS_L_OUTDO_1               ; Skip if so
 DB62: 05 f3                                          ORA   AS_FLASH_BIT               ; =$40 For flash, else $00
-DB64: 20 ed fd                 AS_L_OUTDO_1:         JSR   MON_COUT                   ; "And"s with $3F (inverse), $7F (flash)
+DB64: 20 ed fd                 AS_L_OUTDO_1:         JSR   MS_OUTCH                   ; "And"s with $3F (inverse), $7F (flash)
 DB67: 29 7f                                          AND   #$7F
 DB69: 48                                             PHA
 DB6A: a5 f1                                          LDA   AS_SPEEDZ                  ; Complement of speed #
@@ -2687,10 +2687,10 @@ DBA0:                                                                           
 DBA0:                                                                                 ; "Get" statement
 DBA0:                                                                                 ; --------------------------------
 DBA0: 20 06 e3                 MS_GET:               JSR   AS_ERRDIR                  ; Illegal if in direct mode
-DBA3: a2 01                                          LDX   #<(MS_A_BUFOFS + 1)    ; Simulate input
-DBA5: a0 02                                          LDY   #>(MS_A_BUFOFS + 1)
+DBA3: a2 01                                          LDX   #<(MS_BUF + 1)    ; Simulate input
+DBA5: a0 02                                          LDY   #>(MS_BUF + 1)
 DBA7: a9 00                                          LDA   #0
-DBA9: 8d 01 02                                       STA   MS_A_BUFOFS + 1
+DBA9: 8d 01 02                                       STA   MS_BUF + 1
 DBAC: a9 40                                          LDA   #$40                       ; Set up inputflg
 DBAE: 20 eb db                                       JSR   AS_PROCESS_INPUT_LIST      ; <<< Can save 1 byte here>>>
 DBB1: 60                                             RTS                              ; <<<By "jmp process.input.list">>>
@@ -2707,9 +2707,9 @@ DBC1: 4c c7 db                                       JMP   AS_L_INPUT_2
 DBC4: 20 5a db                 AS_L_INPUT_1:         JSR   AS_OUTQUES                 ; No string, print "?"
 DBC7: 20 06 e3                 AS_L_INPUT_2:         JSR   AS_ERRDIR                  ; Illegal if in direct mode
 DBCA: a9 2c                                          LDA   #"," & %01111111           ; Prime the buffer
-DBCC: 8d ff 01                                       STA   MS_A_BUFOFS - 1
+DBCC: 8d ff 01                                       STA   MS_BUF - 1
 DBCF: 20 2c d5                                       JSR   AS_INLIN
-DBD2: ad 00 02                                       LDA   MS_A_BUFOFS
+DBD2: ad 00 02                                       LDA   MS_BUF
 
 Page 44
 --------------------------------------------------------------------------------
@@ -2757,9 +2757,9 @@ DC0D: 24 15                                          BIT   MS_Z_0015_INPFLG     
 DC0F: 50 1f               DC1F                       BVC   AS_L_PROCESS_INPUT_ITEM_1  ; No
 DC11: 20 0c fd                                       JSR   MS_CQINCH                  ; Yes, get char
 DC14: 29 7f                                          AND   #$7F
-DC16: 8d 00 02                                       STA   MS_A_BUFOFS
-DC19: a2 ff                                          LDX   #<(MS_A_BUFOFS - 1)
-DC1B: a0 01                                          LDY   #>(MS_A_BUFOFS - 1)
+DC16: 8d 00 02                                       STA   MS_BUF
+DC19: a2 ff                                          LDX   #<(MS_BUF - 1)
+DC1B: a0 01                                          LDY   #>(MS_BUF - 1)
 DC1D: d0 27               DC27                       BNE   AS_L_PROCESS_INPUT_ITEM_2  ; ...Always
 DC1F:                                                                                 ; --------------------------------
 DC1F: 30 a0               DCA0 AS_L_PROCESS_INPUT_ITEM_1: BMI   AS_FINDATA                 ; Doing a "read"
@@ -2803,7 +2803,7 @@ DC5D: 20 7b da                                       JSR   AS_PUTSTR            
 DC60: 4c 72 dc                                       JMP   AS_INPUT_MORE
 DC63:                                                                                 ; --------------------------------
 DC63: 48                       AS_L_INSTART_5:       PHA
-DC64: ad 00 02                                       LDA   MS_A_BUFOFS            ; Anything in buffer?
+DC64: ad 00 02                                       LDA   MS_BUF            ; Anything in buffer?
 DC67: f0 99               DC99                       BEQ   AS_INPFIN                  ; No, see if read or input
 DC69:                                                                                 ; --------------------------------
 DC69:                          AS_INPUTDWTA:
@@ -2843,7 +2843,7 @@ DCA0: 20 a3 d9                                       JSR   AS_DATAN             
 DCA3: c8                                             INY                              ; To first char of next line
 DCA4: aa                                             TAX                              ; Which:  eol or colon?
 DCA5: d0 b9               DCB9                       BNE   AS_L_FINDATA_1             ; Colon
-DCA7: a2 2a                                          LDX   #MS_ERROD             ; Eol: might be out of data
+DCA7: a2 2a                                          LDX   #MS_E_ERROD             ; Eol: might be out of data
 DCA9: c8                                             INY                              ; Check hi-byte of forward pntr
 DCAA: b1 b8                                          LDA   (MS_Z_00B8_TXTPTR),Y              ; End of program?
 DCAC: f0 0d               DD0D                       BEQ   AS_GERR                    ; Yes, we are out of data
@@ -2857,7 +2857,7 @@ DCB7: 85 7c                                          STA   MS_Z_007B_DATLIN + 1
 DCB9: b1 b8                    AS_L_FINDATA_1:       LDA   (MS_Z_00B8_TXTPTR),Y              ; Get 1st token of statement
 DCBB: aa                                             TAX                              ; Save token in x-reg
 DCBC: 20 98 d9                                       JSR   AS_ADDON                   ; Add (y) to txtptr
-DCBF: e0 83                                          CPX   #MS_DATATK              ; Did we find a "data" statement?
+DCBF: e0 83                                          CPX   #MS_T_DATATK              ; Did we find a "data" statement?
 DCC1: d0 a0               DCA0                       BNE   AS_FINDATA                 ; Not yet
 DCC3: 4c 2b dc                                       JMP   AS_INSTART                 ; Yes, read it
 DCC6:                                                                                 ; ---No more input requested------
@@ -2918,7 +2918,7 @@ DD02: 85 85                    AS_NEXT_2:            STA   MS_Z_0085_FORPNT
 DD04: 84 86                                          STY   MS_Z_0085_FORPNT + 1
 DD06: 20 65 d3                                       JSR   MS_FNDFOR                ; Find for-frame for this variable
 DD09: f0 0f               DD0F                       BEQ   AS_NEXT_3                  ; Found it
-DD0B: a2 00                                          LDX   #MS_ERRNF              ; Not there, abort
+DD0B: a2 00                                          LDX   #MS_E_ERRNF              ; Not there, abort
 DD0D: f0 78               DD78 AS_GERR:              BEQ   AS_JERROR                  ; ...Always
 DD0F: 9a                       AS_NEXT_3:            TXS                              ; Set stack ptr to point to this frame,
 DD10: e8                                             INX                              ; Which trims off any inner loops
@@ -2992,7 +2992,7 @@ DD6F: 30 74               DD74                       BMI   AS_L_CHKVAL_2        
 DD71: b0 76               DD76                       BCS   AS_L_CHKVAL_3              ; Not string, but we need string
 DD73: 60                       AS_L_CHKVAL_1:        RTS                              ; Type is correct
 DD74: b0 73               DD73 AS_L_CHKVAL_2:        BCS   AS_L_CHKVAL_1              ; Is string and we wanted string
-DD76: a2 a3                    AS_L_CHKVAL_3:        LDX   #MS_ERRTM            ; Type mismatch
+DD76: a2 a3                    AS_L_CHKVAL_3:        LDX   #MS_E_ERRTM            ; Type mismatch
 DD78: 4c 12 d4                 AS_JERROR:            JMP   MS_ERROR
 DD7B:                                                                                 ; --------------------------------
 DD7B:                                                                                 ; Evaluate the expression at txtptr, leaving the
@@ -3019,7 +3019,7 @@ DD95:                                                                           
 DD95:                          AS_FRMEVL_2:
 DD95: 20 b7 00                                       JSR   MS_Z_00B7_CHRGOT                  ; Check for relational operators
 DD98: 38                       AS_L_FRMEVL_2_1:      SEC                              ; > Is $CF, = is $D0, < is $D1
-DD99: e9 cf                                          SBC   #MS_GREATK          ; > Is 0, = is 1, < is 2
+DD99: e9 cf                                          SBC   #MS_T_GREATK          ; > Is 0, = is 1, < is 2
 DD9B: 90 b4               DDB4                       BCC   AS_L_FRMEVL_2_2            ; Not relational operator
 DD9D: c9 03                                          CMP   #3
 DD9F: b0 b4               DDB4                       BCS   AS_L_FRMEVL_2_2            ; Not relational operator
@@ -3039,7 +3039,7 @@ DDB4:                                                                           
 DDB4: a6 89                    AS_L_FRMEVL_2_2:      LDX   MS_Z_0089_OPMASK                  ; Did we find a relational operator?
 DDB6: d0 e4               DDE4                       BNE   AS_FRM_RELATIONAL          ; Yes
 DDB8: b0 35               DE35                       BCS   AS_NOTMATH                 ; No, and next token is > $D1
-DDBA: 69 07                                          ADC   #$CF - MS_PLUSTK       ; No, and next token < $CF
+DDBA: 69 07                                          ADC   #$CF - MS_T_PLUSTK       ; No, and next token < $CF
 DDBC: 90 35               DE35                       BCC   AS_NOTMATH                 ; If next token < "+"
 DDBE: 65 11                                          ADC   MS_Z_0011_VALTYP                  ; + And last result a string?
 DDC0: d0 c5               DDC5                       BNE   AS_L_FRMEVL_2_3            ; Branch if not
@@ -3200,9 +3200,9 @@ DE6C: 20 7d e0                 AS_L_FRM_ELEMENT_3:   JSR   AS_ISLETC            
 DE6F: b0 d5               DED5                       BCS   AS_FRM_VARIABLE            ; Yes
 DE71: c9 2e                                          CMP   #"." & %01111111           ; Decimal point
 DE73: f0 69               DE69                       BEQ   AS_L_FRM_ELEMENT_2         ; Yes, numeric constant
-DE75: c9 c9                                          CMP   #MS_MINUTK            ; Unary minus?
+DE75: c9 c9                                          CMP   #MS_T_MINUTK            ; Unary minus?
 DE77: f0 ce               DECE                       BEQ   AS_MIN                     ; Yes
-DE79: c9 c8                                          CMP   #MS_PLUSTK             ; Unary plus
+DE79: c9 c8                                          CMP   #MS_T_PLUSTK             ; Unary plus
 DE7B: f0 64               DE64                       BEQ   AS_L_FRM_ELEMENT_1         ; Yes
 DE7D: c9 22                                          CMP   #$22                       ; String constant?
 DE7F: d0 90               DE90                       BNE   AS_NOT_                    ; No
@@ -3227,7 +3227,7 @@ DE90:                                                                           
 DE90:                                                                                 ; If fac=0, return fac=1
 DE90:                                                                                 ; If fac<>0, return fac=0
 DE90:                                                                                 ; --------------------------------
-DE90: c9 c6                    AS_NOT_:              CMP   #MS_NOTTK
+DE90: c9 c6                    AS_NOT_:              CMP   #MS_T_NOTTK
 DE92: d0 a4               DEA4                       BNE   AS_FN_                     ; Not "not", try "fn"
 DE94: a0 18                                          LDY   #MS_NOTTAB - MS_OPTAB     ; Point at = comparison
 DE96: d0 d0               DED0                       BNE   AS_EQUL                    ; ...Always
@@ -3242,11 +3242,11 @@ DE9E: 2c                                             .byte $2C                  
 DE9F: a0 00                    AS_L_EQUOP_1:         LDY   #0                         ; False
 DEA1: 4c 01 e3                                       JMP   AS_SNGFLT
 DEA4:                                                                                 ; --------------------------------
-DEA4: c9 c2                    AS_FN_:               CMP   #MS_FNTK
+DEA4: c9 c2                    AS_FN_:               CMP   #MS_T_FNTK
 DEA6: d0 ab               DEAB                       BNE   AS_SGN_
 DEA8: 4c 54 e3                                       JMP   AS_FUNCT
 DEAB:                                                                                 ; --------------------------------
-DEAB: c9 d2                    AS_SGN_:              CMP   #MS_ONEFUN
+DEAB: c9 d2                    AS_SGN_:              CMP   #MS_T_ONEFUN
 DEAD: 90 b2               DEB2                       BCC   AS_PARCHK
 DEAF: 4c 0c df                                       JMP   AS_UNARY
 DEB2:                                                                                 ; --------------------------------
@@ -3270,7 +3270,7 @@ DEC2: d1 b8                                          CMP   (MS_Z_00B8_TXTPTR),Y
 DEC4: d0 c9               DEC9                       BNE   AS_SYNERR
 DEC6: 4c b1 00                                       JMP   MS_Z_00B1_CHRGET                  ; Match, get next char & return
 DEC9:                                                                                 ; --------------------------------
-DEC9: a2 10                    AS_SYNERR:            LDX   #MS_ERRSN
+DEC9: a2 10                    AS_SYNERR:            LDX   #MS_E_ERRSN
 DECB: 4c 12 d4                                       JMP   MS_ERROR
 DECE:                                                                                 ; --------------------------------
 DECE: a0 15                    AS_MIN:               LDY   #MS_NEGTAB - MS_OPTAB     ; Point at unary minus
@@ -3349,9 +3349,9 @@ DF37: 4c 3f df                                       JMP   AS_L_UNARY_2         
 DF3A: 20 b2 de                 AS_L_UNARY_1:         JSR   AS_PARCHK                  ; Require "(expression)"
 DF3D: 68                                             PLA
 DF3E: a8                                             TAY                              ; Index into function address table
-DF3F: b9 dc cf                 AS_L_UNARY_2:         LDA   MS_FUNDSP - MS_ONEFUN - MS_ONEFUN + $100,Y
+DF3F: b9 dc cf                 AS_L_UNARY_2:         LDA   MS_FUNDSP - MS_T_ONEFUN - MS_T_ONEFUN + $100,Y
 DF42: 85 91                                          STA   MS_Z_0090_JMPER + 1             ; Prepare to jsr to address
-DF44: b9 dd cf                                       LDA   MS_FUNDSP - MS_ONEFUN - MS_ONEFUN + $101,Y
+DF44: b9 dd cf                                       LDA   MS_FUNDSP - MS_T_ONEFUN - MS_T_ONEFUN + $101,Y
 DF47: 85 92                                          STA   MS_Z_0090_JMPER + 2
 DF49: 20 90 00                                       JSR   MS_Z_0090_JMPER                 ; Does not return for
 DF4C:                                                                                 ; Chr$, left$, right$, or mid$
@@ -3800,18 +3800,18 @@ E194: 90 6d               E16D                       BCC   AS_L_ARRAY_3         
 E196:                                                                                 ; --------------------------------
 E196:                                                                                 ; Error:  bad subscripts
 E196:                                                                                 ; --------------------------------
-E196: a2 6b                    AS_SUBERR:            LDX   #MS_ERRBS
+E196: a2 6b                    AS_SUBERR:            LDX   #MS_E_ERRBS
 E198: 2c                                             .byte $2C                        ; Trick to skip next line
 E199:                                                                                 ; --------------------------------
 E199:                                                                                 ; Error:  illegal quantity
 E199:                                                                                 ; --------------------------------
-E199: a2 35                    AS_IQERR:             LDX   #MS_ERRFC
+E199: a2 35                    AS_IQERR:             LDX   #MS_E_ERRFC
 E19B: 4c 12 d4                 AS_JER:               JMP   MS_ERROR
 E19E:                                                                                 ; --------------------------------
 E19E:                                                                                 ; Found the array
 E19E:                                                                                 ; --------------------------------
 E19E:                          AS_USE_OLD_ARRAY:
-E19E: a2 78                                          LDX   #MS_ERRDD             ; Set up for redim'd array error
+E19E: a2 78                                          LDX   #MS_E_ERRDD             ; Set up for redim'd array error
 E1A0: a5 10                                          LDA   MS_Z_0010_DIMFLG                  ; Called from "dim" statement?
 E1A2: d0 9b               E19B                       BNE   AS_JER                     ; Yes, error
 E1A4: a5 14                                          LDA   MS_Z_0014_SUBFLG                  ; No, check if any subscripts
@@ -3832,7 +3832,7 @@ E1B8:                                                                           
 E1B8:                          AS_MAKE_NEW_ARRAY:
 E1B8: a5 14                                          LDA   MS_Z_0014_SUBFLG                  ; Called from getarypt?
 E1BA: f0 c1               E1C1                       BEQ   AS_L_MAKE_NEW_ARRAY_1      ; No
-E1BC: a2 2a                                          LDX   #MS_ERROD             ; Yes, give "out of data" error
+E1BC: a2 2a                                          LDX   #MS_E_ERROD             ; Yes, give "out of data" error
 E1BE: 4c 12 d4                                       JMP   MS_ERROR
 E1C1: 20 ed e0                 AS_L_MAKE_NEW_ARRAY_1: JSR   AS_GETARY                  ; Put addr of 1st element in arypnt
 E1C4: 20 e3 d3                                       JSR   AS_REASON                  ; Make sure enough memory left
@@ -4083,10 +4083,10 @@ E306:                                                                           
 E306: a6 76                    AS_ERRDIR:            LDX   MS_Z_0075_CURLIN + 1              ; =$FF if direct mode
 E308: e8                                             INX                              ; Makes $FF into zero
 E309: d0 ac               E2AC                       BNE   AS_RTS_9                   ; Return if running mode
-E30B: a2 95                                          LDX   #MS_ERRID             ; Direct mode, give error
+E30B: a2 95                                          LDX   #MS_E_ERRID             ; Direct mode, give error
 E30D: 2c                                             .byte $2C                        ; Trick to skip next 2 bytes
 E30E:                                                                                 ; --------------------------------
-E30E: a2 e0                    AS_UNDFNC:            LDX   #MS_ERRUF          ; Undefinded function error
+E30E: a2 e0                    AS_UNDFNC:            LDX   #MS_E_ERRUF          ; Undefinded function error
 E310: 4c 12 d4                                       JMP   MS_ERROR
 E313:                                                                                 ; --------------------------------
 E313:                                                                                 ; "Def" statement
@@ -4102,7 +4102,7 @@ Page 66
 E320: 20 e3 df                                       JSR   AS_PTRGET                  ; Get pntr to argument
 E323: 20 6a dd                                       JSR   AS_CHKNUM                  ; Must be numeric
 E326: 20 b8 de                                       JSR   AS_CHKCLS                  ; Must have ")" now
-E329: a9 d0                                          LDA   #MS_EQULTK            ; Now need "="
+E329: a9 d0                                          LDA   #MS_T_EQULTK            ; Now need "="
 E32B: 20 c0 de                                       JSR   AS_SYNCHR                  ; Or else syntax error
 E32E: 48                                             PHA                              ; Save char after "="
 E32F: a5 84                                          LDA   MS_Z_0083_VARPNT + 1              ; Save pntr to argument
@@ -4119,7 +4119,7 @@ E341:                                                                           
 E341:                                                                                 ; Common routine for "deffn" and "fn", to
 E341:                                                                                 ; Parse "fn" and the function name
 E341:                                                                                 ; --------------------------------
-E341: a9 c2                    AS_FNC_:              LDA   #MS_FNTK               ; Must now see "fn" token
+E341: a9 c2                    AS_FNC_:              LDA   #MS_T_FNTK               ; Must now see "fn" token
 E343: 20 c0 de                                       JSR   AS_SYNCHR                  ; Or else syntax error
 E346: 09 80                                          ORA   #$80                       ; Set sign bit on 1st char of name,
 E348: 85 14                                          STA   MS_Z_0014_SUBFLG                  ; Making $C0 < subflg < $DB
@@ -4299,7 +4299,7 @@ E42A:                                                                           
 E42A: a6 52                    AS_PUTNEW:            LDX   MS_Z_0052_TEMPPT                  ; Pointer to next temp string slot
 E42C: e0 5e                                          CPX   #MS_Z_0055_TEMPST + 9             ; Max of 3 temp strings
 E42E: d0 35               E435                       BNE   AS_PUTEMP                  ; Room for another one
-E430: a2 bf                                          LDX   #MS_ERRST             ; Too many, formula too complex
+E430: a2 bf                                          LDX   #MS_E_ERRST             ; Too many, formula too complex
 E432: 4c 12 d4                 AS_JERR:              JMP   MS_ERROR
 E435:                                                                                 ; --------------------------------
 E435: a5 9d                    AS_PUTEMP:            LDA   MS_Z_009D_FAC                     ; Copy temp descriptor into temp stack
@@ -4346,7 +4346,7 @@ E46F: 84 72                                          STY   MS_Z_0071_FRESPC + 1
 E471: aa                                             TAX                              ; Addr in y,x
 E472: 68                                             PLA                              ; Length in a
 E473: 60                                             RTS
-E474: a2 4d                    AS_L_GETSPA_4:        LDX   #MS_ERROM
+E474: a2 4d                    AS_L_GETSPA_4:        LDX   #MS_E_ERROM
 E476: a5 13                                          LDA   MS_Z_0013_GARBFL                  ; Garbage done yet?
 
 Page 70
@@ -4566,7 +4566,7 @@ E5AB: b1 ab                                          LDA   (MS_Z_00AB_STRNG1),Y 
 E5AD: 18                                             CLC
 E5AE: 71 a0                                          ADC   (MS_Z_009D_FAC + 3),Y
 E5B0: 90 b7               E5B7                       BCC   AS_L_CAT_1                 ; Ok if < $100
-E5B2: a2 b0                                          LDX   #MS_ERRLS
+E5B2: a2 b0                                          LDX   #MS_E_ERRLS
 E5B4: 4c 12 d4                                       JMP   MS_ERROR
 E5B7: 20 d5 e3                 AS_L_CAT_1:           JSR   AS_STRINI                  ; Get space for concatenated strings
 E5BA: 20 d4 e5                                       JSR   AS_MOVINS                  ; Move 1st string
@@ -5175,7 +5175,7 @@ E8D2: e6 9e                                          INC   MS_Z_009D_FAC + 1
 E8D4: 60                       AS_RTS_12:            RTS
 E8D5:                                                                                 ; --------------------------------
 E8D5:                          AS_OVERFLOW:
-E8D5: a2 45                                          LDX   #MS_ERROV
+E8D5: a2 45                                          LDX   #MS_E_ERROV
 E8D7: 4c 12 d4                                       JMP   MS_ERROR
 E8DA:                                                                                 ; --------------------------------
 E8DA:                                                                                 ; Shift 1,x thru 5,x right
@@ -5533,7 +5533,7 @@ EADB: 85 ac                                          STA   MS_Z_00AC_FACOV
 EADD: 28                                             PLP
 EADE: 4c e6 ea                                       JMP   AS_COPY_RESULT_INTO_FAC
 EAE1:                                                                                 ; --------------------------------
-EAE1: a2 85                    AS_L_FDIVT_8:         LDX   #MS_ERRDV0
+EAE1: a2 85                    AS_L_FDIVT_8:         LDX   #MS_E_ERRDV0
 EAE3: 4c 12 d4                                       JMP   MS_ERROR
 EAE6:                                                                                 ; --------------------------------
 EAE6:                                                                                 ; Copy result into fac mantissa, and normalize
@@ -5871,11 +5871,11 @@ EC6A: c9 45                                          CMP   #"E" & %01111111     
 EC6C: d0 9e               EC9E                       BNE   AS_FIN_7                   ; No, end of number
 EC6E: 20 b1 00                                       JSR   MS_Z_00B1_CHRGET                  ; Yes, start converting exponent
 EC71: 90 8a               EC8A                       BCC   AS_FIN_5                   ; Exponent digit
-EC73: c9 c9                                          CMP   #MS_MINUTK            ; Negative exponent?
+EC73: c9 c9                                          CMP   #MS_T_MINUTK            ; Negative exponent?
 EC75: f0 85               EC85                       BEQ   AS_L_FIN_3_1               ; Yes
 EC77: c9 2d                                          CMP   #"-" & %01111111           ; Might not be tokenized yet
 EC79: f0 85               EC85                       BEQ   AS_L_FIN_3_1               ; Yes, it is negative
-EC7B: c9 c8                                          CMP   #MS_PLUSTK             ; Optional "+"
+EC7B: c9 c8                                          CMP   #MS_T_PLUSTK             ; Optional "+"
 EC7D: f0 87               EC87                       BEQ   AS_FIN_4                   ; Yes
 EC7F: c9 2b                                          CMP   #"+" & %01111111           ; Might not be tokenized yet
 EC81: f0 87               EC87                       BEQ   AS_FIN_4                   ; Yes, found "+"
@@ -6693,8 +6693,8 @@ F164: a9 03                                          LDA   #3                   
 F166: 85 8f                                          STA   AS_DSCLEN                  ; For garbage collection subroutine
 F168: 20 fb da                                       JSR   AS_CRDO                    ; Print <return>
 F16B: a9 01                                          LDA   #1                         ; Set up fake forward link
-F16D: 8d fd 01                                       STA   MS_A_BUFOFS - 3
-F170: 8d fc 01                                       STA   MS_A_BUFOFS - 4
+F16D: 8d fd 01                                       STA   MS_BUF - 3
+F170: 8d fc 01                                       STA   MS_BUF - 4
 F173: a2 55                                          LDX   #MS_Z_0055_TEMPST                 ; Init index to temp string descriptors
 F175: 86 52                                          STX   MS_Z_0052_TEMPPT
 F177:                                                                                 ; --------------------------------
@@ -6969,7 +6969,7 @@ F2C8: 4c 6c d6                                       JMP   AS_CLEARC            
 F2CB:                                                                                 ; --------------------------------
 F2CB:                                                                                 ; "On err go to" statement
 F2CB:                                                                                 ; --------------------------------
-F2CB: a9 ab                    AS_ONERR:             LDA   #MS_GOTOTK             ; Must be "goto" next
+F2CB: a9 ab                    AS_ONERR:             LDA   #MS_T_GOTOTK             ; Must be "goto" next
 F2CD: 20 c0 de                                       JSR   AS_SYNCHR
 F2D0: a5 b8                                          LDA   MS_Z_00B8_TXTPTR                  ; Save txtptr for handlerr
 F2D2: 85 f4                                          STA   AS_TXTPSV
@@ -7115,9 +7115,9 @@ F3AC: b0 af               F3AF                       BCS   AS_L_STORE_1
 F3AE: ca                                             DEX
 F3AF: 85 50                    AS_L_STORE_1:         STA   MS_Z_0050_LINNUM
 F3B1: 86 51                                          STX   MS_Z_0050_LINNUM + 1
-F3B3: 20 cd fe                                       JSR   MON_WRITE
+F3B3: 20 cd fe                                       JSR   MS_CQCOUT
 F3B6: 20 bc f7                                       JSR   AS_TAPEPNT
-F3B9: 4c cd fe                                       JMP   MON_WRITE
+F3B9: 4c cd fe                                       JMP   MS_CQCOUT
 F3BC:                                                                                 ; --------------------------------
 F3BC:                                                                                 ; "Recall" statement
 
@@ -7125,7 +7125,7 @@ Page 114
 --------------------------------------------------------------------------------
 F3BC:                                                                                 ; --------------------------------
 F3BC: 20 d9 f7                 AS_RECALL:            JSR   AS_GETARYPT                ; Find array in memory
-F3BF: 20 fd fe                                       JSR   MON_READ                   ; Read header
+F3BF: 20 fd fe                                       JSR   MS_CQCSIN                   ; Read header
 F3C2: a0 02                                          LDY   #2                         ; Make sure the new data fits
 F3C4: b1 9b                                          LDA   (MS_Z_009B_LOWTR),Y
 F3C6: c5 50                                          CMP   MS_Z_0050_LINNUM
@@ -7135,7 +7135,7 @@ F3CB: e5 51                                          SBC   MS_Z_0050_LINNUM + 1
 F3CD: b0 d2               F3D2                       BCS   AS_L_RECALL_1              ; It fits
 F3CF: 4c 10 d4                                       JMP   AS_MEMERR                  ; Doesn't fit
 F3D2: 20 bc f7                 AS_L_RECALL_1:        JSR   AS_TAPEPNT                 ; Read the data
-F3D5: 4c fd fe                                       JMP   MON_READ
+F3D5: 4c fd fe                                       JMP   MS_CQCSIN
 F3D8:                                                                                 ; --------------------------------
 F3D8:                                                                                 ; "Hgr" and "hgr2" statements
 F3D8:                                                                                 ; --------------------------------
@@ -7786,13 +7786,13 @@ F6FE:                                                                           
 F6FE:                                                                                 ; Hplot to x,y
 F6FE:                                                                                 ; Hplot x1,y1 to x2,y2
 F6FE:                                                                                 ; --------------------------------
-F6FE: c9 c1                    AS_HPLOT:             CMP   #MS_TOTK               ; "Plot to" form?
+F6FE: c9 c1                    AS_HPLOT:             CMP   #MS_T_TOTK               ; "Plot to" form?
 F700: f0 0f               F70F                       BEQ   AS_L_HPLOT_2               ; Yes, start from current location
 F702: 20 b9 f6                                       JSR   AS_HFNS                    ; No, get starting point of line
 F705: 20 57 f4                                       JSR   AS_HPLOT0                  ; Plot the point, and set up for
 F708:                                                                                 ; Drawing a line from that point
 F708: 20 b7 00                 AS_L_HPLOT_1:         JSR   MS_Z_00B7_CHRGOT                  ; Character at end of expression
-F70B: c9 c1                                          CMP   #MS_TOTK               ; Is a line specified?
+F70B: c9 c1                                          CMP   #MS_T_TOTK               ; Is a line specified?
 F70D: d0 f5               F6F5                       BNE   AS_RTS_23                  ; No, exit
 F70F: 20 c0 de                 AS_L_HPLOT_2:         JSR   AS_SYNCHR                  ; Yes. adv. txtptr (why not chrget)
 F712: 20 b9 f6                                       JSR   AS_HFNS                    ; Get coordinates of line end
@@ -7875,7 +7875,7 @@ F77B: a0 50                                          LDY   #MS_Z_0050_LINNUM
 F77D: 84 3c                                          STY   MON_A1L
 F77F: c8                                             INY                              ; Linnum+1
 F780: 84 3e                                          STY   MON_A2L
-F782: 20 fd fe                                       JSR   MON_READ                   ; Read tape
+F782: 20 fd fe                                       JSR   MS_CQCSIN                   ; Read tape
 
 Page 126
 --------------------------------------------------------------------------------
@@ -8150,7 +8150,7 @@ F8FD: 2a                                             ROL                        
 F8FE: 88                                             DEY
 F8FF: d0 f9               F8F9                       BNE   MON_PRMN2
 F901: 69 bf                                          ADC   #"?" | %10000000           ;Add "?" offset
-F903: 20 ed fd                                       JSR   MON_COUT                   ;Output a char of mnem
+F903: 20 ed fd                                       JSR   MS_OUTCH                   ;Output a char of mnem
 F906: ca                                             DEX
 F907: d0 f5               F8F5                       BNE   MON_NXTCOL
 F909: 20 48 f9                                       JSR   MON_PRBLNK                 ;Output 3 blanks
@@ -8161,10 +8161,10 @@ F912: f0 30               F930                       BEQ   MON_PRADR5           
 F914: 06 2e                    MON_PRADR2:           ASL   MON_MASK
 F916: 90 26               F926                       BCC   MON_PRADR3
 F918: bd b3 f9                                       LDA   MON_CHAR1 - 1,X
-F91B: 20 ed fd                                       JSR   MON_COUT
+F91B: 20 ed fd                                       JSR   MS_OUTCH
 F91E: bd b9 f9                                       LDA   MON_CHAR2 - 1,X
 F921: f0 26               F926                       BEQ   MON_PRADR3
-F923: 20 ed fd                                       JSR   MON_COUT
+F923: 20 ed fd                                       JSR   MS_OUTCH
 F926: ca                       MON_PRADR3:           DEX
 F927: d0 10               F910                       BNE   MON_PRADR1
 F929: 60                                             RTS
@@ -8188,7 +8188,7 @@ F945: 4c da fd                                       JMP   MON_PRBYTE
 F948:                          
 F948: a2 03                    MON_PRBLNK:           LDX   #3                         ;Blank count
 F94A: a9 a0                    MON_PRBL2:            LDA   #" " | %10000000           ;Load a space
-F94C: 20 ed fd                 MON_PRBL3:            JSR   MON_COUT                   ;Output a blank
+F94C: 20 ed fd                 MON_PRBL3:            JSR   MS_OUTCH                   ;Output a blank
 F94F: ca                                             DEX
 F950: d0 4a               F94A                       BNE   MON_PRBL2                  ;Loop until count=0
 
@@ -8397,13 +8397,13 @@ FADE: a9 00                                          LDA   #>$45
 FAE0: 85 41                                          STA   $41
 FAE2: a2 fb                                          LDX   #$FB
 FAE4: a9 a0                    MON_RDSP1:            LDA   #" " | %10000000
-FAE6: 20 ed fd                                       JSR   MON_COUT
+FAE6: 20 ed fd                                       JSR   MS_OUTCH
 FAE9: bd 1e fa                                       LDA   MON_RTBL - $FB,X
 FAEC:                                                                                 ;Lda   MON_RTBL+$FF05,x
 FAEC:                          
-FAEC: 20 ed fd                                       JSR   MON_COUT
+FAEC: 20 ed fd                                       JSR   MS_OUTCH
 FAEF: a9 bd                                          LDA   #"=" | %10000000
-FAF1: 20 ed fd                                       JSR   MON_COUT
+FAF1: 20 ed fd                                       JSR   MS_OUTCH
 FAF4: b5 4a                                          LDA   $45 + 5,X
 FAF6: 20 da fd                                       JSR   MON_PRBYTE
 FAF9: e8                                             INX
@@ -8824,7 +8824,7 @@ FD44: bd 00 02                                       LDA   $0200,X              
 
 Page 141
 --------------------------------------------------------------------------------
-FD47: 20 ed fd                                       JSR   MON_COUT
+FD47: 20 ed fd                                       JSR   MS_OUTCH
 FD4A: 68                                             PLA
 FD4B: 85 32                                          STA   $32
 FD4D:                          
@@ -8840,14 +8840,14 @@ FD5F: e8                       MON_NOTCR1:           INX                        
 FD60: d0 75               FD75                       BNE   MON_NXTCHAR
 FD62:                          
 FD62: a9 dc                    MON_CANCEL:           LDA   #"\\" | %10000000          ;Backslash after cancelled line
-FD64: 20 ed fd                                       JSR   MON_COUT
-FD67: 20 8e fd                 MON_GETLNZ:           JSR   MON_CROUT                  ;Output cr
+FD64: 20 ed fd                                       JSR   MS_OUTCH
+FD67: 20 8e fd                 MS_CQINLN:           JSR   MON_CROUT                  ;Output cr
 FD6A:                          
 FD6A: a5 33                    MON_GETLN:            LDA   $33
-FD6C: 20 ed fd                                       JSR   MON_COUT                   ;Output prompt char
+FD6C: 20 ed fd                                       JSR   MS_OUTCH                   ;Output prompt char
 FD6F: a2 01                                          LDX   #$01                       ;Init input index
 FD71: 8a                       MON_BCKSPC:           TXA                              ;  Will backspace to 0
-FD72: f0 67               FD67                       BEQ   MON_GETLNZ
+FD72: f0 67               FD67                       BEQ   MS_CQINLN
 FD74: ca                                             DEX
 FD75:                          
 FD75: 20 35 fd                 MON_NXTCHAR:          JSR   MON_RDCHAR
@@ -8881,7 +8881,7 @@ FD8E:                     0090 MON_CTRL_P            =     $10 | %10000000
 FD8E:                     0099 MON_CTRL_Y            =     $19 | %10000000
 FD8E:                          
 FD8E: a9 8d                    MON_CROUT:            LDA   #$8D
-FD90: d0 ed               FDED                       BNE   MON_COUT
+FD90: d0 ed               FDED                       BNE   MS_OUTCH
 FD92: a4 3d                    MON_PRA1:             LDY   $3D                        ;Print cr,a1 in hex
 FD94: a6 3c                                          LDX   $3C
 
@@ -8891,7 +8891,7 @@ FD96: 20 8e fd                 MON_PRYX2:            JSR   MON_CROUT
 FD99: 20 40 f9                                       JSR   MON_PRNTYX
 FD9C: a0 00                                          LDY   #$00
 FD9E: a9 ad                                          LDA   #"-" | %10000000           ;Print '-'
-FDA0: 4c ed fd                                       JMP   MON_COUT
+FDA0: 4c ed fd                                       JMP   MS_OUTCH
 FDA3:                          
 FDA3: a5 3c                    MON_XAM8:             LDA   $3C
 FDA5: 09 07                                          ORA   #%00000111                 ;Set to finish at
@@ -8903,7 +8903,7 @@ FDAF: 29 07                                          AND   #%00000111
 FDB1: d0 b6               FDB6                       BNE   MON_DATAOUT
 FDB3: 20 92 fd                 MON_XAM:              JSR   MON_PRA1
 FDB6: a9 a0                    MON_DATAOUT:          LDA   #" " | %10000000
-FDB8: 20 ed fd                                       JSR   MON_COUT                   ;Output blank
+FDB8: 20 ed fd                                       JSR   MS_OUTCH                   ;Output blank
 FDBB: b1 3c                                          LDA   ($3C),Y
 FDBD: 20 da fd                                       JSR   MON_PRBYTE                 ;Output byte in hex
 FDC0: 20 ba fc                                       JSR   MON_NXTA1
@@ -8920,7 +8920,7 @@ FDCF: 49 ff                                          EOR   #$FF                 
 FDD1: 65 3c                    MON_ADD:              ADC   $3C
 FDD3: 48                                             PHA
 FDD4: a9 bd                                          LDA   #"=" | %10000000
-FDD6: 20 ed fd                                       JSR   MON_COUT                   ;Print =, then result
+FDD6: 20 ed fd                                       JSR   MS_OUTCH                   ;Print =, then result
 FDD9: 68                                             PLA
 FDDA:                          
 FDDA: 48                       MON_PRBYTE:           PHA                              ;Print byte as 2 hex
@@ -8933,10 +8933,10 @@ FDE2: 68                                             PLA
 FDE3: 29 0f                    MON_PRHEX:            AND   #%00001111                 ;Print hex dig in a-reg
 FDE5: 09 b0                    MON_PRHEXZ:           ORA   #"0" | %10000000           ;  Lsb's
 FDE7: c9 ba                                          CMP   #("9" | %10000000) + 1
-FDE9: 90 ed               FDED                       BCC   MON_COUT
+FDE9: 90 ed               FDED                       BCC   MS_OUTCH
 FDEB: 69 06                                          ADC   #$06
 FDED:                          
-FDED: 6c 36 00                 MON_COUT:             JMP   ($36)                      ;Vector to user output routine
+FDED: 6c 36 00                 MS_OUTCH:             JMP   ($36)                      ;Vector to user output routine
 FDF0: c9 a0                    MON_COUT1:            CMP   #" " | %10000000
 FDF2: 90 f6               FDF6                       BCC   MON_COUTZ                  ;Dont output ctrls inverse
 FDF4: 25 32                                          AND   $32                        ;Mask with inverse flag
@@ -8994,13 +8994,13 @@ FE3C: 20 92 fd                                       JSR   MON_PRA1
 FE3F: b1 3c                                          LDA   ($3C),Y
 FE41: 20 da fd                                       JSR   MON_PRBYTE
 FE44: a9 a0                                          LDA   #" " | %10000000
-FE46: 20 ed fd                                       JSR   MON_COUT
+FE46: 20 ed fd                                       JSR   MS_OUTCH
 FE49: a9 a8                                          LDA   #"(" | %10000000
-FE4B: 20 ed fd                                       JSR   MON_COUT
+FE4B: 20 ed fd                                       JSR   MS_OUTCH
 FE4E: b1 42                                          LDA   ($42),Y
 FE50: 20 da fd                                       JSR   MON_PRBYTE
 FE53: a9 a9                                          LDA   #")" | %10000000
-FE55: 20 ed fd                                       JSR   MON_COUT
+FE55: 20 ed fd                                       JSR   MS_OUTCH
 FE58: 20 b4 fc                 MON_VFYOK:            JSR   MON_NXTA4
 FE5B: 90 36               FE36                       BCC   MON_VFY
 FE5D: 60                                             RTS
@@ -9084,7 +9084,7 @@ FEC9: ea                                             NOP
 FECA:                          
 FECA: 4c f8 03                 MON_USR:              JMP   $03F8                      ;To usr subr at usradr
 FECD:                          
-FECD: a9 40                    MON_WRITE:            LDA   #$40
+FECD: a9 40                    MS_CQCOUT:            LDA   #$40
 FECF: 20 c9 fc                                       JSR   MON_HEADR                  ;Write 10-sec header
 FED2: a0 27                                          LDY   #$27
 FED4: a2 00                    MON_WR1:              LDX   #$00
@@ -9110,7 +9110,7 @@ FEF9: 68                                             PLA                        
 FEFA: 68                                             PLA                              ;  And rtn to mon
 FEFB: d0 69               FF69                       BNE   MON_MONZ
 FEFD:                          
-FEFD: 20 fa fc                 MON_READ:             JSR   MON_RD2BIT                 ;Find tapein edge
+FEFD: 20 fa fc                 MS_CQCSIN:             JSR   MON_RD2BIT                 ;Find tapein edge
 FF00: a9 16                                          LDA   #$16
 FF02: 20 c9 fc                 MON_READ2:            JSR   MON_HEADR                  ;Delay 3.5 seconds
 FF05: 85 2e                                          STA   MON_MASK                   ;Init chksum=$FF
@@ -9131,16 +9131,16 @@ FF26: 20 ec fc                                       JSR   MON_RDBYTE           
 FF29: c5 2e                                          CMP   MON_MASK
 FF2B: f0 3a               FF3A                       BEQ   MON_BELL                   ;Good, sound bell and return
 FF2D: a9 c5                    MON_PRERR:            LDA   #"E" | %10000000
-FF2F: 20 ed fd                                       JSR   MON_COUT                   ;Print "err", then bell
+FF2F: 20 ed fd                                       JSR   MS_OUTCH                   ;Print "err", then bell
 FF32: a9 d2                                          LDA   #"R" | %10000000
-FF34: 20 ed fd                                       JSR   MON_COUT
-FF37: 20 ed fd                                       JSR   MON_COUT
+FF34: 20 ed fd                                       JSR   MS_OUTCH
+FF37: 20 ed fd                                       JSR   MS_OUTCH
 FF3A:                          
 
 Page 146
 --------------------------------------------------------------------------------
 FF3A: a9 87                    MON_BELL:             LDA   #$87                       ;Output bell and return
-FF3C: 4c ed fd                                       JMP   MON_COUT
+FF3C: 4c ed fd                                       JMP   MS_OUTCH
 FF3F:                          
 FF3F: a5 48                    MON_RESTORE:          LDA   $48                        ;Restore 6502 reg contents
 FF41: 48                                             PHA                              ;  Used by debug software
@@ -9168,7 +9168,7 @@ FF65: d8                       MON_MON:              CLD                        
 FF66: 20 3a ff                                       JSR   MON_BELL
 FF69: a9 aa                    MON_MONZ:             LDA   #$AA                       ;* Prompt for mon
 FF6B: 85 33                                          STA   $33
-FF6D: 20 67 fd                                       JSR   MON_GETLNZ                 ;Read a line
+FF6D: 20 67 fd                                       JSR   MS_CQINLN                 ;Read a line
 FF70: 20 c7 ff                                       JSR   MON_ZMODE                  ;Clear mon mode, scan idx
 FF73: 20 a7 ff                 MON_NXTITM:           JSR   MON_GETNUM                 ;Get item, non-hex
 FF76: 84 34                                          STY   $34                        ;  Char in a-reg
@@ -9274,9 +9274,9 @@ FFEF: 1f                                             .byte <MON_LT - 1
 FFF0: 83                                             .byte <MON_SETNORM - 1
 FFF1: 7f                                             .byte <MON_SETINV - 1
 FFF2: 5d                                             .byte <MON_LIST1 - 1
-FFF3: cc                                             .byte <MON_WRITE - 1
+FFF3: cc                                             .byte <MS_CQCOUT - 1
 FFF4: b5                                             .byte <MON_GO - 1
-FFF5: fc                                             .byte <MON_READ - 1
+FFF5: fc                                             .byte <MS_CQCSIN - 1
 FFF6: 17                                             .byte <MON_SETMODE - 1
 FFF7: 17                                             .byte <MON_SETMODE - 1
 FFF8: f5                                             .byte <MON_CRMON - 1
@@ -9299,7 +9299,7 @@ SYMBOL TABLE
 BY VALUE (numerical):
 --------------------------------------------------------------------------------
   MS_Z_0000_START      = $0000 (0)  [const]
-  MS_ERRNF             = $0000 (0)  [const]
+  MS_E_ERRNF           = $0000 (0)  [const]
   MS_Z_0003_RDYJSR     = $0003 (3)  [const]
   MON_TEXTBOTTOMLINES  = $0004 (4)  [const]
   MS_Z_000A_USRPOK     = $000A (10)  [const]
@@ -9309,7 +9309,7 @@ BY VALUE (numerical):
   AS_EOL_PNTR          = $000F (15)  [const]
   AS_NUMDIM            = $000F (15)  [const]
   MS_Z_0010_DIMFLG     = $0010 (16)  [const]
-  MS_ERRSN             = $0010 (16)  [const]
+  MS_E_ERRSN           = $0010 (16)  [const]
   MS_Z_0011_VALTYP     = $0011 (17)  [const]
   AS_DATAFLG           = $0013 (19)  [const]
   MS_Z_0013_GARBFL     = $0013 (19)  [const]
@@ -9317,14 +9317,14 @@ BY VALUE (numerical):
   MS_Z_0015_INPFLG     = $0015 (21)  [const]
   AS_CPRMASK           = $0016 (22)  [const]
   MS_Z_0016_TANSGN     = $0016 (22)  [const]
-  MS_ERRRG             = $0016 (22)  [const]
+  MS_E_ERRRG           = $0016 (22)  [const]
   AS_HGR_SHAPE         = $001A (26)  [const]
   AS_HGR_BITS          = $001C (28)  [const]
   AS_HGR_COUNT         = $001D (29)  [const]
   MON_CH               = $0024 (36)  [const]
   MON_GBASL            = $0026 (38)  [const]
   MON_GBASH            = $0027 (39)  [const]
-  MS_ERROD             = $002A (42)  [const]
+  MS_E_ERROD           = $002A (42)  [const]
   MON_H2               = $002C (44)  [const]
   MON_V2               = $002D (45)  [const]
   MON_MASK             = $002E (46)  [const]
@@ -9332,21 +9332,21 @@ BY VALUE (numerical):
   MON_COLOR            = $0030 (48)  [const]
   MON_LORESHEIGHT      = $0030 (48)  [const]
   MON_INVFLG           = $0032 (50)  [const]
-  MON_PROMPT           = $0033 (51)  [const]
-  MS_ERRFC             = $0035 (53)  [const]
+  MS_Z_0033_CQPRMP     = $0033 (51)  [const]
+  MS_E_ERRFC           = $0035 (53)  [const]
   MON_A1L              = $003C (60)  [const]
   MON_A1H              = $003D (61)  [const]
   MON_A2L              = $003E (62)  [const]
   MON_A2H              = $003F (63)  [const]
-  MS_ERROV             = $0045 (69)  [const]
+  MS_E_ERROV           = $0045 (69)  [const]
   AS_P_OR              = $0046 (70)  [const]
-  MS_ERROM             = $004D (77)  [const]
+  MS_E_ERROM           = $004D (77)  [const]
   MS_Z_0050_LINNUM     = $0050 (80)  [const]
   AS_P_AND             = $0050 (80)  [const]
   MS_Z_0052_TEMPPT     = $0052 (82)  [const]
   MS_Z_0053_LASTPT     = $0053 (83)  [const]
   MS_Z_0055_TEMPST     = $0055 (85)  [const]
-  MS_ERRUS             = $005A (90)  [const]
+  MS_E_ERRUS           = $005A (90)  [const]
   MS_Z_005E_INDEX      = $005E (94)  [const]
   AS_DEST              = $0060 (96)  [const]
   AS_RESULT            = $0062 (98)  [const]
@@ -9354,14 +9354,14 @@ BY VALUE (numerical):
   MS_Z_0067_TXTTAB     = $0067 (103)  [const]
   MS_Z_0069_VARTAB     = $0069 (105)  [const]
   MS_Z_006B_ARYTAB     = $006B (107)  [const]
-  MS_ERRBS             = $006B (107)  [const]
+  MS_E_ERRBS           = $006B (107)  [const]
   MS_Z_006D_STREND     = $006D (109)  [const]
   MS_Z_006F_FRETOP     = $006F (111)  [const]
   MS_Z_0071_FRESPC     = $0071 (113)  [const]
   MS_Z_0073_MEMSIZ     = $0073 (115)  [const]
   MS_Z_0075_CURLIN     = $0075 (117)  [const]
   MS_Z_0077_OLDLIN     = $0077 (119)  [const]
-  MS_ERRDD             = $0078 (120)  [const]
+  MS_E_ERRDD           = $0078 (120)  [const]
   MS_Z_0079_OLDTXT     = $0079 (121)  [const]
   AS_P_ADD             = $0079 (121)  [const]
   MS_Z_007B_DATLIN     = $007B (123)  [const]
@@ -9371,13 +9371,13 @@ BY VALUE (numerical):
   MS_Z_007F_INPPTR     = $007F (127)  [const]
   AS_P_NEQ             = $007F (127)  [const]
   MS_Z_0081_VARNAM     = $0081 (129)  [const]
-  MS_FORTK             = $0081 (129)  [const]
+  MS_T_FORTK           = $0081 (129)  [const]
   MON_CTRL_B           = $0082 (130)  [const]
   MS_Z_0083_VARPNT     = $0083 (131)  [const]
-  MS_DATATK            = $0083 (131)  [const]
+  MS_T_DATATK          = $0083 (131)  [const]
   MON_CTRL_C           = $0083 (131)  [const]
   MS_Z_0085_FORPNT     = $0085 (133)  [const]
-  MS_ERRDV0            = $0085 (133)  [const]
+  MS_E_ERRDV0          = $0085 (133)  [const]
   MON_CTRL_E           = $0085 (133)  [const]
   MS_Z_0087_VARTXT     = $0087 (135)  [const]
   MS_Z_0087_OPPTR      = $0087 (135)  [const]
@@ -9396,7 +9396,7 @@ BY VALUE (numerical):
   MS_Z_0093_TEMPF1     = $0093 (147)  [const]
   MS_Z_0094_ARYPNT     = $0094 (148)  [const]
   MS_Z_0094_HIGHDS     = $0094 (148)  [const]
-  MS_ERRID             = $0095 (149)  [const]
+  MS_E_ERRID           = $0095 (149)  [const]
   MS_Z_0096_HIGHTR     = $0096 (150)  [const]
   MS_Z_0098_TEMPF2     = $0098 (152)  [const]
   AS_TMPEXP            = $0099 (153)  [const]
@@ -9412,42 +9412,42 @@ BY VALUE (numerical):
   AS_TOKEN_POP         = $00A1 (161)  [const]
   MS_Z_00A2_FACSGN     = $00A2 (162)  [const]
   AS_SERLEN            = $00A3 (163)  [const]
-  MS_ERRTM             = $00A3 (163)  [const]
+  MS_E_ERRTM           = $00A3 (163)  [const]
   AS_SHIFT_SIGN_EXT    = $00A4 (164)  [const]
   MS_Z_00A5_ARGEXP     = $00A5 (165)  [const]
   MS_Z_00AA_ARGSGN     = $00AA (170)  [const]
   MS_Z_00AB_ARISGN     = $00AB (171)  [const]
   MS_Z_00AB_STRNG1     = $00AB (171)  [const]
-  MS_GOTOTK            = $00AB (171)  [const]
+  MS_T_GOTOTK          = $00AB (171)  [const]
   MS_Z_00AC_FACOV      = $00AC (172)  [const]
   AS_SERPNT            = $00AD (173)  [const]
   MS_Z_00AD_STRNG2     = $00AD (173)  [const]
   AS_PRGEND            = $00AF (175)  [const]
-  MS_GOSUTK            = $00B0 (176)  [const]
-  MS_ERRLS             = $00B0 (176)  [const]
+  MS_T_GOSUTK          = $00B0 (176)  [const]
+  MS_E_ERRLS           = $00B0 (176)  [const]
   MS_Z_00B1_CHRGET     = $00B1 (177)  [const]
-  MS_REMTK             = $00B2 (178)  [const]
+  MS_T_REMTK           = $00B2 (178)  [const]
   MS_Z_00B7_CHRGOT     = $00B7 (183)  [const]
   MS_Z_00B8_TXTPTR     = $00B8 (184)  [const]
-  MS_PRINTK            = $00BA (186)  [const]
-  MS_ERRST             = $00BF (191)  [const]
-  MS_TABTK             = $00C0 (192)  [const]
-  MS_TOTK              = $00C1 (193)  [const]
-  MS_FNTK              = $00C2 (194)  [const]
-  MS_SPCTK             = $00C3 (195)  [const]
-  MS_THENTK            = $00C4 (196)  [const]
+  MS_T_PRINTK          = $00BA (186)  [const]
+  MS_E_ERRST           = $00BF (191)  [const]
+  MS_T_TABTK           = $00C0 (192)  [const]
+  MS_T_TOTK            = $00C1 (193)  [const]
+  MS_T_FNTK            = $00C2 (194)  [const]
+  MS_T_SPCTK           = $00C3 (195)  [const]
+  MS_T_THENTK          = $00C4 (196)  [const]
   AS_TOKENDB           = $00C5 (197)  [const]
-  MS_NOTTK             = $00C6 (198)  [const]
-  MS_STEPTK            = $00C7 (199)  [const]
-  MS_PLUSTK            = $00C8 (200)  [const]
+  MS_T_NOTTK           = $00C6 (198)  [const]
+  MS_T_STEPTK          = $00C7 (199)  [const]
+  MS_T_PLUSTK          = $00C8 (200)  [const]
   MS_Z_00C9_RNDX       = $00C9 (201)  [const]
-  MS_MINUTK            = $00C9 (201)  [const]
-  MS_GREATK            = $00CF (207)  [const]
+  MS_T_MINUTK          = $00C9 (201)  [const]
+  MS_T_GREATK          = $00CF (207)  [const]
   AS_HGR_DX            = $00D0 (208)  [const]
-  MS_EQULTK            = $00D0 (208)  [const]
+  MS_T_EQULTK          = $00D0 (208)  [const]
   AS_HGR_DY            = $00D2 (210)  [const]
-  MS_ONEFUN            = $00D2 (210)  [const]
-  MS_ERRCN             = $00D2 (210)  [const]
+  MS_T_ONEFUN          = $00D2 (210)  [const]
+  MS_E_ERRCN           = $00D2 (210)  [const]
   AS_HGR_QUADRANT      = $00D3 (211)  [const]
   AS_HGR_E             = $00D4 (212)  [const]
   AS_LOCK              = $00D6 (214)  [const]
@@ -9458,7 +9458,7 @@ BY VALUE (numerical):
   AS_ERRNUM            = $00DE (222)  [const]
   AS_ERRSTK            = $00DF (223)  [const]
   AS_HGR_X             = $00E0 (224)  [const]
-  MS_ERRUF             = $00E0 (224)  [const]
+  MS_E_ERRUF           = $00E0 (224)  [const]
   AS_HGR_Y             = $00E2 (226)  [const]
   AS_HGR_COLOR         = $00E4 (228)  [const]
   AS_HGR_HORIZ         = $00E5 (229)  [const]
@@ -9476,7 +9476,7 @@ BY VALUE (numerical):
   AS_REMSTK            = $00F8 (248)  [const]
   AS_HGR_ROTATION      = $00F9 (249)  [const]
   AS_STACK             = $0100 (256)  [const]
-  MS_A_BUFOFS          = $0200 (512)  [const]
+  MS_BUF               = $0200 (512)  [const]
   AS_AMPERSAND_VECTOR  = $03F5 (1013)  [const]
   AS_KEYBOARD          = $C000 (49152)  [const]
   MON_KBD              = $C000 (49152)  [const]
@@ -10488,7 +10488,7 @@ BY VALUE (numerical):
   MON_NOTCR            = $FD3D (64829)  [label]
   MON_NOTCR1           = $FD5F (64863)  [label]
   MON_CANCEL           = $FD62 (64866)  [label]
-  MON_GETLNZ           = $FD67 (64871)  [label]
+  MS_CQINLN            = $FD67 (64871)  [label]
   MON_GETLN            = $FD6A (64874)  [label]
   MON_BCKSPC           = $FD71 (64881)  [label]
   MON_NXTCHAR          = $FD75 (64885)  [label]
@@ -10508,7 +10508,7 @@ BY VALUE (numerical):
   MON_PRBYTE           = $FDDA (64986)  [label]
   MON_PRHEX            = $FDE3 (64995)  [label]
   MON_PRHEXZ           = $FDE5 (64997)  [label]
-  MON_COUT             = $FDED (65005)  [label]
+  MS_OUTCH             = $FDED (65005)  [label]
   MON_COUT1            = $FDF0 (65008)  [label]
   MON_COUTZ            = $FDF6 (65014)  [label]
   MON_BL1              = $FE00 (65024)  [label]
@@ -10546,12 +10546,12 @@ BY VALUE (numerical):
   MON_TRACE            = $FEC2 (65218)  [label]
   MON_STEPZ            = $FEC5 (65221)  [label]
   MON_USR              = $FECA (65226)  [label]
-  MON_WRITE            = $FECD (65229)  [label]
+  MS_CQCOUT            = $FECD (65229)  [label]
   MON_WR1              = $FED4 (65236)  [label]
   MON_WRBYTE           = $FEED (65261)  [label]
   MON_WRBYT2           = $FEEF (65263)  [label]
   MON_CRMON            = $FEF6 (65270)  [label]
-  MON_READ             = $FEFD (65277)  [label]
+  MS_CQCSIN            = $FEFD (65277)  [label]
   MON_READ2            = $FF02 (65282)  [label]
   MON_RD2              = $FF0A (65290)  [label]
   MON_RD3              = $FF16 (65302)  [label]
@@ -11460,7 +11460,6 @@ BY NAME (alphabetical):
   MON_CLRSCR           = $F832 (63538)  [label]
   MON_CLRTOP           = $F836 (63542)  [label]
   MON_COLOR            = $0030 (48)  [const]
-  MON_COUT             = $FDED (65005)  [label]
   MON_COUT1            = $FDF0 (65008)  [label]
   MON_COUTZ            = $FDF6 (65014)  [label]
   MON_CR               = $FC62 (64610)  [label]
@@ -11490,7 +11489,6 @@ BY NAME (alphabetical):
   MON_GBCALC           = $F856 (63574)  [label]
   MON_GETFMT           = $F8A9 (63657)  [label]
   MON_GETLN            = $FD6A (64874)  [label]
-  MON_GETLNZ           = $FD67 (64871)  [label]
   MON_GETNUM           = $FFA7 (65447)  [label]
   MON_GO               = $FEB6 (65206)  [label]
   MON_H2               = $002C (44)  [const]
@@ -11584,7 +11582,6 @@ BY NAME (alphabetical):
   MON_PRNTOP           = $F8D4 (63700)  [label]
   MON_PRNTX            = $F944 (63812)  [label]
   MON_PRNTYX           = $F940 (63808)  [label]
-  MON_PROMPT           = $0033 (51)  [const]
   MON_PRYX2            = $FD96 (64918)  [label]
   MON_PTRIG            = $C070 (49264)  [const]
   MON_PWRCON           = $FAFD (64253)  [label]
@@ -11597,7 +11594,6 @@ BY NAME (alphabetical):
   MON_RDBYTE           = $FCEC (64748)  [label]
   MON_RDCHAR           = $FD35 (64821)  [label]
   MON_RDSP1            = $FAE4 (64228)  [label]
-  MON_READ             = $FEFD (65277)  [label]
   MON_READ2            = $FF02 (65282)  [label]
   MON_REGDSP           = $FAD7 (64215)  [label]
   MON_REGZ             = $FEBF (65215)  [label]
@@ -11673,7 +11669,6 @@ BY NAME (alphabetical):
   MON_WRBIT            = $FCD6 (64726)  [label]
   MON_WRBYT2           = $FEEF (65263)  [label]
   MON_WRBYTE           = $FEED (65261)  [label]
-  MON_WRITE            = $FECD (65229)  [label]
   MON_WRTAPE           = $FCE5 (64741)  [label]
   MON_XAM              = $FDB3 (64947)  [label]
   MON_XAM8             = $FDA3 (64931)  [label]
@@ -11683,65 +11678,61 @@ BY NAME (alphabetical):
   MON_ZERDLY           = $FCDB (64731)  [label]
   MON_ZMODE            = $FFC7 (65479)  [label]
   MON1_NXTCOL          = $F85F (63583)  [label]
-  MS_A_BUFOFS          = $0200 (512)  [const]
   MS_ABS               = $EBAF (60335)  [label]
   MS_ANDOP             = $DF55 (57173)  [label]
   MS_ASC               = $E6E5 (59109)  [label]
   MS_ATN               = $F09E (61598)  [label]
   MS_BRKTXT            = $D35D (54109)  [label]
+  MS_BUF               = $0200 (512)  [const]
   MS_CHR               = $E646 (58950)  [label]
   MS_CLEAR             = $D66A (54890)  [label]
   MS_CMPFOR            = $D37F (54143)  [label]
   MS_CONT              = $D896 (55446)  [label]
   MS_COS               = $EFEA (61418)  [label]
+  MS_CQCOUT            = $FECD (65229)  [label]
+  MS_CQCSIN            = $FEFD (65277)  [label]
   MS_CQINCH            = $FD0C (64780)  [label]
+  MS_CQINLN            = $FD67 (64871)  [label]
   MS_DATA              = $D995 (55701)  [label]
-  MS_DATATK            = $0083 (131)  [const]
   MS_DEF               = $E313 (58131)  [label]
   MS_DIM               = $DFD9 (57305)  [label]
   MS_DOREL             = $DF65 (57189)  [label]
+  MS_E_ERRBS           = $006B (107)  [const]
+  MS_E_ERRCN           = $00D2 (210)  [const]
+  MS_E_ERRDD           = $0078 (120)  [const]
+  MS_E_ERRDV0          = $0085 (133)  [const]
+  MS_E_ERRFC           = $0035 (53)  [const]
+  MS_E_ERRID           = $0095 (149)  [const]
+  MS_E_ERRLS           = $00B0 (176)  [const]
+  MS_E_ERRNF           = $0000 (0)  [const]
+  MS_E_ERROD           = $002A (42)  [const]
+  MS_E_ERROM           = $004D (77)  [const]
+  MS_E_ERROV           = $0045 (69)  [const]
+  MS_E_ERRRG           = $0016 (22)  [const]
+  MS_E_ERRSN           = $0010 (16)  [const]
+  MS_E_ERRST           = $00BF (191)  [const]
+  MS_E_ERRTM           = $00A3 (163)  [const]
+  MS_E_ERRUF           = $00E0 (224)  [const]
+  MS_E_ERRUS           = $005A (90)  [const]
   MS_END               = $D870 (55408)  [label]
-  MS_EQULTK            = $00D0 (208)  [const]
   MS_ERR               = $D350 (54096)  [label]
-  MS_ERRBS             = $006B (107)  [const]
-  MS_ERRCN             = $00D2 (210)  [const]
-  MS_ERRDD             = $0078 (120)  [const]
-  MS_ERRDV0            = $0085 (133)  [const]
-  MS_ERRFC             = $0035 (53)  [const]
-  MS_ERRID             = $0095 (149)  [const]
-  MS_ERRLS             = $00B0 (176)  [const]
-  MS_ERRNF             = $0000 (0)  [const]
-  MS_ERROD             = $002A (42)  [const]
-  MS_ERROM             = $004D (77)  [const]
   MS_ERROR             = $D412 (54290)  [label]
-  MS_ERROV             = $0045 (69)  [const]
-  MS_ERRRG             = $0016 (22)  [const]
-  MS_ERRSN             = $0010 (16)  [const]
-  MS_ERRST             = $00BF (191)  [const]
   MS_ERRTAB            = $D260 (53856)  [label]
-  MS_ERRTM             = $00A3 (163)  [const]
-  MS_ERRUF             = $00E0 (224)  [const]
-  MS_ERRUS             = $005A (90)  [const]
   MS_EXP               = $EF09 (61193)  [label]
   MS_FADDT             = $E7C1 (59329)  [label]
   MS_FDIVT             = $EA69 (60009)  [label]
   MS_FFLOOP            = $D36A (54122)  [label]
   MS_FMULTT            = $E982 (59778)  [label]
   MS_FNDFOR            = $D365 (54117)  [label]
-  MS_FNTK              = $00C2 (194)  [const]
   MS_FNWAIT            = $E784 (59268)  [label]
   MS_FOR               = $D766 (55142)  [label]
-  MS_FORTK             = $0081 (129)  [const]
   MS_FPWRT             = $EE97 (61079)  [label]
   MS_FRE               = $E2DE (58078)  [label]
   MS_FSUBT             = $E7AA (59306)  [label]
   MS_FUNDSP            = $D080 (53376)  [label]
   MS_GET               = $DBA0 (56224)  [label]
   MS_GOSUB             = $D921 (55585)  [label]
-  MS_GOSUTK            = $00B0 (176)  [const]
   MS_GOTO              = $D93E (55614)  [label]
-  MS_GOTOTK            = $00AB (171)  [const]
-  MS_GREATK            = $00CF (207)  [const]
   MS_IF                = $D9C9 (55753)  [label]
   MS_INPUT             = $DBB2 (56242)  [label]
   MS_INT               = $EC23 (60451)  [label]
@@ -11753,27 +11744,22 @@ BY NAME (alphabetical):
   MS_LOAD              = $D8C9 (55497)  [label]
   MS_LOG               = $E941 (59713)  [label]
   MS_MID               = $E691 (59025)  [label]
-  MS_MINUTK            = $00C9 (201)  [const]
   MS_NEGOP             = $EED0 (61136)  [label]
   MS_NEGTAB            = $D0C7 (53447)  [label]
   MS_NEXT              = $DCF9 (56569)  [label]
   MS_NOTOP             = $DE98 (56984)  [label]
   MS_NOTTAB            = $D0CA (53450)  [label]
-  MS_NOTTK             = $00C6 (198)  [const]
-  MS_ONEFUN            = $00D2 (210)  [const]
   MS_ONGOTO            = $D9EC (55788)  [label]
   MS_OPTAB             = $D0B2 (53426)  [label]
   MS_OROP              = $DF4F (57167)  [label]
+  MS_OUTCH             = $FDED (65005)  [label]
   MS_PEEK              = $E764 (59236)  [label]
-  MS_PLUSTK            = $00C8 (200)  [const]
   MS_POKE              = $E77B (59259)  [label]
   MS_POS               = $E2FF (58111)  [label]
   MS_PRINT             = $DAD5 (56021)  [label]
-  MS_PRINTK            = $00BA (186)  [const]
   MS_PTDORL            = $D0CD (53453)  [label]
   MS_READ              = $DBE2 (56290)  [label]
   MS_REM               = $D9DC (55772)  [label]
-  MS_REMTK             = $00B2 (178)  [const]
   MS_RESLST            = $D0D0 (53456)  [label]
   MS_RESTOR            = $D849 (55369)  [label]
   MS_RETURN            = $D96B (55659)  [label]
@@ -11784,16 +11770,29 @@ BY NAME (alphabetical):
   MS_SCRATH            = $D649 (54857)  [label]
   MS_SGN               = $EB90 (60304)  [label]
   MS_SIN               = $EFF1 (61425)  [label]
-  MS_SPCTK             = $00C3 (195)  [const]
   MS_SQR               = $EE8D (61069)  [label]
-  MS_STEPTK            = $00C7 (199)  [const]
   MS_STMDSP            = $D000 (53248)  [label]
   MS_STOP              = $D86E (55406)  [label]
   MS_STR               = $E3C5 (58309)  [label]
-  MS_TABTK             = $00C0 (192)  [const]
+  MS_T_DATATK          = $0083 (131)  [const]
+  MS_T_EQULTK          = $00D0 (208)  [const]
+  MS_T_FNTK            = $00C2 (194)  [const]
+  MS_T_FORTK           = $0081 (129)  [const]
+  MS_T_GOSUTK          = $00B0 (176)  [const]
+  MS_T_GOTOTK          = $00AB (171)  [const]
+  MS_T_GREATK          = $00CF (207)  [const]
+  MS_T_MINUTK          = $00C9 (201)  [const]
+  MS_T_NOTTK           = $00C6 (198)  [const]
+  MS_T_ONEFUN          = $00D2 (210)  [const]
+  MS_T_PLUSTK          = $00C8 (200)  [const]
+  MS_T_PRINTK          = $00BA (186)  [const]
+  MS_T_REMTK           = $00B2 (178)  [const]
+  MS_T_SPCTK           = $00C3 (195)  [const]
+  MS_T_STEPTK          = $00C7 (199)  [const]
+  MS_T_TABTK           = $00C0 (192)  [const]
+  MS_T_THENTK          = $00C4 (196)  [const]
+  MS_T_TOTK            = $00C1 (193)  [const]
   MS_TAN               = $F03A (61498)  [label]
-  MS_THENTK            = $00C4 (196)  [const]
-  MS_TOTK              = $00C1 (193)  [const]
   MS_VAL               = $E707 (59143)  [label]
   MS_Z_0000_START      = $0000 (0)  [const]
   MS_Z_0003_RDYJSR     = $0003 (3)  [const]
@@ -11807,6 +11806,7 @@ BY NAME (alphabetical):
   MS_Z_0014_SUBFLG     = $0014 (20)  [const]
   MS_Z_0015_INPFLG     = $0015 (21)  [const]
   MS_Z_0016_TANSGN     = $0016 (22)  [const]
+  MS_Z_0033_CQPRMP     = $0033 (51)  [const]
   MS_Z_0050_LINNUM     = $0050 (80)  [const]
   MS_Z_0052_TEMPPT     = $0052 (82)  [const]
   MS_Z_0053_LASTPT     = $0053 (83)  [const]

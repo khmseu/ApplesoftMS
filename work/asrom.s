@@ -60,7 +60,7 @@ MON_MASK              =     $2E
 MON_HMASK             =     $30
 MON_COLOR             =     $30
 MON_INVFLG            =     $32
-MON_PROMPT            =     $33
+MS_Z_0033_CQPRMP            =     $33
 MON_A1L               =     $3C                        ; Used by tape i/o routines
 MON_A1H               =     $3D                        ; "
 MON_A2L               =     $3E                        ; "
@@ -157,7 +157,7 @@ AS_HGR_ROTATION       =     $F9
                                                        ; $FF is also used by the string out routines
                                                        ; --------------------------------
 AS_STACK              =     $0100
-MS_A_BUFOFS       =     $0200
+MS_BUF       =     $0200
 AS_AMPERSAND_VECTOR   =     $03F5                      ; - 3F7   gets "jmp ...."
                                                        ; --------------------------------
                                                        ; I/o & soft switches
@@ -187,36 +187,36 @@ AS_SW_HIRES           =     $C057
 ;MON_RD2BIT          = $FCFA
 ;MS_CQINCH           = $FD0C
 ;MON_GETLN           = $FD6A
-;MON_COUT            = $FDED
+;MS_OUTCH            = $FDED
 ;MON_INPORT          = $FE8B
 ;MON_OUTPORT         = $FE95
-;MON_WRITE           = $FECD
-;MON_READ            = $FEFD
+;MS_CQCOUT           = $FECD
+;MS_CQCSIN            = $FEFD
 ;MON_READ2           = $FF02
                                                        ; --------------------------------
                                                        ; --------------------------------
                                                        ; Applesoft tokens
                                                        ; --------------------------------
-MS_FORTK          =     $81
-MS_DATATK          =     $83
+MS_T_FORTK          =     $81
+MS_T_DATATK          =     $83
 AS_TOKEN_POP          =     $A1
-MS_GOTOTK         =     $AB
-MS_GOSUTK        =     $B0
-MS_REMTK          =     $B2
-MS_PRINTK        =     $BA
-MS_TABTK          =     $C0
-MS_TOTK           =     $C1
-MS_FNTK           =     $C2
-MS_SPCTK          =     $C3
-MS_THENTK         =     $C4
+MS_T_GOTOTK         =     $AB
+MS_T_GOSUTK        =     $B0
+MS_T_REMTK          =     $B2
+MS_T_PRINTK        =     $BA
+MS_T_TABTK          =     $C0
+MS_T_TOTK           =     $C1
+MS_T_FNTK           =     $C2
+MS_T_SPCTK          =     $C3
+MS_T_THENTK         =     $C4
 AS_TOKENDB            =     $C5
-MS_NOTTK          =     $C6
-MS_STEPTK         =     $C7
-MS_PLUSTK         =     $C8
-MS_MINUTK        =     $C9
-MS_GREATK      =     $CF
-MS_EQULTK        =     $D0
-MS_ONEFUN          =     $D2
+MS_T_NOTTK          =     $C6
+MS_T_STEPTK         =     $C7
+MS_T_PLUSTK         =     $C8
+MS_T_MINUTK        =     $C9
+MS_T_GREATK      =     $CF
+MS_T_EQULTK        =     $D0
+MS_T_ONEFUN          =     $D2
 AS_TOKEN_SCRN         =     $D7
 AS_TOKEN_LEFTSTR      =     $E8
                                                        ; --------------------------------
@@ -864,7 +864,7 @@ MS_RESLST:  .byte "E" & %01111111
                                                        ; Error messages
                                                        ; --------------------------------
 MS_ERRTAB:
-MS_ERRNF          =     * - MS_ERRTAB
+MS_E_ERRNF          =     * - MS_ERRTAB
                       .byte "N" & %01111111
                       .byte "E" & %01111111
                       .byte "X" & %01111111
@@ -882,7 +882,7 @@ MS_ERRNF          =     * - MS_ERRTAB
                       .byte "O" & %01111111
                       .byte "R" | %10000000
 
-MS_ERRSN         =     * - MS_ERRTAB
+MS_E_ERRSN         =     * - MS_ERRTAB
                       .byte "S" & %01111111
                       .byte "Y" & %01111111
                       .byte "N" & %01111111
@@ -890,7 +890,7 @@ MS_ERRSN         =     * - MS_ERRTAB
                       .byte "A" & %01111111
                       .byte "X" | %10000000
 
-MS_ERRRG        =     * - MS_ERRTAB
+MS_E_ERRRG        =     * - MS_ERRTAB
                       .byte "R" & %01111111
                       .byte "E" & %01111111
                       .byte "T" & %01111111
@@ -912,7 +912,7 @@ MS_ERRRG        =     * - MS_ERRTAB
                       .byte "U" & %01111111
                       .byte "B" | %10000000
 
-MS_ERROD         =     * - MS_ERRTAB
+MS_E_ERROD         =     * - MS_ERRTAB
                       .byte "O" & %01111111
                       .byte "U" & %01111111
                       .byte "T" & %01111111
@@ -925,7 +925,7 @@ MS_ERROD         =     * - MS_ERRTAB
                       .byte "T" & %01111111
                       .byte "A" | %10000000
 
-MS_ERRFC         =     * - MS_ERRTAB
+MS_E_ERRFC         =     * - MS_ERRTAB
                       .byte "I" & %01111111
                       .byte "L" & %01111111
                       .byte "L" & %01111111
@@ -943,7 +943,7 @@ MS_ERRFC         =     * - MS_ERRTAB
                       .byte "T" & %01111111
                       .byte "Y" | %10000000
 
-MS_ERROV       =     * - MS_ERRTAB
+MS_E_ERROV       =     * - MS_ERRTAB
                       .byte "O" & %01111111
                       .byte "V" & %01111111
                       .byte "E" & %01111111
@@ -953,7 +953,7 @@ MS_ERROV       =     * - MS_ERRTAB
                       .byte "O" & %01111111
                       .byte "W" | %10000000
 
-MS_ERROM        =     * - MS_ERRTAB
+MS_E_ERROM        =     * - MS_ERRTAB
                       .byte "O" & %01111111
                       .byte "U" & %01111111
                       .byte "T" & %01111111
@@ -968,7 +968,7 @@ MS_ERROM        =     * - MS_ERRTAB
                       .byte "R" & %01111111
                       .byte "Y" | %10000000
 
-MS_ERRUS      =     * - MS_ERRTAB
+MS_E_ERRUS      =     * - MS_ERRTAB
                       .byte "U" & %01111111
                       .byte "N" & %01111111
                       .byte "D" & %01111111
@@ -988,7 +988,7 @@ MS_ERRUS      =     * - MS_ERRTAB
                       .byte "N" & %01111111
                       .byte "T" | %10000000
 
-MS_ERRBS        =     * - MS_ERRTAB
+MS_E_ERRBS        =     * - MS_ERRTAB
                       .byte "B" & %01111111
                       .byte "A" & %01111111
                       .byte "D" & %01111111
@@ -1003,7 +1003,7 @@ MS_ERRBS        =     * - MS_ERRTAB
                       .byte "P" & %01111111
                       .byte "T" | %10000000
 
-MS_ERRDD         =     * - MS_ERRTAB
+MS_E_ERRDD         =     * - MS_ERRTAB
                       .byte "R" & %01111111
                       .byte "E" & %01111111
                       .byte "D" & %01111111
@@ -1019,7 +1019,7 @@ MS_ERRDD         =     * - MS_ERRTAB
                       .byte "A" & %01111111
                       .byte "Y" | %10000000
 
-MS_ERRDV0        =     * - MS_ERRTAB
+MS_E_ERRDV0        =     * - MS_ERRTAB
                       .byte "D" & %01111111
                       .byte "I" & %01111111
                       .byte "V" & %01111111
@@ -1037,7 +1037,7 @@ MS_ERRDV0        =     * - MS_ERRTAB
                       .byte "R" & %01111111
                       .byte "O" | %10000000
 
-MS_ERRID         =     * - MS_ERRTAB
+MS_E_ERRID         =     * - MS_ERRTAB
                       .byte "I" & %01111111
                       .byte "L" & %01111111
                       .byte "L" & %01111111
@@ -1053,7 +1053,7 @@ MS_ERRID         =     * - MS_ERRTAB
                       .byte "C" & %01111111
                       .byte "T" | %10000000
 
-MS_ERRTM        =     * - MS_ERRTAB
+MS_E_ERRTM        =     * - MS_ERRTAB
                       .byte "T" & %01111111
                       .byte "Y" & %01111111
                       .byte "P" & %01111111
@@ -1068,7 +1068,7 @@ MS_ERRTM        =     * - MS_ERRTAB
                       .byte "C" & %01111111
                       .byte "H" | %10000000
 
-MS_ERRLS        =     * - MS_ERRTAB
+MS_E_ERRLS        =     * - MS_ERRTAB
                       .byte "S" & %01111111
                       .byte "T" & %01111111
                       .byte "R" & %01111111
@@ -1085,7 +1085,7 @@ MS_ERRLS        =     * - MS_ERRTAB
                       .byte "N" & %01111111
                       .byte "G" | %10000000
 
-MS_ERRST         =     * - MS_ERRTAB
+MS_E_ERRST         =     * - MS_ERRTAB
                       .byte "F" & %01111111
                       .byte "O" & %01111111
                       .byte "R" & %01111111
@@ -1106,7 +1106,7 @@ MS_ERRST         =     * - MS_ERRTAB
                       .byte "E" & %01111111
                       .byte "X" | %10000000
 
-MS_ERRCN       =     * - MS_ERRTAB
+MS_E_ERRCN       =     * - MS_ERRTAB
                       .byte "C" & %01111111
                       .byte "A" & %01111111
                       .byte "N" & %01111111
@@ -1123,7 +1123,7 @@ MS_ERRCN       =     * - MS_ERRTAB
                       .byte "U" & %01111111
                       .byte "E" | %10000000
 
-MS_ERRUF      =     * - MS_ERRTAB
+MS_E_ERRUF      =     * - MS_ERRTAB
                       .byte "U" & %01111111
                       .byte "N" & %01111111
                       .byte "D" & %01111111
@@ -1189,7 +1189,7 @@ MS_FNDFOR:
                       INX
                       INX
 MS_FFLOOP:      LDA   AS_STACK + 1,X             ; "For" frame here?
-                      CMP   #MS_FORTK
+                      CMP   #MS_T_FORTK
                       BNE   AS_L_GTFORPNT_4            ; No
                       LDA   MS_Z_0085_FORPNT + 1              ; Yes -- "next" with no variable?
                       BNE   MS_CMPFOR            ; No, variable specified
@@ -1299,7 +1299,7 @@ AS_L_REASON_3:        PLA                              ; And (y,a)
                       BCS   AS_MEMERR                  ; No, mem full err
 AS_L_REASON_4:        RTS                              ; Yes, return
                                                        ; --------------------------------
-AS_MEMERR:            LDX   #MS_ERROM
+AS_MEMERR:            LDX   #MS_E_ERROM
                                                        ; --------------------------------
                                                        ; Handle an error
 
@@ -1407,7 +1407,7 @@ AS_L_NUMBERED_LINE_2: LDA   (MS_Z_005E_INDEX),Y               ; Move higher line
                       BNE   AS_L_NUMBERED_LINE_2
                                                        ; --------------------------------
 AS_PUT_NEW_LINE:
-                      LDA   MS_A_BUFOFS            ; Any characters after line #?
+                      LDA   MS_BUF            ; Any characters after line #?
                       BEQ   AS_FIX_LINKS               ; No, so nothing to insert.
                       LDA   MS_Z_0073_MEMSIZ                  ; Yes, so make room and insert line
                       LDY   MS_Z_0073_MEMSIZ + 1              ; Wipe string area clean
@@ -1425,15 +1425,15 @@ AS_L_PUT_NEW_LINE_1:  STY   MS_Z_0094_HIGHDS + 1
                       JSR   AS_BLTU                    ; Make room for the line
                       LDA   MS_Z_0050_LINNUM                  ; Put line number in line image
                       LDY   MS_Z_0050_LINNUM + 1
-                      STA   MS_A_BUFOFS - 2
-                      STY   MS_A_BUFOFS - 1
+                      STA   MS_BUF - 2
+                      STY   MS_BUF - 1
                       LDA   MS_Z_006D_STREND
                       LDY   MS_Z_006D_STREND + 1
                       STA   MS_Z_0069_VARTAB
                       STY   MS_Z_0069_VARTAB + 1
                       LDY   AS_EOL_PNTR
                                                        ; ---Copy line into program-------
-AS_L_PUT_NEW_LINE_2:  LDA   MS_A_BUFOFS - 5,Y
+AS_L_PUT_NEW_LINE_2:  LDA   MS_BUF - 5,Y
                       DEY
                       STA   (MS_Z_009B_LOWTR),Y
                       BNE   AS_L_PUT_NEW_LINE_2
@@ -1478,23 +1478,23 @@ AS_L_FIX_LINKS_3:     INY                              ; (Note maximum length < 
                                                        ; Read a line, and strip off sign bits
                                                        ; --------------------------------
 AS_INLIN:             LDX   #$80                       ; Null prompt
-AS_INLIN2:            STX   MON_PROMPT
+AS_INLIN2:            STX   MS_Z_0033_CQPRMP
                       JSR   MON_GETLN
                       CPX   #239                       ; Maximum line length
                       BCC   AS_L_INLIN2_1
                       LDX   #239                       ; Truncate at 239 chars
 AS_L_INLIN2_1:        LDA   #0                         ; Mark end of line with $00 byte
-                      STA   MS_A_BUFOFS,X
+                      STA   MS_BUF,X
                       TXA
                       BEQ   AS_L_INLIN2_3              ; Null input line
-AS_L_INLIN2_2:        LDA   MS_A_BUFOFS - 1,X      ; Drop sign bits
+AS_L_INLIN2_2:        LDA   MS_BUF - 1,X      ; Drop sign bits
                       AND   #$7F
-                      STA   MS_A_BUFOFS - 1,X
+                      STA   MS_BUF - 1,X
                       DEX
                       BNE   AS_L_INLIN2_2
 AS_L_INLIN2_3:        LDA   #0                         ; (Y,x) points at buffer-1
-                      LDX   #<(MS_A_BUFOFS - 1)
-                      LDY   #>(MS_A_BUFOFS - 1)
+                      LDX   #<(MS_BUF - 1)
+                      LDY   #>(MS_BUF - 1)
                       RTS
                                                        ; --------------------------------
 AS_INCHR:             JSR   MS_CQINCH                  ; *** Ought to be "bit $C010" ***
@@ -1516,7 +1516,7 @@ AS_PARSE_INPUT_LINE:
                       JMP   AS_NEWSTT                  ; Start running
                                                        ; --------------------------------
 AS_PARSE:             INX                              ; Next input character
-AS_L_PARSE_1:         LDA   MS_A_BUFOFS,X
+AS_L_PARSE_1:         LDA   MS_BUF,X
                       BIT   AS_DATAFLG                 ; In a "data" statement?
                       BVS   AS_L_PARSE_2               ; Yes (dataflg = $49)
                       CMP   #" " & %01111111           ; Ignore blanks
@@ -1527,7 +1527,7 @@ AS_L_PARSE_2:         STA   MS_Z_000E_ENDCHR
                       BVS   AS_L_PARSE_9               ; Branch if in "data" statement
                       CMP   #"?" & %01111111           ; Shorthand for "print"?
                       BNE   AS_L_PARSE_3               ; No
-                      LDA   #MS_PRINTK            ; Yes, replace with "print" token
+                      LDA   #MS_T_PRINTK            ; Yes, replace with "print" token
                       BNE   AS_L_PARSE_9               ; ...Always
 AS_L_PARSE_3:         CMP   #"0" & %01111111           ; Is it a digit, colon, or semi-colon?
                       BCC   AS_L_PARSE_4               ; No, punctuation !"#$%&'()*+,-./
@@ -1551,7 +1551,7 @@ AS_L_PARSE_5:         INY                              ; Advance pointer to toke
                       BNE   AS_L_PARSE_6               ; Y=y+1 is enough
                       INC   MS_Z_009D_FAC + 1                 ; Also need to bump the page
 AS_L_PARSE_6:         INX                              ; Advance pointer to input line
-AS_L_PARSE_7:         LDA   MS_A_BUFOFS,X          ; Next char from input line
+AS_L_PARSE_7:         LDA   MS_BUF,X          ; Next char from input line
                       CMP   #" " & %01111111           ; This char a blank?
                       BEQ   AS_L_PARSE_6               ; Yes, ignore all blanks
                       SEC                              ; No, compare to char in table
@@ -1562,7 +1562,7 @@ AS_L_PARSE_7:         LDA   MS_A_BUFOFS,X          ; Next char from input line
                       ORA   MS_Z_000F_COUNT                ; Yes, end of token; get token #
                       CMP   #AS_TOKENDB                ; Did we match "at"?
                       BNE   AS_L_PARSE_8               ; No, so no ambiguity
-                      LDA   MS_A_BUFOFS + 1,X      ; "At" could be "atn" or "a to"
+                      LDA   MS_BUF + 1,X      ; "At" could be "atn" or "a to"
                       CMP   #"N" & %01111111           ; "Atn" has precedence over "at"
                       BEQ   AS_L_PARSE_14              ; It is "atn", find it the hard way
                       CMP   #"O" & %01111111           ; "To" has precedence over "at"
@@ -1574,29 +1574,29 @@ AS_L_PARSE_7:         LDA   MS_A_BUFOFS,X          ; Next char from input line
 AS_L_PARSE_8:         LDY   MS_Z_00AD_STRNG2                  ; Get index to output line in y-reg
 AS_L_PARSE_9:         INX                              ; Advance input index
                       INY                              ; Advance output index
-                      STA   MS_A_BUFOFS - 5,Y      ; Store char or token
-                      LDA   MS_A_BUFOFS - 5,Y      ; Test for eol or eos
+                      STA   MS_BUF - 5,Y      ; Store char or token
+                      LDA   MS_BUF - 5,Y      ; Test for eol or eos
                       BEQ   AS_L_PARSE_17              ; End of line
                       SEC
                       SBC   #":" & %01111111           ; End of statement?
                       BEQ   AS_L_PARSE_10              ; Yes, clear dataflg
-                      CMP   #MS_DATATK + 128 - $BA  ; "Data" token?
+                      CMP   #MS_T_DATATK + 128 - $BA  ; "Data" token?
                       BNE   AS_L_PARSE_11              ; No, leave dataflg alone
 AS_L_PARSE_10:        STA   AS_DATAFLG                 ; Dataflg = 0 or $83-$3A = $49
 AS_L_PARSE_11:        SEC                              ; Is it a "rem" token?
-                      SBC   #MS_REMTK + 128 - $BA
+                      SBC   #MS_T_REMTK + 128 - $BA
                       BNE   AS_L_PARSE_1               ; No, continue parsing line
                       STA   MS_Z_000E_ENDCHR                  ; Yes, clear literal flag
                                                        ; --------------------------------
                                                        ; Handle literal (between quotes) or remark,
                                                        ; By copying chars up to endchr.
                                                        ; --------------------------------
-AS_L_PARSE_12:        LDA   MS_A_BUFOFS,X
+AS_L_PARSE_12:        LDA   MS_BUF,X
                       BEQ   AS_L_PARSE_9               ; End of line
                       CMP   MS_Z_000E_ENDCHR
                       BEQ   AS_L_PARSE_9               ; Found endchr
 AS_L_PARSE_13:        INY                              ; Next output char
-                      STA   MS_A_BUFOFS - 5,Y
+                      STA   MS_BUF - 5,Y
                       INX                              ; Next input char
                       BNE   AS_L_PARSE_12              ; ...Always
                                                        ; --------------------------------
@@ -1612,12 +1612,12 @@ AS_L_PARSE_16:        ASL                              ; See if sign bit set on 
                       BCC   AS_L_PARSE_15              ; No, more in this name
                       LDA   (MS_Z_009D_FAC),Y                 ; Yes, at next name.  end of table?
                       BNE   AS_L_PARSE_7               ; No, not end of table
-                      LDA   MS_A_BUFOFS,X          ; Yes, so not a keyword
+                      LDA   MS_BUF,X          ; Yes, so not a keyword
                       BPL   AS_L_PARSE_8               ; ...Always, copy char as is
                                                        ; ---End of line------------------
-AS_L_PARSE_17:        STA   MS_A_BUFOFS - 3,Y      ; Store another 00 on end
+AS_L_PARSE_17:        STA   MS_BUF - 3,Y      ; Store another 00 on end
                       DEC   MS_Z_00B8_TXTPTR + 1              ; Set txtptr = input.buffer-1
-                      LDA   #<(MS_A_BUFOFS - 1)
+                      LDA   #<(MS_BUF - 1)
                       STA   MS_Z_00B8_TXTPTR
                       RTS
                                                        ; --------------------------------
@@ -1725,7 +1725,7 @@ AS_STXTPT:            CLC                              ; Txtptr = txttab - 1
                                                        ; --------------------------------
 MS_LIST:              BCC   AS_L_LIST_1                ; No  line # specified
                       BEQ   AS_L_LIST_1                ; ---Ditto---
-                      CMP   #MS_MINUTK            ; If dash or comma, start at line 0
+                      CMP   #MS_T_MINUTK            ; If dash or comma, start at line 0
                       BEQ   AS_L_LIST_1                ; Is is a dash
                       CMP   #"," & %01111111           ; Comma?
                       BNE   AS_RTS_2                   ; No, error
@@ -1733,7 +1733,7 @@ AS_L_LIST_1:          JSR   AS_LINGET                  ; Convert line number if 
                       JSR   AS_FNDLIN                  ; Point lowtr to 1st line
                       JSR   MS_Z_00B7_CHRGOT                  ; Range specified?
                       BEQ   AS_L_LIST_3                ; No
-                      CMP   #MS_MINUTK
+                      CMP   #MS_T_MINUTK
                       BEQ   AS_L_LIST_2
                       CMP   #"," & %01111111
                       BNE   AS_RTS_1
@@ -1858,7 +1858,7 @@ AS_L_FOR_1:           PLA                              ; Pop return address too
                       PHA
                       LDA   MS_Z_0075_CURLIN
                       PHA
-                      LDA   #MS_TOTK
+                      LDA   #MS_T_TOTK
                       JSR   AS_SYNCHR                  ; Require "to"
                       JSR   AS_CHKNUM                  ; <Var> = <exp> must be numeric
                       JSR   AS_FRMNUM                  ; Get final value, must be numeric
@@ -1878,7 +1878,7 @@ AS_STEP:              LDA   #<AS_CON_ONE               ; Step default=1
                       LDY   #>AS_CON_ONE
                       JSR   AS_LOAD_FAC_FROM_YA
                       JSR   MS_Z_00B7_CHRGOT
-                      CMP   #MS_STEPTK
+                      CMP   #MS_T_STEPTK
                       BNE   AS_L_STEP_1                ; Use default value of 1.0
                       JSR   MS_Z_00B1_CHRGET                  ; Step specified, get it
                       JSR   AS_FRMNUM
@@ -1888,7 +1888,7 @@ AS_L_STEP_1:          JSR   AS_SIGN
                       PHA
                       LDA   MS_Z_0085_FORPNT
                       PHA
-                      LDA   #MS_FORTK
+                      LDA   #MS_T_FORTK
                       PHA
                                                        ; --------------------------------
                                                        ; Perform next statement
@@ -2024,7 +2024,7 @@ AS_L_END4_1:          JMP   AS_RESTART
                                                        ; "Cont" command
                                                        ; --------------------------------
 MS_CONT:              BNE   AS_RTS_4                   ; If not end of statement, do nothing
-                      LDX   #MS_ERRCN
+                      LDX   #MS_E_ERRCN
                       LDY   MS_Z_0079_OLDTXT + 1             ; Meaningful re-entry?
                       BNE   AS_L_CONT_1                ; Yes
                       JMP   MS_ERROR                   ; No
@@ -2048,15 +2048,15 @@ MS_SAVE:              SEC
                       SBC   MS_Z_0067_TXTTAB + 1
                       STA   MS_Z_0050_LINNUM + 1
                       JSR   AS_VARTIO                  ; Set up to write 3 byte header
-                      JSR   MON_WRITE                  ; Write 'em
+                      JSR   MS_CQCOUT                  ; Write 'em
                       JSR   AS_PROGIO                  ; Set up to write the program
-                      JMP   MON_WRITE                  ; Write it
+                      JMP   MS_CQCOUT                  ; Write it
                                                        ; --------------------------------
                                                        ; "Load" command
                                                        ; Reads a program from cassette tape
                                                        ; --------------------------------
 MS_LOAD:              JSR   AS_VARTIO                  ; Set up to read 3 byte header
-                      JSR   MON_READ                   ; Read length, lock byte
+                      JSR   MS_CQCSIN                   ; Read length, lock byte
                       CLC
                       LDA   MS_Z_0067_TXTTAB                  ; Compute end address
                       ADC   MS_Z_0050_LINNUM
@@ -2067,7 +2067,7 @@ MS_LOAD:              JSR   AS_VARTIO                  ; Set up to read 3 byte h
                       LDA   MS_Z_0052_TEMPPT                  ; Lock byte
                       STA   AS_LOCK
                       JSR   AS_PROGIO                  ; Set up to read program
-                      JSR   MON_READ                   ; Read it
+                      JSR   MS_CQCSIN                   ; Read it
                       BIT   AS_LOCK                    ; If locked, start running now
                       BPL   AS_L_LOAD_1                ; Not locked
                       JMP   AS_SETPTRS                 ; Locked, start running
@@ -2123,7 +2123,7 @@ MS_GOSUB:             LDA   #3                         ; Be sure enough room on 
                       PHA
                       LDA   MS_Z_0075_CURLIN
                       PHA
-                      LDA   #MS_GOSUTK
+                      LDA   #MS_T_GOSUTK
                       PHA
 AS_GO_TO_LINE:
                       JSR   MS_Z_00B7_CHRGOT
@@ -2165,11 +2165,11 @@ MS_RETURN:               BNE   AS_RTS_5
                                                        ; <<< See "all about applesoft", pages 100,101 >>>
                       JSR   MS_FNDFOR                ; To cancel for/next in sub
                       TXS
-                      CMP   #MS_GOSUTK            ; Last gosub found?
+                      CMP   #MS_T_GOSUTK            ; Last gosub found?
                       BEQ   AS_RETURN
-                      LDX   #MS_ERRRG
+                      LDX   #MS_E_ERRRG
                       .byte $2C                        ; Fake
-AS_UNDERR:            LDX   #MS_ERRUS
+AS_UNDERR:            LDX   #MS_E_ERRUS
                       JMP   MS_ERROR
                                                        ; --------------------------------
 AS_SYNERR_2:          JMP   AS_SYNERR
@@ -2233,9 +2233,9 @@ AS_PULL3:             PLA
                                                        ; --------------------------------
 MS_IF:                JSR   AS_FRMEVL
                       JSR   MS_Z_00B7_CHRGOT
-                      CMP   #MS_GOTOTK
+                      CMP   #MS_T_GOTOTK
                       BEQ   AS_L_IF_1
-                      LDA   #MS_THENTK
+                      LDA   #MS_T_THENTK
                       JSR   AS_SYNCHR
 AS_L_IF_1:            LDA   MS_Z_009D_FAC                     ; Condition true or false?
                       BNE   AS_IF_TRUE                 ; Branch if true
@@ -2258,9 +2258,9 @@ AS_L_IF_TRUE_1:       JMP   AS_EXECUTE_STATEMENT
                                                        ; --------------------------------
 MS_ONGOTO:            JSR   AS_GETBYT                  ; Evaluate <exp>, as byte in fac+4
                       PHA                              ; Save next char on stack
-                      CMP   #MS_GOSUTK
+                      CMP   #MS_T_GOSUTK
                       BEQ   AS_ON_2
-AS_ON_1:              CMP   #MS_GOTOTK
+AS_ON_1:              CMP   #MS_T_GOTOTK
                       BNE   AS_SYNERR_2
 AS_ON_2:              DEC   MS_Z_009D_FAC + 4                 ; Counted to right one yet?
                       BNE   AS_L_ON_2_3                ; No, keep looking
@@ -2326,7 +2326,7 @@ AS_L_LINGET_2:        JSR   MS_Z_00B1_CHRGET                  ; Get next char
 MS_LET:               JSR   AS_PTRGET                  ; Get <var>
                       STA   MS_Z_0085_FORPNT
                       STY   MS_Z_0085_FORPNT + 1
-                      LDA   #MS_EQULTK
+                      LDA   #MS_T_EQULTK
                       JSR   AS_SYNCHR
                       LDA   MS_Z_0011_VALTYP + 1              ; Save variable type
                       PHA
@@ -2415,9 +2415,9 @@ AS_PR_STRING:
 MS_PRINT:             BEQ   AS_CRDO                    ; No more list, print <return>
                                                        ; --------------------------------
 AS_PRINT2:            BEQ   AS_RTS_8                   ; No more list, don't print <return>
-                      CMP   #MS_TABTK
+                      CMP   #MS_T_TABTK
                       BEQ   AS_PR_TAB_OR_SPC           ; C=1 for tab(
-                      CMP   #MS_SPCTK
+                      CMP   #MS_T_SPCTK
                       CLC
                       BEQ   AS_PR_TAB_OR_SPC           ; C=0 for spc(
                       CMP   #"," & %01111111
@@ -2509,7 +2509,7 @@ AS_OUTDO:             ORA   #$80                       ; Print (a)
                       CMP   #$A0                       ; Control chr?
                       BCC   AS_L_OUTDO_1               ; Skip if so
                       ORA   AS_FLASH_BIT               ; =$40 For flash, else $00
-AS_L_OUTDO_1:         JSR   MON_COUT                   ; "And"s with $3F (inverse), $7F (flash)
+AS_L_OUTDO_1:         JSR   MS_OUTCH                   ; "And"s with $3F (inverse), $7F (flash)
                       AND   #$7F
                       PHA
                       LDA   AS_SPEEDZ                  ; Complement of speed #
@@ -2555,10 +2555,10 @@ AS_L_RESPERR_1:       LDA   #<AS_ERR_REENTRY           ; "?Reenter"
                                                        ; "Get" statement
                                                        ; --------------------------------
 MS_GET:               JSR   AS_ERRDIR                  ; Illegal if in direct mode
-                      LDX   #<(MS_A_BUFOFS + 1)    ; Simulate input
-                      LDY   #>(MS_A_BUFOFS + 1)
+                      LDX   #<(MS_BUF + 1)    ; Simulate input
+                      LDY   #>(MS_BUF + 1)
                       LDA   #0
-                      STA   MS_A_BUFOFS + 1
+                      STA   MS_BUF + 1
                       LDA   #$40                       ; Set up inputflg
                       JSR   AS_PROCESS_INPUT_LIST      ; <<< Can save 1 byte here>>>
                       RTS                              ; <<<By "jmp process.input.list">>>
@@ -2575,9 +2575,9 @@ MS_INPUT:             CMP   #$22                       ; Check for optional prom
 AS_L_INPUT_1:         JSR   AS_OUTQUES                 ; No string, print "?"
 AS_L_INPUT_2:         JSR   AS_ERRDIR                  ; Illegal if in direct mode
                       LDA   #"," & %01111111           ; Prime the buffer
-                      STA   MS_A_BUFOFS - 1
+                      STA   MS_BUF - 1
                       JSR   AS_INLIN
-                      LDA   MS_A_BUFOFS
+                      LDA   MS_BUF
                       CMP   #$03                       ; Control c?
                       BNE   AS_INPUT_FLAG_ZERO         ; No
                       JMP   AS_CONTROL_C_TYPED
@@ -2622,9 +2622,9 @@ AS_PROCESS_INPUT_ITEM: JSR   AS_PTRGET                  ; Get address of variabl
                       BVC   AS_L_PROCESS_INPUT_ITEM_1  ; No
                       JSR   MS_CQINCH                  ; Yes, get char
                       AND   #$7F
-                      STA   MS_A_BUFOFS
-                      LDX   #<(MS_A_BUFOFS - 1)
-                      LDY   #>(MS_A_BUFOFS - 1)
+                      STA   MS_BUF
+                      LDX   #<(MS_BUF - 1)
+                      LDY   #>(MS_BUF - 1)
                       BNE   AS_L_PROCESS_INPUT_ITEM_2  ; ...Always
                                                        ; --------------------------------
 AS_L_PROCESS_INPUT_ITEM_1: BMI   AS_FINDATA                 ; Doing a "read"
@@ -2665,7 +2665,7 @@ AS_L_INSTART_4:       JSR   AS_STRLT2                  ; Build string starting a
                       JMP   AS_INPUT_MORE
                                                        ; --------------------------------
 AS_L_INSTART_5:       PHA
-                      LDA   MS_A_BUFOFS            ; Anything in buffer?
+                      LDA   MS_BUF            ; Anything in buffer?
                       BEQ   AS_INPFIN                  ; No, see if read or input
                                                        ; --------------------------------
 AS_INPUTDWTA:
@@ -2702,7 +2702,7 @@ AS_FINDATA:
                       INY                              ; To first char of next line
                       TAX                              ; Which:  eol or colon?
                       BNE   AS_L_FINDATA_1             ; Colon
-                      LDX   #MS_ERROD             ; Eol: might be out of data
+                      LDX   #MS_E_ERROD             ; Eol: might be out of data
                       INY                              ; Check hi-byte of forward pntr
                       LDA   (MS_Z_00B8_TXTPTR),Y              ; End of program?
                       BEQ   AS_GERR                    ; Yes, we are out of data
@@ -2716,7 +2716,7 @@ AS_FINDATA:
 AS_L_FINDATA_1:       LDA   (MS_Z_00B8_TXTPTR),Y              ; Get 1st token of statement
                       TAX                              ; Save token in x-reg
                       JSR   AS_ADDON                   ; Add (y) to txtptr
-                      CPX   #MS_DATATK              ; Did we find a "data" statement?
+                      CPX   #MS_T_DATATK              ; Did we find a "data" statement?
                       BNE   AS_FINDATA                 ; Not yet
                       JMP   AS_INSTART                 ; Yes, read it
                                                        ; ---No more input requested------
@@ -2774,7 +2774,7 @@ AS_NEXT_2:            STA   MS_Z_0085_FORPNT
                       STY   MS_Z_0085_FORPNT + 1
                       JSR   MS_FNDFOR                ; Find for-frame for this variable
                       BEQ   AS_NEXT_3                  ; Found it
-                      LDX   #MS_ERRNF              ; Not there, abort
+                      LDX   #MS_E_ERRNF              ; Not there, abort
 AS_GERR:              BEQ   AS_JERROR                  ; ...Always
 AS_NEXT_3:            TXS                              ; Set stack ptr to point to this frame,
                       INX                              ; Which trims off any inner loops
@@ -2845,7 +2845,7 @@ AS_CHKVAL:            BIT   MS_Z_0011_VALTYP                  ; $00 If numeric, 
                       BCS   AS_L_CHKVAL_3              ; Not string, but we need string
 AS_L_CHKVAL_1:        RTS                              ; Type is correct
 AS_L_CHKVAL_2:        BCS   AS_L_CHKVAL_1              ; Is string and we wanted string
-AS_L_CHKVAL_3:        LDX   #MS_ERRTM            ; Type mismatch
+AS_L_CHKVAL_3:        LDX   #MS_E_ERRTM            ; Type mismatch
 AS_JERROR:            JMP   MS_ERROR
                                                        ; --------------------------------
                                                        ; Evaluate the expression at txtptr, leaving the
@@ -2872,7 +2872,7 @@ AS_FRMEVL_1:
 AS_FRMEVL_2:
                       JSR   MS_Z_00B7_CHRGOT                  ; Check for relational operators
 AS_L_FRMEVL_2_1:      SEC                              ; > Is $CF, = is $D0, < is $D1
-                      SBC   #MS_GREATK          ; > Is 0, = is 1, < is 2
+                      SBC   #MS_T_GREATK          ; > Is 0, = is 1, < is 2
                       BCC   AS_L_FRMEVL_2_2            ; Not relational operator
                       CMP   #3
                       BCS   AS_L_FRMEVL_2_2            ; Not relational operator
@@ -2889,7 +2889,7 @@ AS_L_FRMEVL_2_1:      SEC                              ; > Is $CF, = is $D0, < i
 AS_L_FRMEVL_2_2:      LDX   MS_Z_0089_OPMASK                  ; Did we find a relational operator?
                       BNE   AS_FRM_RELATIONAL          ; Yes
                       BCS   AS_NOTMATH                 ; No, and next token is > $D1
-                      ADC   #$CF - MS_PLUSTK       ; No, and next token < $CF
+                      ADC   #$CF - MS_T_PLUSTK       ; No, and next token < $CF
                       BCC   AS_NOTMATH                 ; If next token < "+"
                       ADC   MS_Z_0011_VALTYP                  ; + And last result a string?
                       BNE   AS_L_FRMEVL_2_3            ; Branch if not
@@ -3044,9 +3044,9 @@ AS_L_FRM_ELEMENT_3:   JSR   AS_ISLETC                  ; Variable name?
                       BCS   AS_FRM_VARIABLE            ; Yes
                       CMP   #"." & %01111111           ; Decimal point
                       BEQ   AS_L_FRM_ELEMENT_2         ; Yes, numeric constant
-                      CMP   #MS_MINUTK            ; Unary minus?
+                      CMP   #MS_T_MINUTK            ; Unary minus?
                       BEQ   AS_MIN                     ; Yes
-                      CMP   #MS_PLUSTK             ; Unary plus
+                      CMP   #MS_T_PLUSTK             ; Unary plus
                       BEQ   AS_L_FRM_ELEMENT_1         ; Yes
                       CMP   #$22                       ; String constant?
                       BNE   AS_NOT_                    ; No
@@ -3068,7 +3068,7 @@ AS_L_STRTXT_1:        JSR   AS_STRLIT                  ; Build descriptor to str
                                                        ; If fac=0, return fac=1
                                                        ; If fac<>0, return fac=0
                                                        ; --------------------------------
-AS_NOT_:              CMP   #MS_NOTTK
+AS_NOT_:              CMP   #MS_T_NOTTK
                       BNE   AS_FN_                     ; Not "not", try "fn"
                       LDY   #MS_NOTTAB - MS_OPTAB     ; Point at = comparison
                       BNE   AS_EQUL                    ; ...Always
@@ -3083,11 +3083,11 @@ MS_NOTOP:             LDA   MS_Z_009D_FAC                     ; Set "true" if (f
 AS_L_EQUOP_1:         LDY   #0                         ; False
                       JMP   AS_SNGFLT
                                                        ; --------------------------------
-AS_FN_:               CMP   #MS_FNTK
+AS_FN_:               CMP   #MS_T_FNTK
                       BNE   AS_SGN_
                       JMP   AS_FUNCT
                                                        ; --------------------------------
-AS_SGN_:              CMP   #MS_ONEFUN
+AS_SGN_:              CMP   #MS_T_ONEFUN
                       BCC   AS_PARCHK
                       JMP   AS_UNARY
                                                        ; --------------------------------
@@ -3111,7 +3111,7 @@ AS_SYNCHR:            LDY   #0
                       BNE   AS_SYNERR
                       JMP   MS_Z_00B1_CHRGET                  ; Match, get next char & return
                                                        ; --------------------------------
-AS_SYNERR:            LDX   #MS_ERRSN
+AS_SYNERR:            LDX   #MS_E_ERRSN
                       JMP   MS_ERROR
                                                        ; --------------------------------
 AS_MIN:               LDY   #MS_NEGTAB - MS_OPTAB     ; Point at unary minus
@@ -3184,9 +3184,9 @@ AS_UNARY:             CMP   #AS_TOKEN_SCRN             ; Not unary, do special
 AS_L_UNARY_1:         JSR   AS_PARCHK                  ; Require "(expression)"
                       PLA
                       TAY                              ; Index into function address table
-AS_L_UNARY_2:         LDA   MS_FUNDSP - MS_ONEFUN - MS_ONEFUN + $100,Y
+AS_L_UNARY_2:         LDA   MS_FUNDSP - MS_T_ONEFUN - MS_T_ONEFUN + $100,Y
                       STA   MS_Z_0090_JMPER + 1             ; Prepare to jsr to address
-                      LDA   MS_FUNDSP - MS_ONEFUN - MS_ONEFUN + $101,Y
+                      LDA   MS_FUNDSP - MS_T_ONEFUN - MS_T_ONEFUN + $101,Y
                       STA   MS_Z_0090_JMPER + 2
                       JSR   MS_Z_0090_JMPER                 ; Does not return for
                                                        ; Chr$, left$, right$, or mid$
@@ -3614,18 +3614,18 @@ AS_L_ARRAY_5:         INY                              ; Point at offset to next
                                                        ; --------------------------------
                                                        ; Error:  bad subscripts
                                                        ; --------------------------------
-AS_SUBERR:            LDX   #MS_ERRBS
+AS_SUBERR:            LDX   #MS_E_ERRBS
                       .byte $2C                        ; Trick to skip next line
                                                        ; --------------------------------
                                                        ; Error:  illegal quantity
                                                        ; --------------------------------
-AS_IQERR:             LDX   #MS_ERRFC
+AS_IQERR:             LDX   #MS_E_ERRFC
 AS_JER:               JMP   MS_ERROR
                                                        ; --------------------------------
                                                        ; Found the array
                                                        ; --------------------------------
 AS_USE_OLD_ARRAY:
-                      LDX   #MS_ERRDD             ; Set up for redim'd array error
+                      LDX   #MS_E_ERRDD             ; Set up for redim'd array error
                       LDA   MS_Z_0010_DIMFLG                  ; Called from "dim" statement?
                       BNE   AS_JER                     ; Yes, error
                       LDA   MS_Z_0014_SUBFLG                  ; No, check if any subscripts
@@ -3646,7 +3646,7 @@ AS_L_USE_OLD_ARRAY_1: JSR   AS_GETARY                  ; Set (arypnt) = addr of 
 AS_MAKE_NEW_ARRAY:
                       LDA   MS_Z_0014_SUBFLG                  ; Called from getarypt?
                       BEQ   AS_L_MAKE_NEW_ARRAY_1      ; No
-                      LDX   #MS_ERROD             ; Yes, give "out of data" error
+                      LDX   #MS_E_ERROD             ; Yes, give "out of data" error
                       JMP   MS_ERROR
 AS_L_MAKE_NEW_ARRAY_1: JSR   AS_GETARY                  ; Put addr of 1st element in arypnt
                       JSR   AS_REASON                  ; Make sure enough memory left
@@ -3885,10 +3885,10 @@ AS_SNGFLT:            LDA   #0                         ; Msb = 0
 AS_ERRDIR:            LDX   MS_Z_0075_CURLIN + 1              ; =$FF if direct mode
                       INX                              ; Makes $FF into zero
                       BNE   AS_RTS_9                   ; Return if running mode
-                      LDX   #MS_ERRID             ; Direct mode, give error
+                      LDX   #MS_E_ERRID             ; Direct mode, give error
                       .byte $2C                        ; Trick to skip next 2 bytes
                                                        ; --------------------------------
-AS_UNDFNC:            LDX   #MS_ERRUF          ; Undefinded function error
+AS_UNDFNC:            LDX   #MS_E_ERRUF          ; Undefinded function error
                       JMP   MS_ERROR
                                                        ; --------------------------------
                                                        ; "Def" statement
@@ -3901,7 +3901,7 @@ MS_DEF:               JSR   AS_FNC_                    ; Parse "fn", function na
                       JSR   AS_PTRGET                  ; Get pntr to argument
                       JSR   AS_CHKNUM                  ; Must be numeric
                       JSR   AS_CHKCLS                  ; Must have ")" now
-                      LDA   #MS_EQULTK            ; Now need "="
+                      LDA   #MS_T_EQULTK            ; Now need "="
                       JSR   AS_SYNCHR                  ; Or else syntax error
                       PHA                              ; Save char after "="
                       LDA   MS_Z_0083_VARPNT + 1              ; Save pntr to argument
@@ -3918,7 +3918,7 @@ MS_DEF:               JSR   AS_FNC_                    ; Parse "fn", function na
                                                        ; Common routine for "deffn" and "fn", to
                                                        ; Parse "fn" and the function name
                                                        ; --------------------------------
-AS_FNC_:              LDA   #MS_FNTK               ; Must now see "fn" token
+AS_FNC_:              LDA   #MS_T_FNTK               ; Must now see "fn" token
                       JSR   AS_SYNCHR                  ; Or else syntax error
                       ORA   #$80                       ; Set sign bit on 1st char of name,
                       STA   MS_Z_0014_SUBFLG                  ; Making $C0 < subflg < $DB
@@ -4089,7 +4089,7 @@ AS_L_STRLT2_6:        TYA                              ; Length of string
 AS_PUTNEW:            LDX   MS_Z_0052_TEMPPT                  ; Pointer to next temp string slot
                       CPX   #MS_Z_0055_TEMPST + 9             ; Max of 3 temp strings
                       BNE   AS_PUTEMP                  ; Room for another one
-                      LDX   #MS_ERRST             ; Too many, formula too complex
+                      LDX   #MS_E_ERRST             ; Too many, formula too complex
 AS_JERR:              JMP   MS_ERROR
                                                        ; --------------------------------
 AS_PUTEMP:            LDA   MS_Z_009D_FAC                     ; Copy temp descriptor into temp stack
@@ -4136,7 +4136,7 @@ AS_L_GETSPA_3:        STA   MS_Z_006F_FRETOP                  ; There is room so
                       TAX                              ; Addr in y,x
                       PLA                              ; Length in a
                       RTS
-AS_L_GETSPA_4:        LDX   #MS_ERROM
+AS_L_GETSPA_4:        LDX   #MS_E_ERROM
                       LDA   MS_Z_0013_GARBFL                  ; Garbage done yet?
                       BMI   AS_JERR                    ; Yes, memory is really full
                       JSR   AS_GARBAG                  ; No, try collecting now
@@ -4344,7 +4344,7 @@ AS_CAT:               LDA   MS_Z_009D_FAC + 4                 ; Save address of 
                       CLC
                       ADC   (MS_Z_009D_FAC + 3),Y
                       BCC   AS_L_CAT_1                 ; Ok if < $100
-                      LDX   #MS_ERRLS
+                      LDX   #MS_E_ERRLS
                       JMP   MS_ERROR
 AS_L_CAT_1:           JSR   AS_STRINI                  ; Get space for concatenated strings
                       JSR   AS_MOVINS                  ; Move 1st string
@@ -4923,7 +4923,7 @@ AS_INCREMENT_FAC_MANTISSA:
 AS_RTS_12:            RTS
                                                        ; --------------------------------
 AS_OVERFLOW:
-                      LDX   #MS_ERROV
+                      LDX   #MS_E_ERROV
                       JMP   MS_ERROR
                                                        ; --------------------------------
                                                        ; Shift 1,x thru 5,x right
@@ -5266,7 +5266,7 @@ AS_L_FDIVT_7:         ASL                              ; Left justify the extens
                       PLP
                       JMP   AS_COPY_RESULT_INTO_FAC
                                                        ; --------------------------------
-AS_L_FDIVT_8:         LDX   #MS_ERRDV0
+AS_L_FDIVT_8:         LDX   #MS_E_ERRDV0
                       JMP   MS_ERROR
                                                        ; --------------------------------
                                                        ; Copy result into fac mantissa, and normalize
@@ -5586,11 +5586,11 @@ AS_FIN_3:             CMP   #"." & %01111111           ; Check for decimal point
                       BNE   AS_FIN_7                   ; No, end of number
                       JSR   MS_Z_00B1_CHRGET                  ; Yes, start converting exponent
                       BCC   AS_FIN_5                   ; Exponent digit
-                      CMP   #MS_MINUTK            ; Negative exponent?
+                      CMP   #MS_T_MINUTK            ; Negative exponent?
                       BEQ   AS_L_FIN_3_1               ; Yes
                       CMP   #"-" & %01111111           ; Might not be tokenized yet
                       BEQ   AS_L_FIN_3_1               ; Yes, it is negative
-                      CMP   #MS_PLUSTK             ; Optional "+"
+                      CMP   #MS_T_PLUSTK             ; Optional "+"
                       BEQ   AS_FIN_4                   ; Yes
                       CMP   #"+" & %01111111           ; Might not be tokenized yet
                       BEQ   AS_FIN_4                   ; Yes, found "+"
@@ -6369,8 +6369,8 @@ AS_L_COLD_START_1:    LDA   AS_GENERIC_CHRGET - 1,X
                       STA   AS_DSCLEN                  ; For garbage collection subroutine
                       JSR   AS_CRDO                    ; Print <return>
                       LDA   #1                         ; Set up fake forward link
-                      STA   MS_A_BUFOFS - 3
-                      STA   MS_A_BUFOFS - 4
+                      STA   MS_BUF - 3
+                      STA   MS_BUF - 4
                       LDX   #MS_Z_0055_TEMPST                 ; Init index to temp string descriptors
                       STX   MS_Z_0052_TEMPPT
                                                        ; --------------------------------
@@ -6633,7 +6633,7 @@ AS_LOMEM:             JSR   AS_FRMNUM                  ; Get value specified for
                                                        ; --------------------------------
                                                        ; "On err go to" statement
                                                        ; --------------------------------
-AS_ONERR:             LDA   #MS_GOTOTK             ; Must be "goto" next
+AS_ONERR:             LDA   #MS_T_GOTOTK             ; Must be "goto" next
                       JSR   AS_SYNCHR
                       LDA   MS_Z_00B8_TXTPTR                  ; Save txtptr for handlerr
                       STA   AS_TXTPSV
@@ -6773,14 +6773,14 @@ AS_STORE:             JSR   AS_GETARYPT                ; Get address of array to
                       DEX
 AS_L_STORE_1:         STA   MS_Z_0050_LINNUM
                       STX   MS_Z_0050_LINNUM + 1
-                      JSR   MON_WRITE
+                      JSR   MS_CQCOUT
                       JSR   AS_TAPEPNT
-                      JMP   MON_WRITE
+                      JMP   MS_CQCOUT
                                                        ; --------------------------------
                                                        ; "Recall" statement
                                                        ; --------------------------------
 AS_RECALL:            JSR   AS_GETARYPT                ; Find array in memory
-                      JSR   MON_READ                   ; Read header
+                      JSR   MS_CQCSIN                   ; Read header
                       LDY   #2                         ; Make sure the new data fits
                       LDA   (MS_Z_009B_LOWTR),Y
                       CMP   MS_Z_0050_LINNUM
@@ -6790,7 +6790,7 @@ AS_RECALL:            JSR   AS_GETARYPT                ; Find array in memory
                       BCS   AS_L_RECALL_1              ; It fits
                       JMP   AS_MEMERR                  ; Doesn't fit
 AS_L_RECALL_1:        JSR   AS_TAPEPNT                 ; Read the data
-                      JMP   MON_READ
+                      JMP   MS_CQCSIN
                                                        ; --------------------------------
                                                        ; "Hgr" and "hgr2" statements
                                                        ; --------------------------------
@@ -7411,13 +7411,13 @@ AS_COLORTBL:          .byte %00000000
                                                        ; Hplot to x,y
                                                        ; Hplot x1,y1 to x2,y2
                                                        ; --------------------------------
-AS_HPLOT:             CMP   #MS_TOTK               ; "Plot to" form?
+AS_HPLOT:             CMP   #MS_T_TOTK               ; "Plot to" form?
                       BEQ   AS_L_HPLOT_2               ; Yes, start from current location
                       JSR   AS_HFNS                    ; No, get starting point of line
                       JSR   AS_HPLOT0                  ; Plot the point, and set up for
                                                        ; Drawing a line from that point
 AS_L_HPLOT_1:         JSR   MS_Z_00B7_CHRGOT                  ; Character at end of expression
-                      CMP   #MS_TOTK               ; Is a line specified?
+                      CMP   #MS_T_TOTK               ; Is a line specified?
                       BNE   AS_RTS_23                  ; No, exit
 AS_L_HPLOT_2:         JSR   AS_SYNCHR                  ; Yes. adv. txtptr (why not chrget)
                       JSR   AS_HFNS                    ; Get coordinates of line end
@@ -7497,7 +7497,7 @@ AS_SHLOAD:            LDA   #>MS_Z_0050_LINNUM                ; Set up to read t
                       STY   MON_A1L
                       INY                              ; Linnum+1
                       STY   MON_A2L
-                      JSR   MON_READ                   ; Read tape
+                      JSR   MS_CQCSIN                   ; Read tape
                       CLC                              ; Setup to read (linnum) bytes
                       LDA   MS_Z_0073_MEMSIZ                  ; Ending at himem-1
                       TAX
@@ -7757,7 +7757,7 @@ MON_PRMN2:            ASL   MON_V2                     ;Shift 5 bits of
                       DEY
                       BNE   MON_PRMN2
                       ADC   #"?" | %10000000           ;Add "?" offset
-                      JSR   MON_COUT                   ;Output a char of mnem
+                      JSR   MS_OUTCH                   ;Output a char of mnem
                       DEX
                       BNE   MON_NXTCOL
                       JSR   MON_PRBLNK                 ;Output 3 blanks
@@ -7768,10 +7768,10 @@ MON_PRADR1:           CPX   #3
 MON_PRADR2:           ASL   MON_MASK
                       BCC   MON_PRADR3
                       LDA   MON_CHAR1 - 1,X
-                      JSR   MON_COUT
+                      JSR   MS_OUTCH
                       LDA   MON_CHAR2 - 1,X
                       BEQ   MON_PRADR3
-                      JSR   MON_COUT
+                      JSR   MS_OUTCH
 MON_PRADR3:           DEX
                       BNE   MON_PRADR1
                       RTS
@@ -7795,7 +7795,7 @@ MON_PRNTX:            TXA                              ;  Of branch and return
 
 MON_PRBLNK:           LDX   #3                         ;Blank count
 MON_PRBL2:            LDA   #" " | %10000000           ;Load a space
-MON_PRBL3:            JSR   MON_COUT                   ;Output a blank
+MON_PRBL3:            JSR   MS_OUTCH                   ;Output a blank
                       DEX
                       BNE   MON_PRBL2                  ;Loop until count=0
                       RTS
@@ -7992,13 +7992,13 @@ MON_RGDSP1:           LDA   #<$45                      ;  Contents with
                       STA   $41
                       LDX   #$FB
 MON_RDSP1:            LDA   #" " | %10000000
-                      JSR   MON_COUT
+                      JSR   MS_OUTCH
                       LDA   MON_RTBL - $FB,X
                                                        ;Lda   MON_RTBL+$FF05,x
 
-                      JSR   MON_COUT
+                      JSR   MS_OUTCH
                       LDA   #"=" | %10000000
-                      JSR   MON_COUT
+                      JSR   MS_OUTCH
                       LDA   $45 + 5,X
                       JSR   MON_PRBYTE
                       INX
@@ -8398,7 +8398,7 @@ MON_NOTCR:            LDA   $32
                       LDA   #$FF
                       STA   $32                        ;Echo user line
                       LDA   $0200,X                    ;  Non inverse
-                      JSR   MON_COUT
+                      JSR   MS_OUTCH
                       PLA
                       STA   $32
 
@@ -8414,14 +8414,14 @@ MON_NOTCR1:           INX                              ;Advance input index
                       BNE   MON_NXTCHAR
 
 MON_CANCEL:           LDA   #"\\" | %10000000          ;Backslash after cancelled line
-                      JSR   MON_COUT
-MON_GETLNZ:           JSR   MON_CROUT                  ;Output cr
+                      JSR   MS_OUTCH
+MS_CQINLN:           JSR   MON_CROUT                  ;Output cr
 
 MON_GETLN:            LDA   $33
-                      JSR   MON_COUT                   ;Output prompt char
+                      JSR   MS_OUTCH                   ;Output prompt char
                       LDX   #$01                       ;Init input index
 MON_BCKSPC:           TXA                              ;  Will backspace to 0
-                      BEQ   MON_GETLNZ
+                      BEQ   MS_CQINLN
                       DEX
 
 MON_NXTCHAR:          JSR   MON_RDCHAR
@@ -8455,14 +8455,14 @@ MON_CTRL_P            =     $10 | %10000000
 MON_CTRL_Y            =     $19 | %10000000
 
 MON_CROUT:            LDA   #$8D
-                      BNE   MON_COUT
+                      BNE   MS_OUTCH
 MON_PRA1:             LDY   $3D                        ;Print cr,a1 in hex
                       LDX   $3C
 MON_PRYX2:            JSR   MON_CROUT
                       JSR   MON_PRNTYX
                       LDY   #$00
                       LDA   #"-" | %10000000           ;Print '-'
-                      JMP   MON_COUT
+                      JMP   MS_OUTCH
 
 MON_XAM8:             LDA   $3C
                       ORA   #%00000111                 ;Set to finish at
@@ -8474,7 +8474,7 @@ MON_MODSCHK:          LDA   $3C
                       BNE   MON_DATAOUT
 MON_XAM:              JSR   MON_PRA1
 MON_DATAOUT:          LDA   #" " | %10000000
-                      JSR   MON_COUT                   ;Output blank
+                      JSR   MS_OUTCH                   ;Output blank
                       LDA   ($3C),Y
                       JSR   MON_PRBYTE                 ;Output byte in hex
                       JSR   MON_NXTA1
@@ -8491,7 +8491,7 @@ MON_XAMPM:            LSR                              ;Determine if mon
 MON_ADD:              ADC   $3C
                       PHA
                       LDA   #"=" | %10000000
-                      JSR   MON_COUT                   ;Print =, then result
+                      JSR   MS_OUTCH                   ;Print =, then result
                       PLA
 
 MON_PRBYTE:           PHA                              ;Print byte as 2 hex
@@ -8504,10 +8504,10 @@ MON_PRBYTE:           PHA                              ;Print byte as 2 hex
 MON_PRHEX:            AND   #%00001111                 ;Print hex dig in a-reg
 MON_PRHEXZ:           ORA   #"0" | %10000000           ;  Lsb's
                       CMP   #("9" | %10000000) + 1
-                      BCC   MON_COUT
+                      BCC   MS_OUTCH
                       ADC   #$06
 
-MON_COUT:             JMP   ($36)                      ;Vector to user output routine
+MS_OUTCH:             JMP   ($36)                      ;Vector to user output routine
 MON_COUT1:            CMP   #" " | %10000000
                       BCC   MON_COUTZ                  ;Dont output ctrls inverse
                       AND   $32                        ;Mask with inverse flag
@@ -8562,13 +8562,13 @@ MON_VFY:              LDA   ($3C),Y                    ;Verify (a1 to a2) with
                       LDA   ($3C),Y
                       JSR   MON_PRBYTE
                       LDA   #" " | %10000000
-                      JSR   MON_COUT
+                      JSR   MS_OUTCH
                       LDA   #"(" | %10000000
-                      JSR   MON_COUT
+                      JSR   MS_OUTCH
                       LDA   ($42),Y
                       JSR   MON_PRBYTE
                       LDA   #")" | %10000000
-                      JSR   MON_COUT
+                      JSR   MS_OUTCH
 MON_VFYOK:            JSR   MON_NXTA4
                       BCC   MON_VFY
                       RTS
@@ -8646,7 +8646,7 @@ MON_STEPZ:            NOP
 
 MON_USR:              JMP   $03F8                      ;To usr subr at usradr
 
-MON_WRITE:            LDA   #$40
+MS_CQCOUT:            LDA   #$40
                       JSR   MON_HEADR                  ;Write 10-sec header
                       LDY   #$27
 MON_WR1:              LDX   #$00
@@ -8672,7 +8672,7 @@ MON_CRMON:            JSR   MON_BL1                    ;Handle a cr as blank
                       PLA                              ;  And rtn to mon
                       BNE   MON_MONZ
 
-MON_READ:             JSR   MON_RD2BIT                 ;Find tapein edge
+MS_CQCSIN:             JSR   MON_RD2BIT                 ;Find tapein edge
                       LDA   #$16
 MON_READ2:            JSR   MON_HEADR                  ;Delay 3.5 seconds
                       STA   MON_MASK                   ;Init chksum=$FF
@@ -8693,13 +8693,13 @@ MON_RD3:              JSR   MON_RDBYTE                 ;Read a byte
                       CMP   MON_MASK
                       BEQ   MON_BELL                   ;Good, sound bell and return
 MON_PRERR:            LDA   #"E" | %10000000
-                      JSR   MON_COUT                   ;Print "err", then bell
+                      JSR   MS_OUTCH                   ;Print "err", then bell
                       LDA   #"R" | %10000000
-                      JSR   MON_COUT
-                      JSR   MON_COUT
+                      JSR   MS_OUTCH
+                      JSR   MS_OUTCH
 
 MON_BELL:             LDA   #$87                       ;Output bell and return
-                      JMP   MON_COUT
+                      JMP   MS_OUTCH
 
 MON_RESTORE:          LDA   $48                        ;Restore 6502 reg contents
                       PHA                              ;  Used by debug software
@@ -8727,7 +8727,7 @@ MON_MON:              CLD                              ;Must set hex mode!
                       JSR   MON_BELL
 MON_MONZ:             LDA   #$AA                       ;* Prompt for mon
                       STA   $33
-                      JSR   MON_GETLNZ                 ;Read a line
+                      JSR   MS_CQINLN                 ;Read a line
                       JSR   MON_ZMODE                  ;Clear mon mode, scan idx
 MON_NXTITM:           JSR   MON_GETNUM                 ;Get item, non-hex
                       STY   $34                        ;  Char in a-reg
@@ -8827,9 +8827,9 @@ MON_SUBTBL:           .byte <MON_BASCONT - 1
                       .byte <MON_SETNORM - 1
                       .byte <MON_SETINV - 1
                       .byte <MON_LIST1 - 1
-                      .byte <MON_WRITE - 1
+                      .byte <MS_CQCOUT - 1
                       .byte <MON_GO - 1
-                      .byte <MON_READ - 1
+                      .byte <MS_CQCSIN - 1
                       .byte <MON_SETMODE - 1
                       .byte <MON_SETMODE - 1
                       .byte <MON_CRMON - 1
